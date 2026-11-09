@@ -554,6 +554,29 @@ a.ctl{display:inline-block;line-height:20px}
 @keyframes recipientArrival{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:600px){#reveal.recipient-mode .dlg{padding:8px 8px 18px}#reveal.recipient-mode .stage{--w:min(84vw,42dvh)}}
 @media(prefers-reduced-motion:reduce){#reveal.recipient-mode .stage{animation:none}}
+
+/* Recipient reveal refinement — 2026-11-09 */
+#reveal.recipient-mode .dlg{display:flex;flex-direction:column;justify-content:center;min-height:min(100dvh,740px)}
+#reveal.recipient-mode #stepReveal{width:100%}
+#reveal.recipient-mode .recipient-whisper{font:italic clamp(19px,4.8vw,29px)/1.3 Georgia,serif;color:#3b332e;margin:4px auto 14px;max-width:360px}
+#reveal.recipient-mode .recipient-instruction{font:11px/1.5 Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#5d534b;margin:12px 0 4px}
+#reveal.recipient-mode .stage{--w:min(390px,82vw,37dvh);height:calc(var(--w) * 1.48);animation:none;overflow:hidden}
+#reveal.recipient-mode .env{bottom:calc(var(--w) * .06)}
+#reveal.recipient-mode .env-label{top:13%;bottom:auto;left:5%;right:5%;}
+#reveal.recipient-mode .env-to{font:italic clamp(24px,6.4vw,37px)/1.13 Georgia,serif;letter-spacing:-.04em;padding:0 3%;color:#f6efe6;text-shadow:0 2px 9px #0007;overflow-wrap:anywhere}
+#reveal.recipient-mode .env-to.long-name{font-size:clamp(19px,5vw,29px)}
+#reveal.recipient-mode .env-teaser,#reveal.recipient-mode .env-tap{display:none}
+#reveal.recipient-mode .bcard{opacity:0;visibility:hidden;clip-path:inset(0 0 58% 0);transition:transform 1.5s cubic-bezier(.25,.8,.3,1),opacity .3s ease,clip-path .7s ease;}
+#reveal.recipient-mode .stage.s-rise .bcard{visibility:visible;opacity:1;clip-path:inset(0 0 58% 0)}
+#reveal.recipient-mode .stage.s-out .bcard{visibility:visible;opacity:1;clip-path:inset(0 0 0 0)}
+#reveal.recipient-mode .stage.s-out .env{bottom:calc(var(--w) * -.5)}
+#reveal.recipient-mode .controls{margin-top:4px}
+@media(max-width:600px){
+ #reveal.recipient-mode .dlg{padding:16px 10px 22px;min-height:100dvh}
+ #reveal.recipient-mode .stage{--w:min(84vw,36dvh)}
+ #reveal.recipient-mode .recipient-whisper{margin-bottom:12px}
+}
+@media(prefers-reduced-motion:reduce){#reveal.recipient-mode .bcard{transition:none}}
 </style>
 </head>
 <body>
@@ -665,6 +688,7 @@ a.ctl{display:inline-block;line-height:20px}
       </div>
     </div>
     <div class="step" id="stepReveal" hidden>
+      <p class="recipient-whisper" hidden>Some things are better read in private.</p>
       <div class="stage" id="dlgStage">
       <div class="stage-copy"><p class="quiet">Sealed, addressed, and ready.</p><p class="note" style="margin-top:10px">Tap the envelope to open it.</p></div>
       <div class="bcard" aria-hidden="true">
@@ -676,6 +700,7 @@ a.ctl{display:inline-block;line-height:20px}
         <span class="env-label"><span class="env-to" id="dlgTo">For you</span><span class="env-teaser" id="dlgTeaser">You've been sent a little something unfiltered.</span><span class="env-tap">Tap to open</span></span>
       </button>
     </div>
+    <p class="recipient-instruction" hidden>Tap the seal to open.</p>
     <p class="sr" aria-live="polite" id="dlgLive"></p>
     <div class="controls"><button class="ctl" type="button" id="dlgSkip" hidden>Skip animation</button><button class="ctl" type="button" id="dlgReplay" hidden>Replay the reveal</button></div>
     <div class="after" id="dlgAfter" hidden>
@@ -774,7 +799,7 @@ function makeReveal(pre){
     st.classList.add('instant');st.classList.remove(...STEPS);
     // inside + sign-off are not in the DOM until their beat
     $(pre+'Inside').textContent='';$(pre+'Sign').textContent='';
-    $(pre+'Front').textContent=card.front;$(pre+'To').textContent=toLabel(pers.to);
+    $(pre+'Front').textContent=card.front;$(pre+'To').textContent=pre==='dlg' && pers.to.trim()?pers.to.trim():toLabel(pers.to);$(pre+'To').classList.toggle('long-name',pers.to.trim().length>18);
     env.disabled=false;env.removeAttribute('tabindex');env.setAttribute('aria-label',toLabel(pers.to)+'. Open the envelope');
     skip.hidden=true;replay.hidden=true;after.hidden=true;after.classList.remove('show');live.textContent='';
     void st.offsetWidth;st.classList.remove('instant');
@@ -796,12 +821,12 @@ function makeReveal(pre){
     state='playing';skip.hidden=false;skip.focus({preventScroll:true});
     const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
     st.classList.add('s-open');                         // 0.0s flap lifts slowly
-    at(1200,()=>st.classList.add('s-rise'));             // 0.8s ivory card rises
-    at(2500,()=>{st.classList.add('s-out');env.disabled=true;}); // 1.75s card clears envelope, front reads
-    at(3400,()=>st.classList.add('s-unfold'));          // 2.5s short pause, card unfolds
-    at(4350,()=>{writeInside();st.classList.add('s-inside','s-punch');});  // 3.0s inside punchline
-    at(5350,()=>{writeSign();st.classList.add('s-sign');});      // 3.85s sign-off, final beat
-    at(6200,finish);
+    at(1450,()=>st.classList.add('s-rise'));             // 0.8s ivory card rises
+    at(3150,()=>{st.classList.add('s-out');env.disabled=true;}); // 1.75s card clears envelope, front reads
+    at(4400,()=>st.classList.add('s-unfold'));          // 2.5s short pause, card unfolds
+    at(5650,()=>{writeInside();st.classList.add('s-inside','s-punch');});  // 3.0s inside punchline
+    at(6950,()=>{writeSign();st.classList.add('s-sign');});      // 3.85s sign-off, final beat
+    at(8000,finish);
   }
   env.addEventListener('click',open);
   skip.addEventListener('click',finishInstant);
@@ -840,7 +865,7 @@ function openCard(c){
   $('pvFront').textContent=c.front;$('optOriginal').textContent='“'+c.sign+'”';
   updatePreview();showStep('p');
   $('sharePanel').hidden=true;
-  dlg.classList.remove('sample-mode','recipient-mode');dlg.showModal();dlg.scrollTop=0;$('fTo').focus();
+  dlg.classList.remove('sample-mode','recipient-mode');dlg.querySelector('.recipient-whisper').hidden=true;dlg.querySelector('.recipient-instruction').hidden=true;dlg.showModal();dlg.scrollTop=0;$('fTo').focus();
 }
 function closeDlg(){dr.stop();dlg.close();dlg.classList.remove('sample-mode','recipient-mode');}
 $('closeReveal').addEventListener('click',closeDlg);
@@ -902,6 +927,7 @@ function openSharedCard(){
     $('revealCollection').textContent='A card for you';$('revealTitle').textContent=card.title;
     dlg.querySelector('.dlg').dataset.collection=editionKeys[collections.findIndex(c=>c.name===card.collection)];
     dlg.classList.add('sample-mode','recipient-mode');$('sharePanel').hidden=true;
+    dlg.querySelector('.recipient-whisper').hidden=false;dlg.querySelector('.recipient-instruction').hidden=false;
     dr.set(card,p);showStep('r');dlg.showModal();dlg.scrollTop=0;
     // Let the recipient tap the addressed envelope to open it.
     $('dlgEnv').focus({preventScroll:true});
@@ -923,7 +949,7 @@ function openFeaturedSample(){
   $('revealCollection').textContent='A sample from Womanhood, Unfiltered';
   $('revealTitle').textContent=featured.title;
   dlg.querySelector('.dlg').dataset.collection='womanhood';
-  dlg.classList.add('sample-mode');dlg.classList.remove('recipient-mode');
+  dlg.classList.add('sample-mode');dlg.classList.remove('recipient-mode');dlg.querySelector('.recipient-whisper').hidden=true;dlg.querySelector('.recipient-instruction').hidden=true;
   $('sharePanel').hidden=true;
   dr.set(featured,{mode:'keep',from:'',custom:'',to:''});
   showStep('r');
