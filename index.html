@@ -542,6 +542,10 @@ a.ctl{display:inline-block;line-height:20px}
 #reveal.recipient-mode #revealCollection,#reveal.recipient-mode #revealTitle{display:none;}
 #reveal.recipient-mode .stage-copy{display:none;}
 #reveal.recipient-mode .stage{--w:min(390px,78vw,43dvh);margin:0 auto;height:calc(var(--w) * 1.55);animation:recipientArrival .9s ease both;}
+/* Keep the card fully concealed until it rises out of the envelope. */
+#reveal.recipient-mode .bcard{opacity:0;clip-path:inset(0 0 55% 0);transition:transform 1.25s cubic-bezier(.25,.8,.3,1),opacity .25s ease,clip-path .55s ease;}
+#reveal.recipient-mode .stage.s-rise .bcard{opacity:1;clip-path:inset(0 0 55% 0);}
+#reveal.recipient-mode .stage.s-out .bcard{opacity:1;clip-path:inset(0 0 0 0);}
 #reveal.recipient-mode .env{bottom:calc(var(--w) * .08);}
 #reveal.recipient-mode .stage.s-out .env{bottom:calc(var(--w) * -.5);}
 #reveal.recipient-mode .controls{margin-top:8px;}
