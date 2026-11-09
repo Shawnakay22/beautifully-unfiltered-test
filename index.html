@@ -535,6 +535,21 @@ a.ctl{display:inline-block;line-height:20px}
 .share-panel p{font-size:13px;line-height:1.6;color:#655d55}
 .share-panel .share-status{min-height:1.5em;color:#302923;font-weight:600}
 #reveal.sample-mode .share-panel{display:none!important}
+
+/* Recipient-only cinematic experience: no heading, no empty prelude. */
+#reveal.recipient-mode{width:min(100vw,760px);max-width:100vw;max-height:100dvh;margin:auto;}
+#reveal.recipient-mode .dlg{padding:clamp(12px,2vh,24px) 14px 22px;}
+#reveal.recipient-mode #revealCollection,#reveal.recipient-mode #revealTitle{display:none;}
+#reveal.recipient-mode .stage-copy{display:none;}
+#reveal.recipient-mode .stage{--w:min(390px,78vw,43dvh);margin:0 auto;height:calc(var(--w) * 1.55);animation:recipientArrival .9s ease both;}
+#reveal.recipient-mode .env{bottom:calc(var(--w) * .08);}
+#reveal.recipient-mode .stage.s-out .env{bottom:calc(var(--w) * -.5);}
+#reveal.recipient-mode .controls{margin-top:8px;}
+#reveal.recipient-mode .after{margin-top:12px;}
+#reveal.recipient-mode .env-tap{color:#ded5c9;font-weight:600;}
+@keyframes recipientArrival{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){#reveal.recipient-mode .dlg{padding:8px 8px 18px}#reveal.recipient-mode .stage{--w:min(84vw,42dvh)}}
+@media(prefers-reduced-motion:reduce){#reveal.recipient-mode .stage{animation:none}}
 </style>
 </head>
 <body>
@@ -777,12 +792,12 @@ function makeReveal(pre){
     state='playing';skip.hidden=false;skip.focus({preventScroll:true});
     const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
     st.classList.add('s-open');                         // 0.0s flap lifts slowly
-    at(800,()=>st.classList.add('s-rise'));             // 0.8s ivory card rises
-    at(1750,()=>{st.classList.add('s-out');env.disabled=true;}); // 1.75s card clears envelope, front reads
-    at(2500,()=>st.classList.add('s-unfold'));          // 2.5s short pause, card unfolds
-    at(3150,()=>{writeInside();st.classList.add('s-inside','s-punch');});  // 3.0s inside punchline
-    at(4150,()=>{writeSign();st.classList.add('s-sign');});      // 3.85s sign-off, final beat
-    at(4850,finish);
+    at(1200,()=>st.classList.add('s-rise'));             // 0.8s ivory card rises
+    at(2500,()=>{st.classList.add('s-out');env.disabled=true;}); // 1.75s card clears envelope, front reads
+    at(3400,()=>st.classList.add('s-unfold'));          // 2.5s short pause, card unfolds
+    at(4350,()=>{writeInside();st.classList.add('s-inside','s-punch');});  // 3.0s inside punchline
+    at(5350,()=>{writeSign();st.classList.add('s-sign');});      // 3.85s sign-off, final beat
+    at(6200,finish);
   }
   env.addEventListener('click',open);
   skip.addEventListener('click',finishInstant);
@@ -821,9 +836,9 @@ function openCard(c){
   $('pvFront').textContent=c.front;$('optOriginal').textContent='“'+c.sign+'”';
   updatePreview();showStep('p');
   $('sharePanel').hidden=true;
-  dlg.classList.remove('sample-mode');dlg.showModal();dlg.scrollTop=0;$('fTo').focus();
+  dlg.classList.remove('sample-mode','recipient-mode');dlg.showModal();dlg.scrollTop=0;$('fTo').focus();
 }
-function closeDlg(){dr.stop();dlg.close();dlg.classList.remove('sample-mode');}
+function closeDlg(){dr.stop();dlg.close();dlg.classList.remove('sample-mode','recipient-mode');}
 $('closeReveal').addEventListener('click',closeDlg);
 dlg.addEventListener('click',e=>{if(e.target===dlg)closeDlg();});
 dlg.addEventListener('close',()=>dr.stop());
@@ -882,7 +897,7 @@ function openSharedCard(){
     active=card;
     $('revealCollection').textContent='A card for you';$('revealTitle').textContent=card.title;
     dlg.querySelector('.dlg').dataset.collection=editionKeys[collections.findIndex(c=>c.name===card.collection)];
-    dlg.classList.add('sample-mode');$('sharePanel').hidden=true;
+    dlg.classList.add('sample-mode','recipient-mode');$('sharePanel').hidden=true;
     dr.set(card,p);showStep('r');dlg.showModal();dlg.scrollTop=0;
     // Let the recipient tap the addressed envelope to open it.
     $('dlgEnv').focus({preventScroll:true});
@@ -904,7 +919,7 @@ function openFeaturedSample(){
   $('revealCollection').textContent='A sample from Womanhood, Unfiltered';
   $('revealTitle').textContent=featured.title;
   dlg.querySelector('.dlg').dataset.collection='womanhood';
-  dlg.classList.add('sample-mode');
+  dlg.classList.add('sample-mode');dlg.classList.remove('recipient-mode');
   $('sharePanel').hidden=true;
   dr.set(featured,{mode:'keep',from:'',custom:'',to:''});
   showStep('r');
