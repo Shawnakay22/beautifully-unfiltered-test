@@ -585,11 +585,15 @@ a.ctl{display:inline-block;line-height:20px}
 .qp-shell h2{font:normal clamp(22px,3vw,34px) Georgia,serif;margin:10px 30px 8px}
 .qp-sub{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#bcb6ad}
 .qp-stage{perspective:1800px;display:flex;justify-content:center;align-items:center;min-height:410px;margin:22px auto 10px}
-.qp-book{position:relative;width:min(360px,72vw);height:min(400px,100vw);transform-style:preserve-3d;transition:transform 1.4s cubic-bezier(.22,.65,.18,1)}
+.qp-book{position:relative;width:min(360px,72vw);height:min(400px,100vw);transform-style:preserve-3d;transition:transform 1.65s cubic-bezier(.22,.62,.18,1)}
 .qp-page,.qp-cover{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:28px 24px;text-align:center;overflow-wrap:anywhere}
 .qp-page{background:#f8f4ed;color:#24201e;box-shadow:0 12px 40px #0006;border:1px solid #d4c9ba}
-.qp-cover{background:#f5efe7;color:#231e1d;transform-origin:left center;transform:rotateY(0);transition:transform 1.4s cubic-bezier(.22,.65,.18,1);backface-visibility:hidden;box-shadow:8px 10px 30px #0005;border:1px solid #d4c9ba;z-index:2}
-.qp-book.open .qp-cover{transform:rotateY(-155deg)}
+.qp-cover{background:#f5efe7;color:#231e1d;transform-origin:left center;transform:rotateY(0);transition:transform 1.65s cubic-bezier(.55,.03,.22,1);backface-visibility:hidden;box-shadow:8px 10px 30px #0005;border:1px solid #d4c9ba;z-index:2}
+.qp-book.open .qp-cover{transform:rotateY(-168deg)}
+.qp-book.open{transform:translateX(28%)}
+.qp-page .qp-inside,.qp-page .qp-sign{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease}
+.qp-book.open .qp-inside,.qp-book.open .qp-sign{opacity:1;transform:translateY(0);transition-delay:1.05s}
+.qp-cover{filter:drop-shadow(7px 9px 8px #0003)}
 .qp-front{font:italic clamp(21px,3vw,32px)/1.25 Georgia,serif}
 .qp-inside{font:normal clamp(17px,2.3vw,25px)/1.38 Georgia,serif;max-height:76%;overflow:auto}
 .qp-sign{font:italic 15px/1.5 Georgia,serif;margin-top:24px}
@@ -604,7 +608,7 @@ a.ctl{display:inline-block;line-height:20px}
 .qp-shell[data-collection=birthdays] .qp-cover{background:#172a27;color:#f4e7d5;border-color:#53716a}
 .qp-shell[data-collection=marriage] .qp-cover{background:#c8b2ad;color:#291f20}
 .qp-shell[data-collection=work] .qp-cover{background:#fff;color:#171717}
-@media(max-width:650px){.qp-shell{padding:26px 12px 22px}.qp-stage{min-height:340px}.qp-book{width:min(280px,66vw);height:340px}.qp-book.open{transform:translateX(25%)}.qp-book.open .qp-cover{transform:rotateY(-150deg)}.qp-page,.qp-cover{padding:20px 15px}.qp-inside{font-size:18px}}
+@media(max-width:650px){.qp-shell{padding:26px 12px 22px}.qp-stage{min-height:340px}.qp-book{width:min(280px,66vw);height:340px}.qp-book.open{transform:translateX(28%)}.qp-book.open .qp-cover{transform:rotateY(-168deg)}.qp-page,.qp-cover{padding:20px 15px}.qp-inside{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.qp-book,.qp-cover{transition:none}}
 </style>
 </head>
