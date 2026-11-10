@@ -577,6 +577,35 @@ a.ctl{display:inline-block;line-height:20px}
  #reveal.recipient-mode .recipient-whisper{margin-bottom:12px}
 }
 @media(prefers-reduced-motion:reduce){#reveal.recipient-mode .bcard{transition:none}}
+
+/* Quick folded-card shopping preview — recipient envelope remains unchanged */
+.quick-preview{border:0;padding:0;background:transparent;color:#f5f1e9;width:min(96vw,940px);max-height:95vh;overflow:auto}
+.quick-preview::backdrop{background:#000e}
+.qp-shell{background:#171615;border:1px solid #5b524b;padding:32px 22px 26px;position:relative;text-align:center}
+.qp-shell h2{font:normal clamp(22px,3vw,34px) Georgia,serif;margin:10px 30px 8px}
+.qp-sub{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#bcb6ad}
+.qp-stage{perspective:1800px;display:flex;justify-content:center;align-items:center;min-height:410px;margin:22px auto 10px}
+.qp-book{position:relative;width:min(360px,72vw);height:min(400px,100vw);transform-style:preserve-3d;transition:transform 1.4s cubic-bezier(.22,.65,.18,1)}
+.qp-page,.qp-cover{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:28px 24px;text-align:center;overflow-wrap:anywhere}
+.qp-page{background:#f8f4ed;color:#24201e;box-shadow:0 12px 40px #0006;border:1px solid #d4c9ba}
+.qp-cover{background:#f5efe7;color:#231e1d;transform-origin:left center;transform:rotateY(0);transition:transform 1.4s cubic-bezier(.22,.65,.18,1);backface-visibility:hidden;box-shadow:8px 10px 30px #0005;border:1px solid #d4c9ba;z-index:2}
+.qp-book.open .qp-cover{transform:rotateY(-155deg)}
+.qp-front{font:italic clamp(21px,3vw,32px)/1.25 Georgia,serif}
+.qp-inside{font:normal clamp(17px,2.3vw,25px)/1.38 Georgia,serif;max-height:76%;overflow:auto}
+.qp-sign{font:italic 15px/1.5 Georgia,serif;margin-top:24px}
+.qp-brand{font:9px Arial,sans-serif;letter-spacing:.2em;text-transform:uppercase;margin-top:auto;opacity:.65}
+.qp-page .qp-inside{margin-top:auto}
+.qp-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.qp-actions button{min-height:44px;padding:13px 20px;border:1px solid #e8dfd5;background:transparent;color:#f5f1e9;letter-spacing:.1em;text-transform:uppercase;font-size:11px}
+.qp-actions .qp-primary{background:#f5f1e9;color:#181818}
+.qp-close{position:absolute;top:7px;right:9px;border:0;background:transparent;color:#f5f1e9;font-size:28px;min-width:44px;min-height:44px}
+.qp-help{color:#bcb6ad;font-size:12px;line-height:1.6;margin:16px auto 0}
+.qp-shell[data-collection=taryn] .qp-cover{background:#3b2029;color:#fff3e8;border-color:#8b5a65}
+.qp-shell[data-collection=birthdays] .qp-cover{background:#172a27;color:#f4e7d5;border-color:#53716a}
+.qp-shell[data-collection=marriage] .qp-cover{background:#c8b2ad;color:#291f20}
+.qp-shell[data-collection=work] .qp-cover{background:#fff;color:#171717}
+@media(max-width:650px){.qp-shell{padding:26px 12px 22px}.qp-stage{min-height:340px}.qp-book{width:min(280px,66vw);height:340px}.qp-book.open{transform:translateX(25%)}.qp-book.open .qp-cover{transform:rotateY(-150deg)}.qp-page,.qp-cover{padding:20px 15px}.qp-inside{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.qp-book,.qp-cover{transition:none}}
 </style>
 </head>
 <body>
@@ -720,6 +749,32 @@ a.ctl{display:inline-block;line-height:20px}
   </div>
 </dialog>
 
+
+<dialog id="quickPreview" class="quick-preview" aria-labelledby="qpTitle">
+  <div class="qp-shell" id="qpShell">
+    <button class="qp-close" type="button" id="qpClose" aria-label="Close preview">×</button>
+    <div class="qp-sub">The inside story · Complimentary preview</div>
+    <h2 id="qpTitle"></h2>
+    <div class="qp-stage">
+      <div class="qp-book" id="qpBook">
+        <div class="qp-page">
+          <div class="qp-inside" id="qpInside"></div>
+          <div class="qp-sign" id="qpSign"></div>
+          <div class="qp-brand">Beautifully Unfiltered</div>
+        </div>
+        <div class="qp-cover">
+          <div class="qp-front" id="qpFront"></div>
+          <div class="qp-brand">Beautifully Unfiltered</div>
+        </div>
+      </div>
+    </div>
+    <div class="qp-actions">
+      <button type="button" id="qpToggle">Open card</button>
+      <button type="button" class="qp-primary" id="qpPersonalize">Personalize this card</button>
+    </div>
+    <p class="qp-help">See the full punchline before you personalize. The recipient's envelope reveal is separate.</p>
+  </div>
+</dialog>
 <script type="text/plain" id="card-data">
 ## Womanhood, Unfiltered
 The Absolutely Not Era || I've entered my absolutely not era. || And as my closest friend, I'm going to need you to stop volunteering me for things. || Respectfully, no.
@@ -962,6 +1017,41 @@ $('heroOpen').addEventListener('click',openFeaturedSample);
 sig.set(featured);
 $('sigPersonalize').addEventListener('click',()=>openCard(featured));
 
+
+// Instant folded-card preview: no personalization required.
+const qp=$('quickPreview'), qpBook=$('qpBook');
+let qpCard=null;
+function openQuickPreview(card){
+  qpCard=card;
+  const collectionIndex=collections.findIndex(c=>c.name===card.collection);
+  $('qpShell').dataset.collection=editionKeys[collectionIndex];
+  $('qpTitle').textContent=card.title;
+  $('qpFront').textContent=card.front;
+  $('qpInside').textContent=card.inside;
+  $('qpSign').textContent=card.sign;
+  qpBook.classList.remove('open');
+  $('qpToggle').textContent='Open card';
+  qp.showModal();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    qpBook.classList.add('open');
+    $('qpToggle').textContent='Close card';
+  }));
+}
+function toggleQuickPreview(){
+  const isOpen=qpBook.classList.toggle('open');
+  $('qpToggle').textContent=isOpen?'Close card':'Open card';
+}
+$('qpToggle').addEventListener('click',toggleQuickPreview);
+qpBook.addEventListener('click',toggleQuickPreview);
+$('qpClose').addEventListener('click',()=>qp.close());
+qp.addEventListener('click',e=>{if(e.target===qp)qp.close();});
+$('qpPersonalize').addEventListener('click',()=>{
+  if(!qpCard)return;
+  const card=qpCard;
+  qp.close();
+  openCard(card);
+});
+
 // Collections — original inline gallery; selecting a tile scrolls to its cards.
 const tiles=$('tiles');
 function show(i,scroll){
@@ -972,14 +1062,14 @@ function show(i,scroll){
   const grid=$('grid');grid.innerHTML='';
   c.cards.forEach(card=>{
     const b=document.createElement('button');b.type='button';b.className='product';
-    b.setAttribute('aria-label','Personalize '+card.title);b.dataset.collection=editionKeys[i];
+    b.setAttribute('aria-label','Preview inside '+card.title);b.dataset.collection=editionKeys[i];
     const p=document.createElement('div');p.className='paper';
     const h=document.createElement('div');h.className='hand';h.textContent=card.front;
     const m=document.createElement('div');m.className='micro';m.textContent='Beautifully Unfiltered';
     p.append(h,m);
     const t=document.createElement('h4');t.textContent=card.title;
-    const d=document.createElement('p');d.textContent='Tap to personalize · Digital card';
-    b.append(p,t,d);b.addEventListener('click',()=>openCard(card));grid.append(b);
+    const d=document.createElement('p');d.textContent='Tap to open & read inside · Digital card';
+    b.append(p,t,d);b.addEventListener('click',()=>openQuickPreview(card));grid.append(b);
   });
   if(scroll)$('shelf').scrollIntoView({behavior:reduceMQ.matches?'auto':'smooth',block:'start'});
 }
