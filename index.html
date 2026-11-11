@@ -663,6 +663,18 @@ a.ctl{display:inline-block;line-height:20px}
 @media(max-width:600px){.gift-note{width:min(91vw,510px)}}
 @media(prefers-reduced-motion:reduce){.gift-note{transition:none;transform:none}}
 .gift-note[hidden]{display:none!important}
+.gift-note-heading{font:italic clamp(28px,5vw,39px)/1.2 Georgia,serif;font-weight:normal;margin:16px 0 8px;color:#29231f}
+.gift-note-subtitle{font:13px/1.5 Georgia,serif;color:#756c62;margin-bottom:22px}
+.scratch-wrap{position:relative;min-height:170px;display:flex;align-items:center;justify-content:center;border:1px solid #d5cabc;background:#fffdf9;overflow:hidden}
+.gift-note .scratch-wrap p{margin:0;padding:24px 18px;max-width:100%}
+.scratch-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.scratch-wrap.revealed .scratch-canvas{opacity:0;pointer-events:none;transition:opacity .45s ease}
+.scratch-actions{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:18px}
+.scratch-actions .ctl{background:#282320;color:#f8f4ed;border:1px solid #282320;min-width:160px}
+.scratch-hint{font:11px/1.5 Arial,sans-serif;color:#756c62}
+#dlgReplay{font-size:11px;letter-spacing:.08em;border:0;background:transparent;text-decoration:underline;text-underline-offset:5px}
+#reveal .controls:has(#dlgReplay){margin-top:26px}
+@media(prefers-reduced-motion:reduce){.scratch-wrap.revealed .scratch-canvas{transition:none}}
 </style>
 </head>
 <body>
@@ -816,8 +828,8 @@ a.ctl{display:inline-block;line-height:20px}
     </div>
     <p class="recipient-instruction" hidden>Tap the seal to open.</p>
     <p class="sr" aria-live="polite" id="dlgLive"></p>
-    <section class="gift-note" id="dlgGiftNote" hidden aria-label="A personal note"><span class="gift-note-rule" aria-hidden="true"></span><div class="gift-note-label">A PERSONAL NOTE, JUST FOR YOU</div><p id="dlgGiftNoteText"></p></section>
-    <div class="controls"><button class="ctl" type="button" id="dlgSkip" hidden>Skip animation</button><button class="ctl" type="button" id="dlgReplay" hidden>Replay the reveal</button></div>
+    <section class="gift-note" id="dlgGiftNote" hidden aria-label="A personal note"><span class="gift-note-rule" aria-hidden="true"></span><div class="gift-note-label">BEAUTIFULLY UNFILTERED</div><h3 class="gift-note-heading">One More Thing…</h3><div class="gift-note-subtitle">A personal note, just for you.</div><div class="scratch-wrap" id="dlgScratchWrap"><p id="dlgGiftNoteText"></p><canvas id="dlgScratchCanvas" class="scratch-canvas" aria-label="Scratch away the champagne coating to reveal your personal note"></canvas></div><div class="scratch-actions" id="dlgScratchActions"><button class="ctl" type="button" id="dlgQuickReveal">Quick Reveal</button><span class="scratch-hint">Or rub the silver with your finger or mouse</span></div></section>
+    <div class="controls"><button class="ctl" type="button" id="dlgSkip" hidden>Skip animation</button></div><div class="controls"><button class="ctl" type="button" id="dlgReplay" hidden>↻ Experience it again</button></div>
     <div class="after" id="dlgAfter" hidden>
       <h3>Know someone who needs this kind of honesty?</h3>
       <p>Choose a card from the collections, add your own touch, and preview how it arrives.</p>
@@ -957,7 +969,7 @@ function makeReveal(pre){
     $(pre+'Front').textContent=card.front;$(pre+'To').textContent=pre==='dlg' && pers.to.trim()?pers.to.trim():toLabel(pers.to);$(pre+'To').classList.toggle('long-name',pers.to.trim().length>18);
     env.disabled=false;env.removeAttribute('tabindex');env.setAttribute('aria-label',toLabel(pers.to)+'. Open the envelope');
     skip.hidden=true;replay.hidden=true;after.hidden=true;after.classList.remove('show');live.textContent='';
-    if(pre==='dlg'){$('dlgGiftNote').hidden=true;$('dlgGiftNote').classList.remove('show');$('dlgGiftNoteText').textContent='';}
+    if(pre==='dlg'){$('dlgGiftNote').hidden=true;$('dlgGiftNote').classList.remove('show');$('dlgGiftNoteText').textContent='';resetScratchNote();}
     void st.offsetWidth;st.classList.remove('instant');
   }
   function finish(){
@@ -969,7 +981,7 @@ function makeReveal(pre){
     live.textContent=card.front+' '+card.inside+' '+composeSign(card,pers).main+' '+composeSign(card,pers).by;
     if(pre==='dlg'&&pers.note&&pers.note.trim()){
       $('dlgGiftNoteText').textContent=pers.note.trim();
-      $('dlgGiftNote').hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>$('dlgGiftNote').classList.add('show')));
+      $('dlgGiftNote').hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>{$('dlgGiftNote').classList.add('show');setupScratchNote();}));
     }
     after.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>after.classList.add('show')));
     if(document.activeElement===env||document.activeElement===skip)replay.focus({preventScroll:true});
@@ -983,10 +995,10 @@ function makeReveal(pre){
     st.classList.add('s-open');                         // 0.0s flap lifts slowly
     at(1450,()=>st.classList.add('s-rise'));             // 0.8s ivory card rises
     at(3150,()=>{st.classList.add('s-out');env.disabled=true;}); // 1.75s card clears envelope, front reads
-    at(4400,()=>st.classList.add('s-unfold'));          // 2.5s short pause, card unfolds
-    at(5650,()=>{writeInside();st.classList.add('s-inside','s-punch');});  // 3.0s inside punchline
-    at(6950,()=>{writeSign();st.classList.add('s-sign');});      // 3.85s sign-off, final beat
-    at(8000,finish);
+    at(5900,()=>st.classList.add('s-unfold'));          // 2.5s short pause, card unfolds
+    at(7150,()=>{writeInside();st.classList.add('s-inside','s-punch');});  // 3.0s inside punchline
+    at(8450,()=>{writeSign();st.classList.add('s-sign');});      // 3.85s sign-off, final beat
+    at(9500,finish);
   }
   env.addEventListener('click',open);
   skip.addEventListener('click',finishInstant);
@@ -994,6 +1006,55 @@ function makeReveal(pre){
   return {set(c,p){card=c;if(p)pers=p;reset();},open,stop:clear};
 }
 const sig=makeReveal('sig'),dr=makeReveal('dlg');
+// Scratch-to-reveal is a recipient-side visual effect; the note remains in the DOM
+// so screen readers and the Quick Reveal option can access it without scratching.
+let scratchReady=false,scratchDown=false,scratchDistance=0,scratchLast=null;
+function resetScratchNote(){
+  scratchDown=false;scratchReady=false;scratchDistance=0;scratchLast=null;
+  const wrap=$('dlgScratchWrap'),canvas=$('dlgScratchCanvas');
+  wrap.classList.remove('revealed');canvas.width=0;canvas.height=0;
+  $('dlgScratchActions').hidden=false;
+}
+function revealScratchNote(){
+  $('dlgScratchWrap').classList.add('revealed');$('dlgScratchActions').hidden=true;
+  $('dlgScratchCanvas').setAttribute('aria-hidden','true');
+}
+function setupScratchNote(){
+  const canvas=$('dlgScratchCanvas'),wrap=$('dlgScratchWrap');
+  if(wrap.classList.contains('revealed'))return;
+  const r=wrap.getBoundingClientRect();
+  if(!r.width||!r.height)return;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);
+  const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  const fill=ctx.createLinearGradient(0,0,r.width,r.height);
+  fill.addColorStop(0,'#b6ab9b');fill.addColorStop(.35,'#e0d8cc');fill.addColorStop(.7,'#bdb1a1');fill.addColorStop(1,'#e4dcd0');
+  ctx.fillStyle=fill;ctx.fillRect(0,0,r.width,r.height);
+  ctx.fillStyle='#554d44';ctx.textAlign='center';ctx.font='italic 23px Georgia, serif';
+  ctx.fillText('Scratch to Reveal',r.width/2,r.height/2-4);
+  ctx.font='11px Arial, sans-serif';ctx.fillText('A LITTLE SOMETHING EXTRA',r.width/2,r.height/2+23);
+  scratchReady=true;scratchDistance=0;scratchLast=null;
+}
+(function(){
+  const canvas=$('dlgScratchCanvas');
+  function point(e){const r=canvas.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+  function erase(e){
+    if(!scratchDown||!scratchReady||$('dlgScratchWrap').classList.contains('revealed'))return;
+    const p=point(e),ctx=canvas.getContext('2d');
+    ctx.globalCompositeOperation='destination-out';ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=42;
+    ctx.beginPath();
+    if(scratchLast){ctx.moveTo(scratchLast.x,scratchLast.y);ctx.lineTo(p.x,p.y);scratchDistance+=Math.hypot(p.x-scratchLast.x,p.y-scratchLast.y);}
+    else{ctx.arc(p.x,p.y,21,0,Math.PI*2);scratchDistance+=12;}
+    ctx.stroke();ctx.fill();scratchLast=p;
+    const r=canvas.getBoundingClientRect();
+    if(scratchDistance>Math.max(160,(r.width*r.height)/110))revealScratchNote();
+  }
+  canvas.addEventListener('pointerdown',e=>{scratchDown=true;scratchLast=null;canvas.setPointerCapture(e.pointerId);erase(e);});
+  canvas.addEventListener('pointermove',erase);
+  canvas.addEventListener('pointerup',()=>{scratchDown=false;scratchLast=null;});
+  canvas.addEventListener('pointercancel',()=>{scratchDown=false;scratchLast=null;});
+  $('dlgQuickReveal').addEventListener('click',revealScratchNote);
+})();
 
 // Personalization dialog (prototype only — nothing is purchased, sent or saved)
 let active=null;
