@@ -775,7 +775,7 @@ a.ctl{display:inline-block;line-height:20px}
               <div class="delivery-field"><label for="deliveryDate">Delivery date</label><input id="deliveryDate" type="date"></div>
               <div class="delivery-field"><label for="deliveryTime">Delivery time</label><input id="deliveryTime" type="time" value="09:00"></div>
               <div class="delivery-field"><label for="deliveryZone">Recipient's time zone</label><select id="deliveryZone"><option value="America/Los_Angeles">Pacific</option><option value="America/Denver">Mountain</option><option value="America/Chicago">Central</option><option value="America/New_York">Eastern</option></select></div>
-              <p class="delivery-warning" id="scheduleWarning">Scheduled delivery is coming soon. Checkout for future delivery will be enabled after the scheduling service is tested.</p>
+              <p class="delivery-warning" id="scheduleWarning">Scheduled email cards are delivered on the next 30-minute processing run after your chosen time. Please allow up to 30 minutes.</p>
             </div>
             <div class="checkout-price"><span>Digital greeting card</span><strong>$6.95</strong></div>
             <button class="ctl solid checkout-button" type="button" id="previewRevealBtn">Continue to secure payment — $6.95</button>
@@ -1004,18 +1004,62 @@ function updateDelivery(){
   $('emailDeliveryField').hidden=method!=='email';
   $('textDeliveryField').hidden=method!=='text';
   $('scheduleDeliveryFields').hidden=timing!=='later';
-  $('previewRevealBtn').disabled=timing==='later';
-  $('previewRevealBtn').textContent=timing==='later'?'Scheduling coming soon':'Continue to secure payment — $6.95';
+  const unsupported=timing==='later'&&method==='text';
+  $('previewRevealBtn').disabled=unsupported;
+  $('previewRevealBtn').textContent=unsupported?'Scheduling available for email only':'Continue to secure payment — $6.95';
+  $('scheduleWarning').textContent=unsupported
+    ? 'Scheduled delivery is currently available for email only. Choose Email to schedule your card.'
+    : 'Scheduled email cards are processed every 30 minutes after your chosen time. Delivery may be later than the exact minute selected.';
   $('deliveryError').hidden=true;
 }
 form.querySelectorAll('input[name=deliveryMethod],input[name=deliveryTiming]').forEach(x=>x.addEventListener('change',updateDelivery));
 function showDeliveryError(message){$('deliveryError').textContent=message;$('deliveryError').hidden=false;}
 function validEmail(value){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length<=254;}
 function validPhone(value){return /^\+?[0-9() .-]{7,30}$/.test(value) && value.replace(/\D/g,'').length>=7;}
+
+// Interpret the selected wall-clock time in the recipient's named time zone,
+// including daylight-saving changes, without relying on the sender's time zone.
+function scheduledUtc(dateValue,timeValue,zone){
+  if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(dateValue)||!/^\\d{2}:\\d{2}$/.test(timeValue))
+    throw Error('Choose a delivery date and time.');
+  const [year,month,day]=dateValue.split('-').map(Number);
+  const [hour,minute]=timeValue.split(':').map(Number);
+  if(month<1||month>12||day<1||day>31||hour>23||minute>59||
+     new Date(Date.UTC(year,month-1,day)).toISOString().slice(0,10)!==dateValue)
+    throw Error('Choose a valid delivery date and time.');
+  const formatter=new Intl.DateTimeFormat('en-US',{
+    timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',
+    hour:'2-digit',minute:'2-digit',hourCycle:'h23'
+  });
+  const desired=dateValue+' '+timeValue;
+  const base=Date.UTC(year,month-1,day,hour,minute);
+  // Search possible UTC offsets in 15-minute steps to handle DST folds/gaps.
+  const matches=[];
+  for(let offset=-14*60;offset<=14*60;offset+=15){
+    const candidate=base-offset*60000;
+    const parts=Object.fromEntries(formatter.formatToParts(new Date(candidate))
+      .filter(p=>p.type!=='literal').map(p=>[p.type,p.value]));
+    const local=parts.year+'-'+parts.month+'-'+parts.day+' '+parts.hour+':'+parts.minute;
+    if(local===desired)matches.push(candidate);
+  }
+  if(!matches.length)throw Error('That local time does not exist due to a daylight-saving change. Choose another time.');
+  if(matches.length>1)throw Error('That local time occurs twice due to a daylight-saving change. Choose another time.');
+  const scheduled=matches[0];
+  const delay=scheduled-Date.now();
+  if(delay<5*60*1000||delay>330*24*60*60*1000)
+    throw Error('Choose a time at least 5 minutes from now and no more than 330 days away.');
+  return new Date(scheduled).toISOString();
+}
+
 async function startCheckout() {
   if (!active) return;
   const method=deliveryMethod(),timing=deliveryTiming();
-  if(timing!=='now'){showDeliveryError('Scheduled delivery is not active yet. Please choose Send now.');return;}
+  if(timing==='later'&&method!=='email'){showDeliveryError('Scheduling is available for email only.');return;}
+  let scheduleAt=null;
+  if(timing==='later'){
+    try{scheduleAt=scheduledUtc($('deliveryDate').value,$('deliveryTime').value,$('deliveryZone').value);}
+    catch(error){showDeliveryError(error.message);return;}
+  }
   const recipient=(method==='email' ? $('deliveryEmail').value : $('deliveryPhone').value).trim();
   if(method==='email'&&!validEmail(recipient)){showDeliveryError('Please enter a valid recipient email.');return;}
   if(method==='text'&&!validPhone(recipient)){showDeliveryError('Please enter a valid phone number.');return;}
@@ -1031,7 +1075,7 @@ async function startCheckout() {
     });
     const result=await response.json();
     if(!response.ok||!result.url)throw new Error(result.error||'Checkout unavailable.');
-    sessionStorage.setItem(DELIVERY_PENDING_KEY,JSON.stringify({method,recipient,timing}));
+    sessionStorage.setItem(DELIVERY_PENDING_KEY,JSON.stringify({method,recipient,timing,scheduleAt,zone:$('deliveryZone').value}));
     location.href=result.url;
   }catch(error){showDeliveryError('Could not open checkout: '+error.message);button.disabled=false;updateDelivery();}
 }
@@ -1049,8 +1093,17 @@ function displayReceipt(data){
     $('receiptDescription').textContent='Your payment is verified. Copy your private link below to deliver your card.';
     $('receiptPrimary').hidden=true;
   }else if(delivery.method==='email'){
-    $('receiptDescription').textContent='Ready to send your card to '+delivery.recipient+'.';
-    $('receiptPrimary').textContent='Send card by email';
+    if(delivery.timing==='later'&&delivery.scheduleAt){
+      const scheduledLabel=new Date(delivery.scheduleAt).toLocaleString('en-US',{
+        timeZone:delivery.zone||'America/Los_Angeles',dateStyle:'medium',timeStyle:'short'
+      });
+      $('receiptDescription').textContent='Ready to schedule your card for '+delivery.recipient+
+        ' on '+scheduledLabel+'. Delivery is processed every 30 minutes.';
+      $('receiptPrimary').textContent='Confirm scheduled email';
+    }else{
+      $('receiptDescription').textContent='Ready to send your card to '+delivery.recipient+'.';
+      $('receiptPrimary').textContent='Send card by email';
+    }
   }else{
     $('receiptDescription').textContent='Ready to text your card to '+delivery.recipient+'. You will press Send in your messaging app.';
     $('receiptPrimary').textContent='Open text message';
@@ -1073,17 +1126,22 @@ async function deliverPurchasedCard(){
     return;
   }
   $('receiptPrimary').disabled=true;
-  $('receiptStatus').textContent='Sending your card…';
+  const isScheduled=delivery.timing==='later'&&Boolean(delivery.scheduleAt);
+  $('receiptStatus').textContent=isScheduled?'Scheduling your card…':'Sending your card…';
   try{
     const response=await fetch(CHECKOUT_API+'/send-email',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({session_id:sessionId,token,email:delivery.recipient})
+      body:JSON.stringify({session_id:sessionId,token,email:delivery.recipient,...(isScheduled?{schedule_at:delivery.scheduleAt}:{})})
     });
     const result=await response.json();
     if(!response.ok||!result.success)throw new Error(result.error||'Email delivery failed.');
-    $('receiptTitle').textContent='Beautifully sent.';
-    $('receiptDescription').textContent='Your card was accepted for email delivery to '+delivery.recipient+'.';
-    $('receiptStatus').textContent='Your recipient can open the private envelope from the email.';
+    $('receiptTitle').textContent=isScheduled?'Beautifully scheduled.':'Beautifully sent.';
+    $('receiptDescription').textContent=isScheduled
+      ? 'Your card is scheduled for email delivery to '+delivery.recipient+'.'
+      : 'Your card was accepted for email delivery to '+delivery.recipient+'.';
+    $('receiptStatus').textContent=isScheduled
+      ? 'Cloudflare checks scheduled cards every 30 minutes. Keep your private link for reference.'
+      : 'Your recipient can open the private envelope from the email.';
     $('receiptPrimary').hidden=true;
     sessionStorage.removeItem(DELIVERY_RECEIPT_KEY);
   }catch(e){
