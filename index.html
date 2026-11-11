@@ -651,6 +651,10 @@ a.ctl{display:inline-block;line-height:20px}
   #reveal.recipient-mode .stage{--w:min(91vw,51dvh)}
   #reveal.recipient-mode .dlg{min-height:0}
 }
+.gift-note{max-width:480px;margin:22px auto 0;padding:25px 26px;border-top:1px solid #b8ada0;border-bottom:1px solid #b8ada0;background:#faf7f1;color:#29231f;text-align:center}
+.gift-note-label{font:10px Arial,sans-serif;letter-spacing:.2em;color:#7b7067}
+.gift-note p{font:italic 19px/1.65 Georgia,serif;white-space:pre-wrap;overflow-wrap:anywhere;margin:17px 0 0}
+#reveal:not(.recipient-mode) .gift-note{display:none}
 </style>
 </head>
 <body>
@@ -745,9 +749,12 @@ a.ctl{display:inline-block;line-height:20px}
           <div class="mini-card"><span class="k">Sign-off</span><div class="sv" id="pvSign" aria-live="polite"></div></div>
         </div>
         <form class="form" id="pForm" autocomplete="off">
-          <label class="f" for="fTo">Recipient name <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+          <label class="f" for="fTo">Recipient name <span style="text-transform:none;letter-spacing:0">(required for delivery)</span></label>
           <input type="text" id="fTo" maxlength="40" placeholder="e.g. Taryn">
-          <p class="hint">Shown on the black envelope. Leave blank for "For you".</p>
+          <p class="hint">Their name appears on the black envelope and in the email.</p>
+          <label class="f" for="fNote">Your personal note <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+          <textarea id="fNote" maxlength="500" rows="4" placeholder="Add a heartfelt thought, an inside joke, or a little extra sass…"></textarea>
+          <p class="hint">Revealed after the card opens, before the final sign-off. Up to 500 characters.</p>
           <fieldset>
             <legend>Sign-off</legend>
             <label class="opt"><input type="radio" name="mode" value="keep" checked><span>Keep the original<small id="optOriginal"></small></span></label>
@@ -801,6 +808,7 @@ a.ctl{display:inline-block;line-height:20px}
     <p class="recipient-instruction" hidden>Tap the seal to open.</p>
     <p class="sr" aria-live="polite" id="dlgLive"></p>
     <div class="controls"><button class="ctl" type="button" id="dlgSkip" hidden>Skip animation</button><button class="ctl" type="button" id="dlgReplay" hidden>Replay the reveal</button></div>
+    <section class="gift-note" id="dlgGiftNote" hidden aria-label="A personal note"><div class="gift-note-label">A PERSONAL NOTE, JUST FOR YOU</div><p id="dlgGiftNoteText"></p></section>
     <div class="after" id="dlgAfter" hidden>
       <h3>Know someone who needs this kind of honesty?</h3>
       <p>Choose a card from the collections, add your own touch, and preview how it arrives.</p>
@@ -927,7 +935,7 @@ const toLabel=n=>n&&n.trim()?'For '+n.trim():'For you';
 // Reusable cinematic reveal (~5s): flap lifts, card rises, unfolds, inside, then sign-off
 function makeReveal(pre){
   const st=$(pre+'Stage'),env=$(pre+'Env'),skip=$(pre+'Skip'),replay=$(pre+'Replay'),after=$(pre+'After'),live=$(pre+'Live');
-  let card=null,pers={mode:'keep',from:'',custom:'',to:''},timers=[],state='closed';
+  let card=null,pers={mode:'keep',from:'',custom:'',to:'',note:''},timers=[],state='closed';
   const STEPS=['s-open','s-rise','s-out','s-unfold','s-inside','s-punch','s-sign'];
   function clear(){timers.forEach(clearTimeout);timers=[];}
   function writeInside(){$(pre+'Inside').textContent=card.inside;}
@@ -940,6 +948,7 @@ function makeReveal(pre){
     $(pre+'Front').textContent=card.front;$(pre+'To').textContent=pre==='dlg' && pers.to.trim()?pers.to.trim():toLabel(pers.to);$(pre+'To').classList.toggle('long-name',pers.to.trim().length>18);
     env.disabled=false;env.removeAttribute('tabindex');env.setAttribute('aria-label',toLabel(pers.to)+'. Open the envelope');
     skip.hidden=true;replay.hidden=true;after.hidden=true;after.classList.remove('show');live.textContent='';
+    if(pre==='dlg'){$('dlgGiftNote').hidden=true;$('dlgGiftNoteText').textContent='';}
     void st.offsetWidth;st.classList.remove('instant');
   }
   function finish(){
@@ -949,6 +958,10 @@ function makeReveal(pre){
     env.disabled=true;env.setAttribute('tabindex','-1');
     skip.hidden=true;replay.hidden=false;
     live.textContent=card.front+' '+card.inside+' '+composeSign(card,pers).main+' '+composeSign(card,pers).by;
+    if(pre==='dlg'&&pers.note&&pers.note.trim()){
+      $('dlgGiftNoteText').textContent=pers.note.trim();
+      $('dlgGiftNote').hidden=false;
+    }
     after.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>after.classList.add('show')));
     if(document.activeElement===env||document.activeElement===skip)replay.focus({preventScroll:true});
   }
@@ -976,7 +989,7 @@ const sig=makeReveal('sig'),dr=makeReveal('dlg');
 // Personalization dialog (prototype only — nothing is purchased, sent or saved)
 let active=null;
 const form=$('pForm');
-function pers(){return {mode:form.querySelector('input[name=mode]:checked').value,from:$('fFrom').value,custom:$('fCustom').value,to:$('fTo').value};}
+function pers(){return {mode:form.querySelector('input[name=mode]:checked').value,from:$('fFrom').value,custom:$('fCustom').value,to:$('fTo').value,note:$('fNote').value};}
 function updatePreview(){
   const p=pers();
   $('addField').hidden=p.mode!=='add';$('customField').hidden=p.mode!=='custom';
@@ -1001,6 +1014,7 @@ function deliveryMethod(){return form.querySelector('input[name=deliveryMethod]:
 function deliveryTiming(){return form.querySelector('input[name=deliveryTiming]:checked').value;}
 function updateDelivery(){
   const method=deliveryMethod(),timing=deliveryTiming();
+  if(!$('fTo').value.trim()){showDeliveryError('Please enter your recipient’s name so we can address their envelope.');$('fTo').focus();return;}
   $('emailDeliveryField').hidden=method!=='email';
   $('textDeliveryField').hidden=method!=='text';
   $('scheduleDeliveryFields').hidden=timing!=='later';
@@ -1020,7 +1034,7 @@ function validPhone(value){return /^\+?[0-9() .-]{7,30}$/.test(value) && value.r
 // Interpret the selected wall-clock time in the recipient's named time zone,
 // including daylight-saving changes, without relying on the sender's time zone.
 function scheduledUtc(dateValue,timeValue,zone){
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(dateValue)||!/^\d{2}:\d{2}$/.test(timeValue))
+  if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(dateValue)||!/^\\d{2}:\\d{2}$/.test(timeValue))
     throw Error('Choose a delivery date and time.');
   const [year,month,day]=dateValue.split('-').map(Number);
   const [hour,minute]=timeValue.split(':').map(Number);
@@ -1186,7 +1200,7 @@ document.addEventListener('click',e=>{
 function makeCardUrl(){
   const index=collections.flatMap(c=>c.cards).findIndex(c=>c===active);
   const p=pers();
-  const payload={v:1,i:index,to:p.to.slice(0,40),mode:p.mode,from:p.from.slice(0,40),custom:p.custom.slice(0,90)};
+  const payload={v:1,i:index,to:p.to.slice(0,40),mode:p.mode,from:p.from.slice(0,40),custom:p.custom.slice(0,90),note:p.note.slice(0,500)};
   const bytes=new TextEncoder().encode(JSON.stringify(payload));
   let binary='';bytes.forEach(b=>binary+=String.fromCharCode(b));
   const encoded=btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
@@ -1221,7 +1235,7 @@ function openSharedCard(){
     if(data.v!==1||!Number.isInteger(data.i)||!all[data.i])return;
     const card=all[data.i];
     const safe=(v,n)=>typeof v==='string'?v.slice(0,n):'';
-    const p={to:safe(data.to,40),mode:['keep','add','custom'].includes(data.mode)?data.mode:'keep',from:safe(data.from,40),custom:safe(data.custom,90)};
+    const p={to:safe(data.to,40),mode:['keep','add','custom'].includes(data.mode)?data.mode:'keep',from:safe(data.from,40),custom:safe(data.custom,90),note:safe(data.note,500)};
     active=card;
     $('revealCollection').textContent='A card for you';$('revealTitle').textContent=card.title;
     dlg.querySelector('.dlg').dataset.collection=editionKeys[collections.findIndex(c=>c.name===card.collection)];
