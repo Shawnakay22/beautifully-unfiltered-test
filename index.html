@@ -1020,7 +1020,7 @@ function validPhone(value){return /^\+?[0-9() .-]{7,30}$/.test(value) && value.r
 // Interpret the selected wall-clock time in the recipient's named time zone,
 // including daylight-saving changes, without relying on the sender's time zone.
 function scheduledUtc(dateValue,timeValue,zone){
-  if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(dateValue)||!/^\\d{2}:\\d{2}$/.test(timeValue))
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(dateValue)||!/^\d{2}:\d{2}$/.test(timeValue))
     throw Error('Choose a delivery date and time.');
   const [year,month,day]=dateValue.split('-').map(Number);
   const [hour,minute]=timeValue.split(':').map(Number);
