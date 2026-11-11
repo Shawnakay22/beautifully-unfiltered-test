@@ -610,6 +610,34 @@ a.ctl{display:inline-block;line-height:20px}
 .qp-shell[data-collection=work] .qp-cover{background:#fff;color:#171717}
 @media(max-width:650px){.qp-shell{padding:26px 12px 22px}.qp-stage{min-height:340px}.qp-book{width:min(280px,66vw);height:340px}.qp-book.open{transform:translateX(28%)}.qp-book.open .qp-cover{transform:rotateY(-168deg)}.qp-page,.qp-cover{padding:20px 15px}.qp-inside{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.qp-book,.qp-cover{transition:none}}
+
+/* Beautifully Unfiltered — delivery choices and receipt */
+.delivery-box{margin-top:28px;padding:24px;background:#fbf8f2;border:1px solid #cfc7bb;color:#181818}
+.delivery-box h4{font:normal 25px Georgia,serif;margin:0 0 8px}
+.delivery-box .delivery-intro{font-size:13px;color:#665e55;line-height:1.6;margin:0 0 18px}
+.delivery-options{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 20px}
+.delivery-options label{flex:1;min-width:115px;padding:13px;border:1px solid #c9c0b5;cursor:pointer;font-size:13px}
+.delivery-options label:has(input:checked){border-color:#181818;background:#f0ebe2}
+.delivery-options input{accent-color:#181818}
+.delivery-box input[type=email],.delivery-box input[type=tel],.delivery-box input[type=date],.delivery-box input[type=time],.delivery-box select{width:100%;min-height:46px;border:1px solid #bfb7ab;padding:10px;background:white;color:#181818;font:16px Arial,sans-serif}
+.delivery-box .delivery-field{margin:15px 0}
+.delivery-box .delivery-field>label{display:block;margin-bottom:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.delivery-box .delivery-hint{font-size:12px;line-height:1.5;color:#6c635a}
+.delivery-box .delivery-warning{font-size:12px;color:#8b403c;margin-top:12px}
+.delivery-box .checkout-price{display:flex;justify-content:space-between;border-top:1px solid #cfc7bb;padding-top:18px;margin-top:22px;font-size:14px}
+.delivery-box .checkout-price strong{font-size:20px;font-family:Georgia,serif}
+.delivery-box .checkout-button{width:100%;margin-top:18px}
+.delivery-box .checkout-button:disabled{opacity:.5;cursor:not-allowed}
+.delivery-receipt{position:fixed;inset:0;z-index:9999;background:#000b;display:grid;place-items:center;padding:18px}
+.delivery-receipt[hidden]{display:none}
+.delivery-receipt-inner{width:min(520px,100%);max-height:90vh;overflow:auto;background:#f5f1e9;color:#171717;padding:38px 30px;text-align:center;box-shadow:0 20px 80px #0009}
+.delivery-receipt h2{font:normal 38px Georgia,serif;margin:15px 0}
+.delivery-receipt p{font-size:14px;line-height:1.7;color:#5b554e}
+.delivery-receipt .receipt-actions{display:grid;gap:12px;margin-top:22px}
+.delivery-receipt button,.delivery-receipt a{display:block;width:100%;border:1px solid #171717;background:#171717;color:white;padding:15px;font:11px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.delivery-receipt .secondary{background:transparent;color:#171717}
+.delivery-receipt .receipt-status{font-weight:600;overflow-wrap:anywhere}
+
 </style>
 </head>
 <body>
@@ -621,7 +649,7 @@ a.ctl{display:inline-block;line-height:20px}
     <h1>Beautifully<br>understated.<br><em>Occasionally<br>unhinged.</em></h1>
     <p class="sub">Digital cards for the things worth saying. Each one opens from a little black envelope.</p>
     <div class="actions"><a class="btn" href="#collections">Explore the collections</a><button class="btn outline" type="button" id="heroOpen">Open the featured card</button></div>
-    <p class="tiny" style="margin-top:22px">Preview only · Cards can't be purchased or sent from this site yet.</p>
+    <p class="tiny" style="margin-top:22px">Preview store · Secure checkout is currently in test mode.</p>
   </div>
   <div class="card-stage">
     <button class="paper" type="button" id="heroCard" aria-label="Open The Emergency Contact"><div class="hand" id="heroFront"></div><div class="micro">Beautifully Unfiltered</div></button>
@@ -715,8 +743,32 @@ a.ctl{display:inline-block;line-height:20px}
             <label class="opt"><input type="radio" name="mode" value="custom"><span>Write my own sign-off<small>Replaces the original sign-off</small></span></label>
             <div class="sub-field" id="customField" hidden><label class="sr" for="fCustom">Custom sign-off</label><textarea id="fCustom" maxlength="90" placeholder="Your own sign-off"></textarea></div>
           </fieldset>
-          <div class="controls" style="justify-content:flex-start"><button class="ctl solid" type="button" id="previewRevealBtn">Purchase & Get Private Link — $6.95</button></div>
-          <p class="proto">Secure checkout · $6.95 per digital card. After payment, you'll receive a private link to share by text or email.· </p>
+          <section class="delivery-box" aria-label="Delivery and checkout">
+            <h4>Make it personal.</h4>
+            <p class="delivery-intro">Choose how and when your card arrives. The punchline stays a surprise.</p>
+            <span class="f">Delivery method</span>
+            <div class="delivery-options">
+              <label><input type="radio" name="deliveryMethod" value="email" checked> Email</label>
+              <label><input type="radio" name="deliveryMethod" value="text"> Text message</label>
+            </div>
+            <div class="delivery-field" id="emailDeliveryField"><label for="deliveryEmail">Recipient's email</label><input id="deliveryEmail" type="email" maxlength="254" placeholder="friend@example.com" autocomplete="email"></div>
+            <div class="delivery-field" id="textDeliveryField" hidden><label for="deliveryPhone">Recipient's phone number</label><input id="deliveryPhone" type="tel" maxlength="30" placeholder="(555) 555-5555" autocomplete="tel"><p class="delivery-hint">After payment, we'll open your phone's messaging app with the private card link. You press Send.</p></div>
+            <span class="f">When should it arrive?</span>
+            <div class="delivery-options">
+              <label><input type="radio" name="deliveryTiming" value="now" checked> Send now</label>
+              <label><input type="radio" name="deliveryTiming" value="later"> Schedule for later</label>
+            </div>
+            <div id="scheduleDeliveryFields" hidden>
+              <div class="delivery-field"><label for="deliveryDate">Delivery date</label><input id="deliveryDate" type="date"></div>
+              <div class="delivery-field"><label for="deliveryTime">Delivery time</label><input id="deliveryTime" type="time" value="09:00"></div>
+              <div class="delivery-field"><label for="deliveryZone">Recipient's time zone</label><select id="deliveryZone"><option value="America/Los_Angeles">Pacific</option><option value="America/Denver">Mountain</option><option value="America/Chicago">Central</option><option value="America/New_York">Eastern</option></select></div>
+              <p class="delivery-warning" id="scheduleWarning">Scheduled delivery is coming soon. Checkout for future delivery will be enabled after the scheduling service is tested.</p>
+            </div>
+            <div class="checkout-price"><span>Digital greeting card</span><strong>$6.95</strong></div>
+            <button class="ctl solid checkout-button" type="button" id="previewRevealBtn">Continue to secure payment — $6.95</button>
+            <p class="delivery-hint">Secure Stripe test checkout. No real payment is charged while we're testing.</p>
+            <p class="delivery-warning" id="deliveryError" role="alert" hidden></p>
+          </section>
         </form>
       </div>
     </div>
@@ -779,6 +831,20 @@ a.ctl{display:inline-block;line-height:20px}
     <p class="qp-help">See the full punchline before you personalize. The recipient's envelope reveal is separate.</p>
   </div>
 </dialog>
+
+<div class="delivery-receipt" id="deliveryReceipt" hidden role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
+  <div class="delivery-receipt-inner">
+    <div class="eyebrow">BEAUTIFULLY UNFILTERED</div>
+    <h2 id="receiptTitle">Your card is ready.</h2>
+    <p id="receiptDescription">A little something worth sending.</p>
+    <p class="receipt-status" id="receiptStatus" role="status"></p>
+    <div class="receipt-actions">
+      <button id="receiptPrimary" type="button">Send your card</button>
+      <button id="receiptCopy" class="secondary" type="button">Copy private card link</button>
+      <button id="receiptClose" class="secondary" type="button">Close</button>
+    </div>
+  </div>
+</div>
 <script type="text/plain" id="card-data">
 ## Womanhood, Unfiltered
 The Absolutely Not Era || I've entered my absolutely not era. || And as my closest friend, I'm going to need you to stop volunteering me for things. || Respectfully, no.
@@ -915,63 +981,113 @@ function launchPersonalizedReveal(){
   $('dlgEnv').focus();
 }
 
+const DELIVERY_PENDING_KEY = 'bu_delivery_pending_v1';
+const DELIVERY_RECEIPT_KEY = 'bu_delivery_receipt_v1';
+let receiptData = null;
+function deliveryMethod(){return form.querySelector('input[name=deliveryMethod]:checked').value;}
+function deliveryTiming(){return form.querySelector('input[name=deliveryTiming]:checked').value;}
+function updateDelivery(){
+  const method=deliveryMethod(),timing=deliveryTiming();
+  $('emailDeliveryField').hidden=method!=='email';
+  $('textDeliveryField').hidden=method!=='text';
+  $('scheduleDeliveryFields').hidden=timing!=='later';
+  $('previewRevealBtn').disabled=timing==='later';
+  $('previewRevealBtn').textContent=timing==='later'?'Scheduling coming soon':'Continue to secure payment — $6.95';
+  $('deliveryError').hidden=true;
+}
+form.querySelectorAll('input[name=deliveryMethod],input[name=deliveryTiming]').forEach(x=>x.addEventListener('change',updateDelivery));
+function showDeliveryError(message){$('deliveryError').textContent=message;$('deliveryError').hidden=false;}
+function validEmail(value){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length<=254;}
+function validPhone(value){return /^\+?[0-9() .-]{7,30}$/.test(value) && value.replace(/\D/g,'').length>=7;}
 async function startCheckout() {
   if (!active) return;
-
-  const button = $('previewRevealBtn');
-  const originalText = button.textContent;
-
-  button.disabled = true;
-  button.textContent = 'Connecting to secure checkout…';
-
+  const method=deliveryMethod(),timing=deliveryTiming();
+  if(timing!=='now'){showDeliveryError('Scheduled delivery is not active yet. Please choose Send now.');return;}
+  const recipient=(method==='email' ? $('deliveryEmail').value : $('deliveryPhone').value).trim();
+  if(method==='email'&&!validEmail(recipient)){showDeliveryError('Please enter a valid recipient email.');return;}
+  if(method==='text'&&!validPhone(recipient)){showDeliveryError('Please enter a valid phone number.');return;}
+  const button=$('previewRevealBtn');
+  button.disabled=true;button.textContent='Connecting to secure checkout…';
   try {
-    const collectionIndex = collections.findIndex(
-      c => c.name === active.collection
-    );
-
-    const previousCards = collections
-      .slice(0, collectionIndex)
-      .reduce((sum, c) => sum + c.cards.length, 0);
-
-    const cardIndex =
-      previousCards +
-      collections[collectionIndex].cards.indexOf(active);
-
-    const response = await fetch(
-      'https://beautifully-unfiltered-checkout.shawnakgrant.workers.dev/create-checkout',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          i: cardIndex,
-          ...pers()
-        })
-      }
-    );
-
-    const result = await response.json();
-
-    if (!response.ok || !result.url) {
-      throw new Error(result.error || 'Checkout unavailable.');
-    }
-
-    window.location.href = result.url;
-  } catch (error) {
-    alert(
-      'We could not open checkout. Please try again. ' +
-      error.message
-    );
-    button.disabled = false;
-    button.textContent = originalText;
-  }
+    const collectionIndex=collections.findIndex(c=>c.name===active.collection);
+    const previousCards=collections.slice(0,collectionIndex).reduce((sum,c)=>sum+c.cards.length,0);
+    const cardIndex=previousCards+collections[collectionIndex].cards.indexOf(active);
+    const response=await fetch('https://beautifully-unfiltered-checkout.shawnakgrant.workers.dev/create-checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({i:cardIndex,...pers()})
+    });
+    const result=await response.json();
+    if(!response.ok||!result.url)throw new Error(result.error||'Checkout unavailable.');
+    sessionStorage.setItem(DELIVERY_PENDING_KEY,JSON.stringify({method,recipient,timing}));
+    location.href=result.url;
+  }catch(error){showDeliveryError('Could not open checkout: '+error.message);button.disabled=false;updateDelivery();}
 }
 
-  
+function displayReceipt(data){
+  receiptData=data;
+  $('deliveryReceipt').hidden=false;
+  $('receiptCopy').hidden=false;
+  $('receiptPrimary').hidden=false;
+  $('receiptPrimary').disabled=false;
+  $('receiptTitle').textContent='Your card is ready.';
+  $('receiptStatus').textContent='';
+  const delivery=data.delivery;
+  if(!delivery){
+    $('receiptDescription').textContent='Your payment is verified. Copy your private link below to deliver your card.';
+    $('receiptPrimary').hidden=true;
+  }else if(delivery.method==='email'){
+    $('receiptDescription').textContent='Ready to send your card to '+delivery.recipient+'.';
+    $('receiptPrimary').textContent='Send card by email';
+  }else{
+    $('receiptDescription').textContent='Ready to text your card to '+delivery.recipient+'. You will press Send in your messaging app.';
+    $('receiptPrimary').textContent='Open text message';
+  }
+}
+async function copyGiftLink(){
+  if(!receiptData)return;
+  try{await navigator.clipboard.writeText(receiptData.url);$('receiptStatus').textContent='Private card link copied.';}
+  catch(e){$('receiptStatus').textContent='Select and copy this private link: '+receiptData.url;}
+}
+async function deliverPurchasedCard(){
+  if(!receiptData||!receiptData.delivery)return;
+  const {delivery,sessionId,token,url}=receiptData;
+  if(delivery.method==='text'){
+    const message='Someone sent you a Beautifully Unfiltered card! Open it here: '+url;
+    const phone=delivery.recipient.replace(/[^+\d]/g,'');
+    // Native SMS requires the customer to press Send; desktop devices may not support it.
+    location.href='sms:'+phone+'?body='+encodeURIComponent(message);
+    $('receiptStatus').textContent='Your messaging app should open. Press Send there. If not, copy the private link below.';
+    return;
+  }
+  $('receiptPrimary').disabled=true;
+  $('receiptStatus').textContent='Sending your card…';
+  try{
+    const response=await fetch(CHECKOUT_API+'/send-email',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({session_id:sessionId,token,email:delivery.recipient})
+    });
+    const result=await response.json();
+    if(!response.ok||!result.success)throw new Error(result.error||'Email delivery failed.');
+    $('receiptTitle').textContent='Beautifully sent.';
+    $('receiptDescription').textContent='Your card was accepted for email delivery to '+delivery.recipient+'.';
+    $('receiptStatus').textContent='Your recipient can open the private envelope from the email.';
+    $('receiptPrimary').hidden=true;
+    sessionStorage.removeItem(DELIVERY_RECEIPT_KEY);
+  }catch(e){
+    $('receiptStatus').textContent='Email was not confirmed: '+e.message+'. Please keep your private link.';
+    $('receiptPrimary').disabled=false;
+  }
+}
+$('receiptPrimary').addEventListener('click',deliverPurchasedCard);
+$('receiptCopy').addEventListener('click',copyGiftLink);
+$('receiptClose').addEventListener('click',()=>{$('deliveryReceipt').hidden=true;});
+updateDelivery();
+
   $('previewRevealBtn').addEventListener('click',startCheckout);
 form.addEventListener('submit',e=>{e.preventDefault();launchPersonalizedReveal();});
 $('editAgain').addEventListener('click',()=>{dr.stop();showStep('p');$('fTo').focus();});
 function openCard(c){
-  active=c;form.reset();
+  active=c;form.reset();updateDelivery();
   $('revealCollection').textContent=c.collection;$('revealTitle').textContent=c.title;
   dlg.querySelector('.dlg').dataset.collection=editionKeys[collections.findIndex(x=>x.name===c.collection)];
   $('pvFront').textContent=c.front;$('optOriginal').textContent='“'+c.sign+'”';
@@ -1088,67 +1204,39 @@ async function openPaidGift() {
 }
 
 async function completeCheckout() {
-  const params = new URLSearchParams(location.search);
-  if (params.get('checkout') !== 'success') return;
-
-  const sessionId = params.get('session_id');
-  if (!sessionId) return;
-
-  try {
-    const response = await fetch(CHECKOUT_API + '/redeem', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId })
-    });
-
-    const result = await response.json();
-    if (!response.ok || !result.url) {
-      throw new Error(result.error || 'Verification failed');
-    }
-
-    history.replaceState(null, '', location.pathname);
-   
-const delivery = prompt(
-  'Your payment was verified! 🖤\n\n' +
-  'How would you like to deliver your card?\n\n' +
-  '1 — Email it to someone\n' +
-  '2 — Send it by text\n\n' +
-  'Enter 1 or 2:'
-);
-
-if (delivery === '1') {
-  const email = prompt("Enter your recipient's email address:");
-
-  if (email) {
-    const response = await fetch(CHECKOUT_API + '/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        session_id: sessionId,
-        token: result.token,
-        email: email.trim()
-      })
-    });
-
-    const sent = await response.json();
-
-    if (!response.ok || !sent.success) {
-      throw new Error(sent.error || 'Email delivery failed.');
-    }
-
-    alert('Your Beautifully Unfiltered card has been sent! 🖤');
-  } else {
-    prompt('Your card link (save this):', result.url);
+  const params=new URLSearchParams(location.search);
+  if(params.get('checkout')==='cancel'){
+    history.replaceState(null,'',location.pathname);
+    sessionStorage.removeItem(DELIVERY_PENDING_KEY);
+    return;
   }
-} else {
-  prompt('Copy your private card link to send by text:', result.url);
-}
-
-  } catch (error) {
-    alert(
-      'We could not retrieve your purchased card yet. ' +
-      'Please keep your Stripe receipt and contact support.'
-    );
+  if(params.get('checkout')!=='success'){
+    // Recover a verified purchase screen after accidental refresh or close.
+    try{const saved=JSON.parse(sessionStorage.getItem(DELIVERY_RECEIPT_KEY)||'null');if(saved?.url)displayReceipt(saved);}catch(e){}
+    return;
+  }
+  const sessionId=params.get('session_id');
+  if(!sessionId)return;
+  try{
+    const response=await fetch(CHECKOUT_API+'/redeem',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({session_id:sessionId})
+    });
+    const result=await response.json();
+    if(!response.ok||!result.url)throw new Error(result.error||'Payment verification failed.');
+    let delivery=null;
+    try{delivery=JSON.parse(sessionStorage.getItem(DELIVERY_PENDING_KEY)||'null');}catch(e){}
+    const receipt={url:result.url,token:result.token,sessionId,delivery};
+    sessionStorage.setItem(DELIVERY_RECEIPT_KEY,JSON.stringify(receipt));
+    sessionStorage.removeItem(DELIVERY_PENDING_KEY);
+    history.replaceState(null,'',location.pathname);
+    displayReceipt(receipt);
+  }catch(error){
+    // Preserve checkout URL for retry; never discard a paid session on an error.
+    const fallback=document.createElement('p');
+    fallback.style.cssText='position:fixed;top:0;left:0;right:0;z-index:10000;padding:20px;background:#f5f1e9;color:#171717;text-align:center';
+    fallback.textContent='We could not verify your card yet. Please refresh this page to retry. Keep your Stripe receipt.';
+    document.body.append(fallback);
   }
 }
 
