@@ -653,10 +653,16 @@ a.ctl{display:inline-block;line-height:20px}
 }
 #reveal.customer-preview-mode .after,#reveal.customer-preview-mode .share-panel{display:none!important}
 #reveal.customer-preview-mode #editAgain{margin:18px auto 0}
-.gift-note{max-width:480px;margin:22px auto 0;padding:25px 26px;border-top:1px solid #b8ada0;border-bottom:1px solid #b8ada0;background:#faf7f1;color:#29231f;text-align:center}
-.gift-note-label{font:10px Arial,sans-serif;letter-spacing:.2em;color:#7b7067}
-.gift-note p{font:italic 19px/1.65 Georgia,serif;white-space:pre-wrap;overflow-wrap:anywhere;margin:17px 0 0}
+/* A second stationery leaf, revealed after the original punchline. */
+.gift-note{box-sizing:border-box;width:min(510px,88vw);max-width:100%;margin:22px auto 28px;padding:clamp(32px,6vw,52px) clamp(24px,5vw,42px);min-height:220px;background:#f8f4ed;color:#29231f;border:1px solid #d4c9ba;box-shadow:0 12px 32px #241c1617;text-align:center;opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+.gift-note.show{opacity:1;transform:translateY(0)}
+.gift-note-label{font:10px Arial,sans-serif;letter-spacing:.22em;color:#7b7067}
+.gift-note p{font:italic clamp(19px,2.5vw,24px)/1.6 Georgia,serif;white-space:pre-wrap;overflow-wrap:anywhere;margin:28px 0 0}
+.gift-note-rule{display:block;width:64px;height:1px;background:#b7a99b;margin:0 auto 26px}
 #reveal:not(.recipient-mode) .gift-note{display:none}
+@media(max-width:600px){.gift-note{width:min(91vw,510px)}}
+@media(prefers-reduced-motion:reduce){.gift-note{transition:none;transform:none}}
+.gift-note[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -810,8 +816,8 @@ a.ctl{display:inline-block;line-height:20px}
     </div>
     <p class="recipient-instruction" hidden>Tap the seal to open.</p>
     <p class="sr" aria-live="polite" id="dlgLive"></p>
+    <section class="gift-note" id="dlgGiftNote" hidden aria-label="A personal note"><span class="gift-note-rule" aria-hidden="true"></span><div class="gift-note-label">A PERSONAL NOTE, JUST FOR YOU</div><p id="dlgGiftNoteText"></p></section>
     <div class="controls"><button class="ctl" type="button" id="dlgSkip" hidden>Skip animation</button><button class="ctl" type="button" id="dlgReplay" hidden>Replay the reveal</button></div>
-    <section class="gift-note" id="dlgGiftNote" hidden aria-label="A personal note"><div class="gift-note-label">A PERSONAL NOTE, JUST FOR YOU</div><p id="dlgGiftNoteText"></p></section>
     <div class="after" id="dlgAfter" hidden>
       <h3>Know someone who needs this kind of honesty?</h3>
       <p>Choose a card from the collections, add your own touch, and preview how it arrives.</p>
@@ -951,7 +957,7 @@ function makeReveal(pre){
     $(pre+'Front').textContent=card.front;$(pre+'To').textContent=pre==='dlg' && pers.to.trim()?pers.to.trim():toLabel(pers.to);$(pre+'To').classList.toggle('long-name',pers.to.trim().length>18);
     env.disabled=false;env.removeAttribute('tabindex');env.setAttribute('aria-label',toLabel(pers.to)+'. Open the envelope');
     skip.hidden=true;replay.hidden=true;after.hidden=true;after.classList.remove('show');live.textContent='';
-    if(pre==='dlg'){$('dlgGiftNote').hidden=true;$('dlgGiftNoteText').textContent='';}
+    if(pre==='dlg'){$('dlgGiftNote').hidden=true;$('dlgGiftNote').classList.remove('show');$('dlgGiftNoteText').textContent='';}
     void st.offsetWidth;st.classList.remove('instant');
   }
   function finish(){
@@ -963,7 +969,7 @@ function makeReveal(pre){
     live.textContent=card.front+' '+card.inside+' '+composeSign(card,pers).main+' '+composeSign(card,pers).by;
     if(pre==='dlg'&&pers.note&&pers.note.trim()){
       $('dlgGiftNoteText').textContent=pers.note.trim();
-      $('dlgGiftNote').hidden=false;
+      $('dlgGiftNote').hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>$('dlgGiftNote').classList.add('show')));
     }
     after.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>after.classList.add('show')));
     if(document.activeElement===env||document.activeElement===skip)replay.focus({preventScroll:true});
