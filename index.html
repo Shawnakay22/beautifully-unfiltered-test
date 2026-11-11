@@ -638,6 +638,19 @@ a.ctl{display:inline-block;line-height:20px}
 .delivery-receipt .secondary{background:transparent;color:#171717}
 .delivery-receipt .receipt-status{font-weight:600;overflow-wrap:anywhere}
 
+
+/* Larger recipient card — preserve the existing envelope and reveal sequence. */
+#reveal.recipient-mode .stage{
+  --w:min(510px,88vw,58dvh);
+  height:calc(var(--w) * 1.48);
+}
+#reveal.recipient-mode .dlg{justify-content:flex-start;min-height:0}
+#reveal.recipient-mode .binside{font-size:calc(var(--w) * .051);line-height:1.42}
+#reveal.recipient-mode .bsign{font-size:calc(var(--w) * .029)}
+@media(max-width:600px){
+  #reveal.recipient-mode .stage{--w:min(91vw,51dvh)}
+  #reveal.recipient-mode .dlg{min-height:0}
+}
 </style>
 </head>
 <body>
