@@ -1107,21 +1107,43 @@ async function completeCheckout() {
     }
 
     history.replaceState(null, '', location.pathname);
-    const copy = confirm(
-      'Your payment was verified! Your private card link is ready. ' +
-      'Click OK to copy it.'
-    );
+   
+const delivery = prompt(
+  'Your payment was verified! 🖤\n\n' +
+  'How would you like to deliver your card?\n\n' +
+  '1 — Email it to someone\n' +
+  '2 — Send it by text\n\n' +
+  'Enter 1 or 2:'
+);
 
-    if (copy) {
-      try {
-        await navigator.clipboard.writeText(result.url);
-        alert('Private card link copied! You can send it by text or email.');
-      } catch (error) {
-        prompt('Copy your private card link:', result.url);
-      }
-    } else {
-      prompt('Here is your private card link:', result.url);
+if (delivery === '1') {
+  const email = prompt("Enter your recipient's email address:");
+
+  if (email) {
+    const response = await fetch(CHECKOUT_API + '/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        session_id: sessionId,
+        token: result.token,
+        email: email.trim()
+      })
+    });
+
+    const sent = await response.json();
+
+    if (!response.ok || !sent.success) {
+      throw new Error(sent.error || 'Email delivery failed.');
     }
+
+    alert('Your Beautifully Unfiltered card has been sent! 🖤');
+  } else {
+    prompt('Your card link (save this):', result.url);
+  }
+} else {
+  prompt('Copy your private card link to send by text:', result.url);
+}
+
   } catch (error) {
     alert(
       'We could not retrieve your purchased card yet. ' +
