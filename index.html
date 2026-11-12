@@ -685,6 +685,37 @@ a.ctl{display:inline-block;line-height:20px}
 .dlg[data-collection=hormone] .bcover::before{display:none!important;content:none!important}
 .dlg[data-collection=hormone] .env-back{background:#a78b87!important}
 .qp-shell[data-collection=hormone] .qp-cover{background:#e9d9d2;color:#302126;border-color:#b89e99}
+
+/* Approved editorial additions — preserve the original wide hero and fonts. */
+.hero .sub{max-width:570px}.hero-intro{display:block;font:normal clamp(18px,2vw,25px)/1.35 Georgia,serif;color:var(--ivory);margin-bottom:14px}.hero-explainer{display:block;font-size:clamp(13px,1.15vw,15px);line-height:1.75}
+.seasonal-feature{padding:56px 7%;background:#f4f0e8;color:#25221f;border-bottom:1px solid #ded6c9}
+.seasonal-feature>.eyebrow{color:#72675e;margin-bottom:15px}.seasonal-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;border-top:1px solid #bfb2a1;padding-top:22px}
+.seasonal-inner h2{font:normal clamp(29px,3.5vw,48px)/1.1 Georgia,serif;margin:0 0 9px}.seasonal-inner p{font:italic 20px Georgia,serif;margin:0;color:#5b5149}.seasonal-note{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#655b51}
+.tile[data-collection=plot]{background:#373d38!important;color:#f6f0e8!important;border-color:#69736b!important}
+.tile[data-collection=plot] .collection-preview{background:#373d38!important;color:#f6f0e8!important}
+.tile[data-collection=plot] .name{font-family:Georgia,serif;font-style:italic;font-weight:400}
+.product[data-collection=plot] .paper{background:#373d38!important;color:#f6f0e8!important;border:1px solid #68726b!important}
+.product[data-collection=plot] .paper:before{color:#d5dcd2!important;content:"THE PLOT TWIST EDIT"}
+.product[data-collection=plot] .paper:after{border-color:#f6f0e833!important}
+.product[data-collection=plot] .micro{color:#e5e9e2!important}
+.dlg[data-collection=plot] .bcover{background:#373d38!important;color:#f6f0e8!important;box-shadow:none!important}
+.dlg[data-collection=plot] .bmicro{color:#e5e9e2!important}
+.dlg[data-collection=plot] .env-back{background:#373d38!important}
+.qp-shell[data-collection=plot] .qp-cover{background:#373d38!important;color:#f6f0e8!important;border-color:#69736b!important}
+.product[data-collection=taryn] .paper{background:#381c23!important;color:#fff4ec!important;border-color:#814952!important}
+.dlg[data-collection=taryn] .bcover{background:#381c23!important;color:#fff4ec!important;border-color:#814952!important}
+.qp-shell[data-collection=taryn] .qp-cover{background:#381c23!important;color:#fff4ec!important;border-color:#814952!important}
+@media(max-width:800px){.seasonal-feature{padding:45px 7%}.seasonal-inner{align-items:flex-start;flex-direction:column;gap:14px}}
+
+/* Approved refinement: retain original type family; soften hero description. */
+.hero .hero-explainer{font-family:Georgia,serif!important;font-style:italic!important;font-weight:400!important;text-transform:none!important;letter-spacing:normal!important;line-height:1.65!important;font-size:clamp(16px,1.45vw,20px)!important;color:#e9e1d7!important}
+/* Seven collections: six live tiles, then a centered seasonal preview. */
+#tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#tiles .seasonal-tile{grid-column:2;cursor:default!important}
+#tiles .seasonal-tile .collection-preview{background:#c5b6a4!important;color:#302624!important;gap:20px}
+#tiles .seasonal-tile .preview-hook{font-style:italic!important}
+#tiles .seasonal-coming{font:500 10px/1.5 Arial,sans-serif;letter-spacing:.2em;color:#51453b}
+@media(max-width:600px){#tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}#tiles .seasonal-tile{grid-column:1 / -1;width:calc((100% - 14px)/2);justify-self:center}}
 </style>
 </head>
 <body>
@@ -694,12 +725,12 @@ a.ctl{display:inline-block;line-height:20px}
   <div>
     <div class="eyebrow">Digital greeting cards</div>
     <h1>Beautifully<br>understated.<br><em>Occasionally<br>unhinged.</em></h1>
-    <p class="sub">Digital cards for the things worth saying. Each one opens from a little black envelope.</p>
+    <p class="sub"><strong class="hero-intro">Some things deserve more than a text or a meme.</strong><span class="hero-explainer">Thoughtfully unfiltered digital cards, delivered in our signature little black envelope. Inside, a perfectly imperfect sentiment and a personal note hidden beneath a silver scratch-off. Just between you two.</span></p>
     <div class="actions"><a class="btn" href="#collections">Explore the collections</a><button class="btn outline" type="button" id="heroOpen">Open the featured card</button></div>
     <p class="tiny" style="margin-top:22px">Preview store · Secure checkout is currently in test mode.</p>
   </div>
   <div class="card-stage">
-    <button class="paper" type="button" id="heroCard" aria-label="Open The Emergency Contact"><div class="hand" id="heroFront"></div><div class="micro">Beautifully Unfiltered</div></button>
+    <button class="paper" type="button" id="heroCard" aria-label="Open The Absolutely Not Era"><div class="hand" id="heroFront"></div><div class="micro">Beautifully Unfiltered</div></button>
     <div class="featured-label eyebrow">Featured card<strong id="heroTitle"></strong></div>
   </div>
 </section>
@@ -946,6 +977,10 @@ The Volume Control || Your laugh is my favorite sound. || Apparently it's also t
 The Referral || I found you the perfect man. || He's single, employed, and has all his original teeth. At our age, that's practically a fucking unicorn. || Love you. I've already shared your Instagram profile.
 The Life Motto || Some women live by inspirational quotes. || We prefer 'Rock out with your cock out.' Same message. Significantly less appropriate. || Love you. Stay classy, bitch.
 The Love Language || Some people say 'I love you.' || I say 'Where the fuck have you been?' Same sentiment. More personality. || Love you, fucker.
+## The Plot Twist Edit
+The Divorce Party || Congratulations on your recent weight loss. || Funny how losing one man can make your whole life feel lighter. || Cheers to losing the dead weight.
+The Settlement || You kept the house. He kept his audacity. || I'd say you got the better deal. || Yours in favorable outcomes.
+The Fresh Start || This wasn't how you pictured your happily ever after. || Turns out, the best part of your story might be the chapter you write without him. || Yours in beautiful new beginnings.
 </script>
 <script>
 const raw=document.getElementById('card-data').textContent;
@@ -958,8 +993,8 @@ raw.split('\n').forEach(line=>{
 });
 const $=id=>document.getElementById(id);
 const plural=n=>n+(n===1?' card':' cards');
-const editionKeys=['womanhood','work','birthdays','marriage','taryn','hormone'];
-const editionNotes=['Expressive editorial serif. Feminine, unapologetic, and beautifully understated.','Confidential memos meet corporate satire. Bold type with impeccable timing.','Editorial glamour for milestones worth celebrating.','Romantic restraint, unexpected honesty, and very fine print.','An intimate, expressive tribute. Loudly loved. Forever unfiltered.','For girlfriends navigating hot flashes, 47 open tabs, and expensive magnesium together.'];
+const editionKeys=['womanhood','work','birthdays','marriage','hormone','taryn','plot'];
+const editionNotes=['Expressive editorial serif. Feminine, unapologetic, and beautifully understated.','Confidential memos meet corporate satire. Bold type with impeccable timing.','Editorial glamour for milestones worth celebrating.','Romantic restraint, unexpected honesty, and very fine print.','For girlfriends navigating hot flashes, 47 open tabs, and expensive magnesium together.','An intimate, expressive tribute. Loudly loved. Forever unfiltered.','For the chapters you never saw coming.'];
 const dlg=$('reveal');
 const reduceMQ=window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -1433,7 +1468,7 @@ $('innerForm').addEventListener('submit',e=>{
 });
 
 // Hero: featured card
-const featured=collections.flatMap(c=>c.cards).find(c=>c.title==='The Emergency Contact');
+const featured=collections.flatMap(c=>c.cards).find(c=>c.title==='The Absolutely Not Era');
 $('heroFront').textContent=featured.front;$('heroTitle').textContent=featured.title;
 function openFeaturedSample(){
   active=featured;
@@ -1492,7 +1527,7 @@ $('qpPersonalize').addEventListener('click',()=>{
 const tiles=$('tiles');
 function show(i,scroll){
   const c=collections[i];
-  [...tiles.children].forEach((t,j)=>t.setAttribute('aria-pressed',String(j===i)));
+  [...tiles.children].forEach(t=>t.setAttribute('aria-pressed',String(t.dataset.collection===editionKeys[i])));
   $('shelfTitle').textContent=c.name;$('shelfCount').textContent=plural(c.cards.length);
   $('shelfIntro').textContent=editionNotes[i];
   const grid=$('grid');grid.innerHTML='';
@@ -1510,16 +1545,23 @@ function show(i,scroll){
   if(scroll)$('shelf').scrollIntoView({behavior:reduceMQ.matches?'auto':'smooth',block:'start'});
 }
 collections.forEach((c,i)=>{
+  if(c.name==='The Taryn Edit')return; // Available exclusively through the dedicated tribute section.
   const t=document.createElement('button');t.type='button';t.className='tile';t.dataset.collection=editionKeys[i];t.dataset.edition='0'+(i+1);
   const n=document.createElement('span');n.className='name';n.textContent=c.name;
   const k=document.createElement('span');k.className='count';k.textContent=plural(c.cards.length);
   const preview=document.createElement('span');preview.className='collection-preview';
   const hook=document.createElement('span');hook.className='preview-hook';
-  const previewCard=[c.cards[2]||c.cards[0],c.cards[2]||c.cards[0],c.cards[0],c.cards[0],c.cards[4]||c.cards[0],c.cards[8]||c.cards[0]][i];
+  const previewCard=(i===0||i===1)?(c.cards[2]||c.cards[0]):(i===4?(c.cards[4]||c.cards[0]):c.cards[0]);
   hook.textContent=previewCard.front;
   preview.append(hook);
   t.append(preview,n,k);t.addEventListener('click',()=>show(i,true));tiles.append(t);
 });
+// A quiet, non-clickable coming-soon tile centered beneath the six live collections.
+const seasonalTile=document.createElement('div');
+seasonalTile.className='tile seasonal-tile';
+seasonalTile.setAttribute('aria-label','The Seasonal Edit, coming soon');
+seasonalTile.innerHTML='<span class="collection-preview"><span class="preview-hook">For the season we’re in.</span><span class="seasonal-coming">COMING SOON</span></span><span class="name">The Seasonal Edit</span>';
+tiles.append(seasonalTile);
 show(0,false);
 openSharedCard();
 $('browseTaryn').addEventListener('click',()=>{show(collections.findIndex(c=>c.name==='The Taryn Edit'),true);});
