@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Beautifully Unfiltered — Impeccable taste. Unfiltered sentiments.</title>
-<meta name="description" content="Digital greeting cards for the things worth saying. Five collections, each card revealed from a little black envelope.">
+<meta name="description" content="Digital greeting cards for the things worth saying. Six collections, each card revealed from a little black envelope.">
 <style>
 :root{--black:#101010;--ivory:#f5f1e9;--muted:#bcb6ad;--ink:#222;--line:#3a3835}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
@@ -670,11 +670,21 @@ a.ctl{display:inline-block;line-height:20px}
 .scratch-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
 .scratch-wrap.revealed .scratch-canvas{opacity:0;pointer-events:none;transition:opacity .45s ease}
 .scratch-actions{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:18px}
+.scratch-actions[hidden]{display:none!important}
 .scratch-actions .ctl{background:#282320;color:#f8f4ed;border:1px solid #282320;min-width:160px}
 .scratch-hint{font:11px/1.5 Arial,sans-serif;color:#756c62}
 #dlgReplay{font-size:11px;letter-spacing:.08em;border:0;background:transparent;text-decoration:underline;text-underline-offset:5px}
 #reveal .controls:has(#dlgReplay){margin-top:26px}
 @media(prefers-reduced-motion:reduce){.scratch-wrap.revealed .scratch-canvas{transition:none}}
+
+/* The Hormone Edit — champagne-rose editorial identity */
+.tiles .tile[data-collection=hormone] .collection-preview{background:#e9d9d2!important;color:#302126!important}
+.tiles .tile[data-collection=hormone] .preview-hook{font-style:italic!important}
+.product[data-collection=hormone] .paper{background:#e9d9d2!important;color:#302126!important}
+.dlg[data-collection=hormone] .bcover{background:#e9d9d2!important;color:#302126!important;box-shadow:none!important}
+.dlg[data-collection=hormone] .bcover::before{display:none!important;content:none!important}
+.dlg[data-collection=hormone] .env-back{background:#a78b87!important}
+.qp-shell[data-collection=hormone] .qp-cover{background:#e9d9d2;color:#302126;border-color:#b89e99}
 </style>
 </head>
 <body>
@@ -914,6 +924,18 @@ The Expiration Date || You're not past your prime. || You're just at the age whe
 The Birthday Recovery Plan || Let's celebrate like we're 25 again. || Cocktails at 7. Bad decisions at 10. Hydration IVs at noon. Regret scheduled through Thursday. || Love you. Our appointments are confirmed.
 ## Marriage & Relationships
 The Trophy Wife || You're not a trophy wife. || You're a luxury asset with appreciating value and increasingly expensive maintenance requirements. || He should've read the fine print.
+## The Hormone Edit
+The Internal Thermostat || Between the two of us, we're experiencing all four seasons. || And that's just since breakfast. || Yours in climate instability.
+The Brain Fog || I had something important to tell you. || It was brilliant. Life-changing, probably. Anyway, how are you? || Sent from somewhere in my frontal lobe.
+The Perimenopause Club || Welcome to the club. || There are no rules, the thermostat is broken, and someone is crying in the kitchen. || Your fellow founding member.
+The Permission Slip || Consider this your official permission slip. || To rest. To say no. To change your mind. And to stop explaining yourself. || Signed, a woman who gets it.
+The Hormonal Forecast || Just checking the forecast for us. || Hot flashes, scattered patience, and a 90% chance one of us says something wildly inappropriate. || Warm regards. Very warm.
+The Sleep Divorce || Girl, I think my marriage is in trouble. || Not because I don't love him. Because apparently my husband's breathing is now a personal attack. || Sleeping separately. Loving conditionally.
+The Zero Fucks Era || I think we've officially entered our zero-fucks era. || Our hormones are unpredictable, our patience is limited, and somehow our standards have never been higher. || With love. And very few fucks left.
+The Midlife Upgrade || Remember when we cared what everyone thought? || Neither do I. And honestly, I think this version of us is spectacular. || Yours in unapologetic evolution.
+The Supplement Situation || At this point, we don't need a medicine cabinet. || We need a walk-in pantry, a spreadsheet, and a second income to support our supplement habit. || Love you. Take your magnesium.
+The Google Diagnosis || Girl, I've diagnosed us. || According to Google, we're either in perimenopause, critically ill, or just need to drink more water. I'll keep researching. || Sent from my 47 open tabs.
+The Wellness Routine || Remember when getting ready meant coffee and mascara? || Now it's magnesium, vitamin D, electrolytes, progesterone, and a suspiciously expensive powder that promises cellular renewal. || Yours in high-maintenance survival.
 ## The Taryn Edit
 The Sisterhood || I'd give you the shirt off my back. || But if I find one more thing missing from my closet, we're going to have a fucking problem. || Love you, bitch. Give it back.
 The Plus-Ones || Let's grab a quick drink. || Just us girls. Until you make friends with the entire bar and suddenly we're invited to a wedding in Scottsdale. || Love you. Who the fuck are these people?
@@ -936,8 +958,8 @@ raw.split('\n').forEach(line=>{
 });
 const $=id=>document.getElementById(id);
 const plural=n=>n+(n===1?' card':' cards');
-const editionKeys=['womanhood','work','birthdays','marriage','taryn'];
-const editionNotes=['Expressive editorial serif. Feminine, unapologetic, and beautifully understated.','Confidential memos meet corporate satire. Bold type with impeccable timing.','Editorial glamour for milestones worth celebrating.','Romantic restraint, unexpected honesty, and very fine print.','An intimate, expressive tribute. Loudly loved. Forever unfiltered.'];
+const editionKeys=['womanhood','work','birthdays','marriage','taryn','hormone'];
+const editionNotes=['Expressive editorial serif. Feminine, unapologetic, and beautifully understated.','Confidential memos meet corporate satire. Bold type with impeccable timing.','Editorial glamour for milestones worth celebrating.','Romantic restraint, unexpected honesty, and very fine print.','An intimate, expressive tribute. Loudly loved. Forever unfiltered.','For girlfriends navigating hot flashes, 47 open tabs, and expensive magnesium together.'];
 const dlg=$('reveal');
 const reduceMQ=window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -1493,7 +1515,7 @@ collections.forEach((c,i)=>{
   const k=document.createElement('span');k.className='count';k.textContent=plural(c.cards.length);
   const preview=document.createElement('span');preview.className='collection-preview';
   const hook=document.createElement('span');hook.className='preview-hook';
-  const previewCard=[c.cards[2]||c.cards[0],c.cards[2]||c.cards[0],c.cards[0],c.cards[0],c.cards[8]||c.cards[0]][i];
+  const previewCard=[c.cards[2]||c.cards[0],c.cards[2]||c.cards[0],c.cards[0],c.cards[0],c.cards[4]||c.cards[0],c.cards[8]||c.cards[0]][i];
   hook.textContent=previewCard.front;
   preview.append(hook);
   t.append(preview,n,k);t.addEventListener('click',()=>show(i,true));tiles.append(t);
