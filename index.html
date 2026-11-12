@@ -731,6 +731,43 @@ a.ctl{display:inline-block;line-height:20px}
 /* Refined collection gallery heading */
 #shelfTitle{font-size:clamp(25px,2.7vw,38px)!important;line-height:1.2!important}
 #shelfIntro{font-size:13px;line-height:1.75;letter-spacing:.015em;font-weight:400}
+
+/* November 12: immersive recipient-only reveal. Shopping previews stay unchanged. */
+#reveal.recipient-mode{position:fixed;inset:0;margin:0!important;width:100vw!important;max-width:none!important;height:100dvh;max-height:none!important;background:#101010;color:#f5f1e9;overflow-y:auto;overflow-x:hidden;border:0;}
+#reveal.recipient-mode::backdrop{background:#101010;}
+#reveal.recipient-mode .dlg{background:#101010;color:#f5f1e9;min-height:100dvh!important;padding:24px 20px 56px!important;justify-content:flex-start!important;}
+#reveal.recipient-mode .x{color:#f5f1e9;position:fixed;z-index:40;right:18px;top:14px;}
+#reveal.recipient-mode .recipient-whisper{color:#e9e1d7;font-size:clamp(22px,3vw,32px);margin:18px auto 8px;}
+#reveal.recipient-mode .recipient-instruction{color:#cfc5b9;}
+#reveal.recipient-mode .stage{--w:min(460px,83vw,48dvh);width:min(96vw,760px);max-width:100%;height:calc(var(--w) * 1.63);overflow:visible;margin:12px auto 8px;}
+#reveal.recipient-mode .bcard{transform-origin:center center;}
+#reveal.recipient-mode .stage.s-out .bcard{transform:translateY(calc(var(--w) * -.715)) scale(1.24);}
+#reveal.recipient-mode .stage.s-unfold .bcover{transform:translateX(-112%) rotate(-3deg);opacity:0;transition:transform 1.1s cubic-bezier(.22,.7,.22,1),opacity .6s ease .5s;}
+#reveal.recipient-mode .bpage{background:#fbf8f2;}
+#reveal.recipient-mode .bcover .cfront{font-size:calc(var(--w) * .062);}
+#reveal.recipient-mode .binside{font-size:calc(var(--w) * .048);}
+#reveal.recipient-mode .seal{background:#f5f1e9;color:#101010;}
+#reveal.recipient-mode .controls .ctl{border-color:#9e9489;color:#f5f1e9;}
+#reveal.recipient-mode .after{border-color:#ffffff25;}
+#reveal.recipient-mode .after h3{color:#f5f1e9;}
+#reveal.recipient-mode .after p{color:#c9c0b6;}
+#reveal.recipient-mode .gift-note{margin-top:36px;}
+#reveal.recipient-mode .recipient-sound{background:transparent;color:#e5dcd1;border:1px solid #71675e;padding:9px 13px;font:10px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin:2px auto 6px;min-height:38px;}
+#reveal.recipient-mode .recipient-sound:focus-visible{outline:2px solid #f5f1e9;outline-offset:3px;}
+@media(max-width:600px){
+ #reveal.recipient-mode .dlg{padding:45px 12px 40px!important;}
+ #reveal.recipient-mode .stage{--w:min(84vw,43dvh);width:100%;height:calc(var(--w) * 1.7);}
+ #reveal.recipient-mode .stage.s-out .bcard{transform:translateY(calc(var(--w) * -.715)) scale(1.16);}
+ #reveal.recipient-mode .stage.s-unfold .bcover{transform:translateX(-104%) rotate(-2deg);}
+}
+@media(prefers-reduced-motion:reduce){#reveal.recipient-mode .stage.s-unfold .bcover{transition:none!important;}}
+/* Narrow editorial treatment for the memorial, without changing its words. */
+#taryn .taryn-tribute{max-width:550px;}
+#taryn .taryn-tribute p:not(.for){font-family:Georgia,'Times New Roman',serif;font-size:clamp(15px,1.35vw,16px);line-height:1.85;max-width:540px;}
+#taryn .taryn-tribute p:nth-of-type(3){font-style:italic;font-size:clamp(18px,1.8vw,21px);line-height:1.5;margin:24px auto 30px;}
+#taryn .taryn-tribute .for{margin-top:5px;}
+#taryn .taryn-giving-note{max-width:550px;}
+.footer-tagline{display:block;font:italic 18px/1.5 Georgia,serif;color:#eee5da;text-align:center;margin:0 auto;padding:26px 18px 0;}
 </style>
 </head>
 <body>
@@ -810,6 +847,7 @@ a.ctl{display:inline-block;line-height:20px}
 </section>
 <section class="section ivory-panel"><div class="eyebrow">A note from us</div><h2>Not everything belongs<br>on the internet.</h2><p class="note">Some things belong between girlfriends. Beautifully Unfiltered is bringing the art of personal correspondence back—with a wink.</p></section>
 </main>
+<div class="footer-tagline">Life is messy. Your correspondence shouldn’t be.</div>
 <footer><span>© 2026 Beautifully Unfiltered · Preview</span><span>Impeccable taste. Unfiltered sentiments.</span><span>Made for the people who get it.</span></footer>
 
 <dialog id="reveal" aria-labelledby="revealTitle">
@@ -873,6 +911,7 @@ a.ctl{display:inline-block;line-height:20px}
     </div>
     <div class="step" id="stepReveal" hidden>
       <p class="recipient-whisper" hidden>Some things are better read in private.</p>
+      <button class="recipient-sound" id="recipientSound" type="button" hidden aria-pressed="false">Sound off · Turn on</button>
       <div class="stage" id="dlgStage">
       <div class="stage-copy"><p class="quiet">Sealed, addressed, and ready.</p><p class="note" style="margin-top:10px">Tap the envelope to open it.</p></div>
       <div class="bcard" aria-hidden="true">
@@ -1066,10 +1105,10 @@ function makeReveal(pre){
     if(reduceMQ.matches){finishInstant();return;}
     state='playing';skip.hidden=false;skip.focus({preventScroll:true});
     const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
-    st.classList.add('s-open');                         // 0.0s flap lifts slowly
-    at(1450,()=>st.classList.add('s-rise'));             // 0.8s ivory card rises
+    st.classList.add('s-open');if(pre==='dlg')recipientCue('open'); // flap lifts
+    at(1450,()=>{st.classList.add('s-rise');if(pre==='dlg')recipientCue('rise');});             // 0.8s ivory card rises
     at(3150,()=>{st.classList.add('s-out');env.disabled=true;}); // 1.75s card clears envelope, front reads
-    at(5900,()=>st.classList.add('s-unfold'));          // 2.5s short pause, card unfolds
+    at(5900,()=>{st.classList.add('s-unfold');if(pre==='dlg')recipientCue('slide');});          // 2.5s short pause, card unfolds
     at(7150,()=>{writeInside();st.classList.add('s-inside','s-punch');});  // 3.0s inside punchline
     at(8450,()=>{writeSign();st.classList.add('s-sign');});      // 3.85s sign-off, final beat
     at(9500,finish);
@@ -1080,6 +1119,29 @@ function makeReveal(pre){
   return {set(c,p){card=c;if(p)pers=p;reset();},open,stop:clear};
 }
 const sig=makeReveal('sig'),dr=makeReveal('dlg');
+// Optional, understated Web Audio cues. No autoplay; defaults to silent.
+let recipientSoundOn=false,recipientAudio=null;
+function recipientCue(kind){
+  if(!recipientSoundOn||reduceMQ.matches)return;
+  try{
+    recipientAudio ||= new (window.AudioContext||window.webkitAudioContext)();
+    if(recipientAudio.state==='suspended')recipientAudio.resume();
+    const t=recipientAudio.currentTime;
+    const o=recipientAudio.createOscillator(),g=recipientAudio.createGain();
+    o.type='sine';o.frequency.setValueAtTime(kind==='open'?360:kind==='rise'?480:280,t);
+    o.frequency.exponentialRampToValueAtTime(kind==='open'?220:kind==='rise'?390:180,t+.18);
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.018,t+.025);
+    g.gain.exponentialRampToValueAtTime(.0001,t+.24);
+    o.connect(g);g.connect(recipientAudio.destination);o.start(t);o.stop(t+.26);
+  }catch(e){}
+}
+const recipientSoundButton=$('recipientSound');
+recipientSoundButton.addEventListener('click',()=>{
+  recipientSoundOn=!recipientSoundOn;
+  recipientSoundButton.setAttribute('aria-pressed',String(recipientSoundOn));
+  recipientSoundButton.textContent=recipientSoundOn?'Sound on · Turn off':'Sound off · Turn on';
+});
+
 // Scratch-to-reveal is a recipient-side visual effect; the note remains in the DOM
 // so screen readers and the Quick Reveal option can access it without scratching.
 let scratchReady=false,scratchDown=false,scratchDistance=0,scratchLast=null;
@@ -1327,7 +1389,7 @@ function openCard(c){
   $('sharePanel').hidden=true;
   dlg.classList.remove('sample-mode','recipient-mode','customer-preview-mode');dlg.querySelector('.recipient-whisper').hidden=true;dlg.querySelector('.recipient-instruction').hidden=true;dlg.showModal();dlg.scrollTop=0;$('fTo').focus();
 }
-function closeDlg(){dr.stop();dlg.close();dlg.classList.remove('sample-mode','recipient-mode','customer-preview-mode');}
+function closeDlg(){dr.stop();recipientSoundButton.hidden=true;recipientSoundOn=false;dlg.close();dlg.classList.remove('sample-mode','recipient-mode','customer-preview-mode');}
 $('closeReveal').addEventListener('click',closeDlg);
 dlg.addEventListener('click',e=>{if(e.target===dlg)closeDlg();});
 dlg.addEventListener('close',()=>dr.stop());
@@ -1422,6 +1484,7 @@ async function openPaidGift() {
       editionKeys[collections.findIndex(c => c.name === card.collection)];
 
     dlg.classList.add('recipient-mode');
+    recipientSoundButton.hidden=false;recipientSoundOn=false;recipientSoundButton.textContent='Sound off · Turn on';recipientSoundButton.setAttribute('aria-pressed','false');
     dlg.classList.remove('sample-mode');
     dlg.querySelector('.recipient-whisper').hidden = false;
     dlg.querySelector('.recipient-instruction').hidden = false;
