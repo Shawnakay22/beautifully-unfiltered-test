@@ -1100,6 +1100,20 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 @keyframes conciergeIntroFade{to{opacity:1;transform:translateY(0)}}
 @keyframes conciergeIntroLine{to{transform:scaleX(1)}}
 @media(prefers-reduced-motion:reduce){.concierge-editorial-frame #card-concierge .concierge-edition{opacity:1!important;transform:none!important}.concierge-editorial-frame #card-concierge .concierge-edition::before{transform:none!important;animation:none!important}}
+</style><style>
+/* Editorial typography refinement — preserves existing card layouts and interactions */
+#how-it-works .how-heading h2{font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(37px,4.1vw,64px)!important;font-weight:400!important;letter-spacing:-.048em!important;line-height:1.12!important}
+#how-it-works .how-heading .how-punchline{font-size:.48em!important;font-weight:400!important;color:#8d7d6d!important;letter-spacing:-.025em!important;line-height:1.35!important;margin-top:.4em!important}
+#how-it-works .how-card-front{font:italic 400 clamp(20px,2vw,29px)/1.3 Georgia,serif!important;letter-spacing:-.035em!important;text-align:center}
+#how-it-works .how-card-back{background:#b9ada0!important}
+#how-it-works .how-letter{justify-content:center!important}
+#how-it-works .how-message{font:400 clamp(18px,1.65vw,25px)/1.35 Arial,Helvetica,sans-serif!important;letter-spacing:-.03em!important;text-align:center!important;max-width:95%!important}
+#how-it-works .how-envelope-label{font:italic 400 clamp(18px,1.9vw,26px)/1.3 Georgia,serif!important;text-align:center!important}
+#collections .section-head h2{font:400 clamp(40px,4.6vw,69px)/1.13 Georgia,serif!important;letter-spacing:-.047em!important;max-width:1000px!important}
+#collections .section-head h2 .rose-type{font-size:.64em!important;color:#b9a996!important;letter-spacing:-.035em!important;font-weight:400!important;line-height:1.3!important}
+.brand-story h2{font:400 clamp(38px,4.3vw,65px)/1.16 Georgia,serif!important;letter-spacing:-.045em!important}
+.brand-story h2 .rose-type{display:block;font-size:.56em!important;color:#8d7d6d!important;line-height:1.35!important;margin-top:.18em!important}
+@media(max-width:700px){#how-it-works .how-heading h2{font-size:clamp(34px,8vw,45px)!important}#collections .section-head h2{font-size:clamp(36px,9vw,53px)!important}.brand-story h2{font-size:clamp(36px,8vw,50px)!important}}
 </style></head>
 <body>
 <header><a class="logo" href="#top">BEAUTIFULLY UNFILTERED</a><nav><a href="#collections">Collections</a><a class="nav-concierge" href="#card-concierge">AI Card Concierge ✦</a><a href="our-story.html">Our Story</a><a href="#tiles">The Taryn Edit</a></nav></header>
@@ -1120,26 +1134,24 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 <section aria-labelledby="how-title" class="how-section" id="how-it-works">
 <div class="how-heading"><div class="eyebrow">HOW IT WORKS</div><h2 id="how-title">Pick it. Personalize it.<em class="how-punchline">Thoughtful looks good on you.</em></h2></div>
 <div class="how-grid">
-<article class="how-step" data-motion=""><div class="how-art how-select"><div class="how-card how-card-back">You get me.</div><div class="how-card how-card-front">The best kind<br/>of trouble.</div></div><div class="how-index">01 / SELECT</div><h3>Find your favorite.</h3><p>Explore the collections or create your own with our AI Card Concierge.</p></article>
-<article class="how-step" data-motion=""><div class="how-art how-personalize"><div class="how-letter"><span>JUST BETWEEN US</span><div class="how-message">You know exactly<br/>why this is funny.</div><small>Love, your favorite accomplice.</small></div></div><div class="how-index">02 / PERSONALIZE</div><h3>Make it personal.</h3><p>Add a thoughtful note, an inside joke, and your signature sign-off.</p></article>
-<article class="how-step" data-motion=""><div class="how-art how-send"><div class="how-envelope"><div class="how-envelope-flap"></div><div class="how-envelope-seal">BU</div><div class="how-envelope-label">For you</div></div></div><div class="how-index">03 / SEND &amp; REVEAL</div><h3>Send it beautifully.</h3><p>Send a little black envelope with a personal surprise waiting inside.</p></article>
+<article class="how-step" data-motion=""><div class="how-art how-select"><div class="how-card how-card-back"></div><div class="how-card how-card-front">Per my last nerve.</div></div><div class="how-index">01 / SELECT</div><h3>Find your favorite.</h3><p>Explore the collections or create your own with our AI Card Concierge.</p></article>
+<article class="how-step" data-motion=""><div class="how-art how-personalize"><div class="how-letter"><div class="how-message">Some things are better left in the group chat.</div></div></div><div class="how-index">02 / PERSONALIZE</div><h3>Make it personal.</h3><p>Add a thoughtful note, an inside joke, and your signature sign-off.</p></article>
+<article class="how-step" data-motion=""><div class="how-art how-send"><div class="how-envelope"><div class="how-envelope-flap"></div><div class="how-envelope-seal">BU</div><div class="how-envelope-label">For your eyes only.</div></div></div><div class="how-index">03 / SEND &amp; REVEAL</div><h3>Send it beautifully.</h3><p>Send a little black envelope with a personal surprise waiting inside.</p></article>
 </div>
 </section>
-<div class="concierge-editorial-frame" aria-label="Featured: AI Card Concierge">
+<div aria-label="Featured: AI Card Concierge" class="concierge-editorial-frame">
 <section aria-labelledby="concierge-heading" class="concierge-feature" id="card-concierge">
 <div class="concierge-copy">
-
 <div class="concierge-edition">INTRODUCING THE AI CARD CONCIERGE</div>
 <h2 id="concierge-heading">No two stories alike.<br/><em>No two cards either.</em></h2>
 <p>Tell us who it's for, what happened, and the inside joke. Our AI Card Concierge turns your story into something uniquely yours.</p>
 <a class="concierge-button" href="https://beautifully-unfiltered-ai.shawnakgrant.workers.dev/" rel="noopener noreferrer" target="_blank">Create your card <span aria-hidden="true">↗</span></a>
-
 </div>
 <div aria-hidden="true" class="concierge-art"><div class="concierge-sheet"><span class="sheet-top">BEAUTIFULLY UNFILTERED · BESPOKE</span><div class="sheet-message">Put a little thought<br/>into it.<br/>Make it beautifully<br/>unfiltered.</div><span class="sheet-bottom">PERSONALIZED FOR YOUR PERSON.</span></div></div>
 </section>
 </div>
 <section class="section" id="collections">
-<div class="section-head"><div><div class="eyebrow">The Collections</div><h2>For every occasion.<br/><em class="rose-type">And everything in between.</em></h2><a class="btn collection-cta" href="#tiles">Explore the collections <span aria-hidden="true">↗</span></a></div><p class="note"></p></div>
+<div class="section-head"><div><div class="eyebrow">The Collections</div><h2>For every occasion.<br/><em class="rose-type">And everything in between.</em></h2></div><p class="note"></p></div>
 <div aria-label="Collections" class="tiles" id="tiles" role="group"></div>
 <div class="shelf" id="shelf">
 <div class="shelf-head"><div><h3 id="shelfTitle"></h3><p class="collection-intro" id="shelfIntro"></p></div><span class="eyebrow" id="shelfCount"></span></div>
