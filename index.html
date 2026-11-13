@@ -801,6 +801,54 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 .sheet-message{font:italic 400 clamp(29px,3vw,44px)/1.24 Georgia,serif;letter-spacing:-.045em;color:#241f1d}
 .concierge-accent{position:absolute;bottom:12px;left:5%;font:10px Arial,sans-serif;letter-spacing:.23em;color:#7b655f}
 @media(max-width:800px){.concierge-feature{grid-template-columns:1fr;padding:70px 7%;gap:25px}.concierge-art{min-height:340px}.concierge-sheet{min-height:300px;width:min(72%,280px)}.concierge-feature h2{font-size:clamp(40px,9vw,66px)}}
+
+/* 2026-11-13: recipient viewport repair — isolated to delivered gift links. */
+#reveal.recipient-mode {
+  position:fixed!important;inset:0!important;margin:0!important;
+  width:100vw!important;max-width:none!important;height:100dvh!important;
+  max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;
+  background:#101010!important;color:#f5f1e9!important;
+  border:0!important;padding:0!important;
+}
+#reveal.recipient-mode::backdrop{background:#101010!important}
+#reveal.recipient-mode .dlg{
+  width:100%!important;min-height:100dvh!important;height:auto!important;
+  padding:56px 16px 38px!important;background:#101010!important;
+  color:#f5f1e9!important;display:block!important;text-align:center!important;
+}
+#reveal.recipient-mode #stepReveal{max-width:1000px!important;margin:0 auto!important}
+#reveal.recipient-mode .recipient-whisper{color:#f5f1e9!important;margin:0 auto 12px!important}
+#reveal.recipient-mode .recipient-whisper-sub{color:#d6cfc4!important}
+#reveal.recipient-mode .recipient-instruction{color:#d6cfc4!important;margin:8px auto 0!important}
+#reveal.recipient-mode .stage{
+ --w:min(510px,83vw,54dvh)!important;
+ width:min(100%,780px)!important;height:calc(var(--w) * 1.36)!important;
+ margin:0 auto!important;overflow:hidden!important;
+}
+#reveal.recipient-mode .env{bottom:calc(var(--w) * .05)!important}
+#reveal.recipient-mode .stage.s-out .env{bottom:calc(var(--w) * -.5)!important}
+#reveal.recipient-mode .x{position:fixed!important;top:14px!important;right:16px!important;z-index:30!important;color:#f5f1e9!important}
+#reveal.recipient-mode .gift-note{margin:24px auto 28px!important}
+#reveal.recipient-mode .controls{margin:10px auto!important}
+#reveal.recipient-mode .controls .ctl{color:#f5f1e9;border-color:#bcb6ad}
+@media(max-width:600px){
+ #reveal.recipient-mode .dlg{padding:66px 10px 28px!important}
+ #reveal.recipient-mode .stage{--w:min(91vw,46dvh)!important;height:calc(var(--w) * 1.43)!important}
+}
+/* WOW reveal v2: final recipient-only overrides; preserve existing gift and checkout logic. */
+#reveal.recipient-mode .dlg{padding:24px 16px 38px!important;}
+#reveal.recipient-mode .recipient-whisper{margin:0 auto 2px!important;font-size:clamp(28px,4vw,52px)!important;line-height:1.15!important;max-width:900px!important;}
+#reveal.recipient-mode .recipient-whisper-sub{margin-top:10px!important;font-size:clamp(11px,1.2vw,15px)!important;}
+#reveal.recipient-mode .recipient-sound{margin:12px auto 0!important;}
+#reveal.recipient-mode .stage{--w:min(600px,86vw,62dvh)!important;height:calc(var(--w) * 1.23)!important;margin:-14px auto 0!important;}
+#reveal.recipient-mode .stage.s-out .bcard{transform:translateY(calc(var(--w) * -.65)) scale(1.14)!important;}
+#reveal.recipient-mode .recipient-instruction{margin:0 auto 4px!important;}
+#reveal.recipient-mode .stage.s-open~.recipient-instruction,#reveal.recipient-mode #stepReveal:has(.stage.s-open) .recipient-instruction{visibility:hidden!important;}
+@media(max-width:600px){
+ #reveal.recipient-mode .dlg{padding:54px 10px 25px!important;}
+ #reveal.recipient-mode .stage{--w:min(91vw,50dvh)!important;height:calc(var(--w) * 1.32)!important;margin:0 auto!important;}
+ #reveal.recipient-mode .stage.s-out .bcard{transform:translateY(calc(var(--w) * -.68)) scale(1.08)!important;}
+}
 </style>
 </head>
 <body>
