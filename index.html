@@ -1,9 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
 <title>Beautifully Unfiltered — Impeccable taste. Unfiltered sentiments.</title>
-<meta name="description" content="Digital greeting cards for the things worth saying. Six collections, each card revealed from a little black envelope.">
+<meta content="Digital greeting cards for the things worth saying. Six collections, each card revealed from a little black envelope." name="description"/>
 <style>
 :root{--black:#101010;--ivory:#f5f1e9;--muted:#bcb6ad;--ink:#222;--line:#3a3835}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
@@ -1020,229 +1021,303 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 @media(max-width:800px){.how-grid{grid-template-columns:1fr;max-width:440px;gap:38px}.how-section{padding:70px 7%}.how-art{height:250px}.brand-story{padding:72px 7%}}
 @media(prefers-reduced-motion:reduce){.how-step[data-motion]{opacity:1!important;transform:none!important;transition:none!important}.how-card,.how-envelope{transition:none!important}}
 </style>
-</head>
+<style>
+/* Editorial refinements: collection card identities remain untouched. */
+.how-heading h2{font-size:clamp(2.5rem,4.5vw,4.8rem)!important;line-height:1.09!important}
+.how-heading h2 .how-punchline{display:block;font-size:.66em;line-height:1.2;margin-top:.25em;font-weight:400;color:#24211e;font-style:italic}
+.how-heading{margin-bottom:2.1rem!important}
+.how-heading .eyebrow,.how-index{color:#776c61!important}
+.how-section .rose-type{color:#24211e!important}
+.how-card-back{background:#b8a99a!important}
+.how-letter span{color:#75675c!important}
+#collections .section-head h2{font-size:clamp(2.7rem,5.4vw,5.7rem)!important;line-height:1.08!important;max-width:980px!important}
+#collections .section-head h2 .rose-type{color:#c9b9a7!important}
+#collections .section-head{margin-bottom:2.2rem!important}
+.brand-story .brand-story-inner{max-width:790px!important;margin:auto!important;text-align:center!important}
+.brand-story h2{font-size:clamp(2.5rem,5vw,5rem)!important}
+.brand-story h2 .rose-type{color:inherit!important}
+.hero .hero-intro{display:block;margin-bottom:.55rem}
+@media(max-width:700px){.how-heading h2{font-size:2.55rem!important}#collections .section-head h2{font-size:2.8rem!important}}
+</style><style>
+/* Final approved editorial refinements — original collections unchanged */
+#collections h2{font-size:clamp(34px,3.35vw,54px)!important;line-height:1.14!important;max-width:940px!important;letter-spacing:-.035em!important}
+#collections h2 em{color:#c7b8a6!important}
+#how-it-works .how-punchline{font-size:.55em!important;line-height:1.25!important;margin-top:.3em!important}
+header nav{gap:clamp(12px,1.8vw,28px)!important;align-items:center!important;flex-wrap:wrap!important}
+header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
+@media(max-width:760px){#collections h2{font-size:clamp(32px,7vw,43px)!important}header nav a{white-space:normal!important}}
+</style>
+<style id="recipient-spacing-fix">
+/* Bring the envelope closer to its introduction without altering the reveal geometry. */
+#private-reveal #sigStage { margin-top: -150px !important; margin-bottom: -150px !important; }
+@media (max-width: 600px) { #private-reveal #sigStage { margin-top: -95px !important; margin-bottom: -95px !important; } }
+</style>
+<style>
+/* Approved editorial AI Concierge presentation — isolated from collection styles */
+#card-concierge.concierge-feature{background:#111110;color:#f6f1e9;gap:6%;padding-top:104px;padding-bottom:104px}
+#card-concierge .concierge-edition{color:#c7b8a6;margin:0 0 25px;letter-spacing:.20em;font-size:10px;line-height:1.6}
+#card-concierge h2{font-size:clamp(38px,4.2vw,65px);line-height:1.12;letter-spacing:-.045em;margin-bottom:26px;color:#f6f1e9}
+#card-concierge h2 em{color:#c7b8a6;display:inline-block;font-weight:400}
+#card-concierge .concierge-copy>p{color:#d0c8be;font-size:16px;line-height:1.75;max-width:485px}
+#card-concierge .concierge-button{background:#f6f1e9;color:#111110;border:1px solid #f6f1e9}
+#card-concierge .concierge-button:hover{background:#c7b8a6;border-color:#c7b8a6;color:#111110}
+#card-concierge .concierge-art{background:radial-gradient(ellipse at center,rgba(193,176,154,.14) 0%,transparent 70%)}
+#card-concierge .concierge-sheet{background:#f6f1e9;border-color:#c7b8a6;box-shadow:24px 30px 65px rgba(0,0,0,.58)}
+#card-concierge .sheet-top,#card-concierge .sheet-bottom{color:#74695e}
+#card-concierge .sheet-message{color:#24201e}
+@media(max-width:800px){#card-concierge.concierge-feature{padding-top:75px;padding-bottom:75px}#card-concierge h2{font-size:clamp(35px,8vw,55px)}}
+
+/* Approved editorial spotlight: ivory frame around the existing black Concierge. */
+.concierge-editorial-frame{background:#f1ece4;padding:clamp(24px,4.8vw,70px);position:relative}
+.concierge-editorial-frame #card-concierge{background:#111110;color:#f6f1e9;margin:0;min-height:480px}
+.concierge-editorial-frame #card-concierge h2 em{color:#c7b8a6!important}
+.concierge-editorial-frame #card-concierge .concierge-edition{color:#c7b8a6!important}
+@media(max-width:800px){.concierge-editorial-frame{padding:20px 15px}.concierge-editorial-frame #card-concierge{min-height:0}}
+
+</style><style id="final-editorial-polish">
+/* Only section presentation is modified; the envelope and shopping logic are unchanged. */
+.concierge-editorial-frame{padding:clamp(12px,1.5vw,24px)!important;background:#f1ece4!important}
+.concierge-editorial-frame #card-concierge{padding:clamp(48px,6vw,82px) clamp(28px,7vw,110px)!important;min-height:0!important}
+.concierge-editorial-frame #card-concierge h2{font-size:clamp(35px,4.25vw,64px)!important;line-height:1.12!important}
+.concierge-editorial-frame #card-concierge h2 em{color:#c5b6a3!important}
+.concierge-editorial-frame #card-concierge .concierge-edition{color:#c5b6a3!important;display:flex;align-items:center;gap:14px}
+.concierge-editorial-frame #card-concierge .concierge-edition::before{content:"";display:block;flex:none;width:28px;height:1px;background:#c5b6a3;transform-origin:left center}
+.concierge-editorial-frame #card-concierge .concierge-copy>p{color:#d4cec5!important}
+.concierge-editorial-frame #card-concierge .concierge-button{background:#f5f0e9!important;color:#161616!important}
+.concierge-editorial-frame #card-concierge .sheet-bottom{color:#81776c!important}
+#private-reveal .reveal-editorial{max-width:750px!important;margin-bottom:0!important}
+#private-reveal .reveal-editorial h2{font-size:clamp(38px,4.35vw,64px)!important;line-height:1.12!important;margin:15px 0 20px!important}
+#private-reveal .reveal-editorial .rose-type{color:#8d7d6d!important}
+#private-reveal .reveal-editorial p{max-width:650px!important;font-size:clamp(14px,1.25vw,17px)!important;line-height:1.65!important}
+#private-reveal{padding-top:clamp(46px,5vw,70px)!important}
+@media(max-width:800px){.concierge-editorial-frame{padding:12px!important}.concierge-editorial-frame #card-concierge{padding:48px 25px!important;gap:22px!important}#private-reveal .reveal-editorial h2{font-size:clamp(36px,8vw,52px)!important}}
+@media(prefers-reduced-motion:no-preference){
+ .concierge-editorial-frame #card-concierge .concierge-edition{opacity:0;transform:translateY(8px)}
+ .concierge-editorial-frame #card-concierge .concierge-edition::before{transform:scaleX(0)}
+ .concierge-editorial-frame.introduced #card-concierge .concierge-edition{animation:conciergeIntroFade .75s ease-out .25s both}
+ .concierge-editorial-frame.introduced #card-concierge .concierge-edition::before{animation:conciergeIntroLine .65s ease-out both}
+}
+@keyframes conciergeIntroFade{to{opacity:1;transform:translateY(0)}}
+@keyframes conciergeIntroLine{to{transform:scaleX(1)}}
+@media(prefers-reduced-motion:reduce){.concierge-editorial-frame #card-concierge .concierge-edition{opacity:1!important;transform:none!important}.concierge-editorial-frame #card-concierge .concierge-edition::before{transform:none!important;animation:none!important}}
+</style></head>
 <body>
-<header><a class="logo" href="#top">BEAUTIFULLY UNFILTERED</a><nav><a href="#collections">The Collections</a><a class="nav-concierge" href="#card-concierge">The Card Concierge ✦</a><a href="#private-reveal">The Reveal</a><a href="our-story.html">Our Story</a></nav></header>
+<header><a class="logo" href="#top">BEAUTIFULLY UNFILTERED</a><nav><a href="#collections">Collections</a><a class="nav-concierge" href="#card-concierge">AI Card Concierge ✦</a><a href="our-story.html">Our Story</a><a href="#tiles">The Taryn Edit</a></nav></header>
 <main id="top">
 <section class="hero">
-  <div>
-    <div class="eyebrow">Digital greeting cards</div>
-    <h1>Beautifully<br>understated.<br><em>Occasionally<br>unhinged.</em></h1>
-    <p class="sub"><strong class="hero-intro">Some things deserve more than a text or a meme.</strong><span class="hero-explainer">Thoughtfully unfiltered digital cards, delivered in our signature little black envelope. Inside, a perfectly imperfect sentiment and a personal note hidden beneath a silver scratch-off. Just between you two.</span></p>
-    <div class="actions"><a class="btn" href="#collections">Explore the collections</a><a class="btn outline" href="#card-concierge">Create a custom card</a><button class="btn outline" type="button" id="heroOpen">Open the featured card</button></div>
-    <p class="tiny" style="margin-top:22px">Preview store · Secure checkout is currently in test mode.</p>
-  </div>
-  <div class="card-stage">
-    <button class="paper" type="button" id="heroCard" aria-label="Open The Absolutely Not Era"><div class="hand" id="heroFront"></div><div class="micro">Beautifully Unfiltered</div></button>
-    <div class="featured-label eyebrow">Featured card<strong id="heroTitle"></strong></div>
-  </div>
+<div>
+<div class="eyebrow">Digital greeting cards</div>
+<h1>Beautifully<br/>understated.<br/><em>Occasionally<br/>unhinged.</em></h1>
+<p class="sub"><strong class="hero-intro">Life is messy. Your correspondence shouldn’t be.</strong><span class="hero-explainer">Thoughtfully unfiltered digital cards, delivered in our signature little black envelope. Inside, a perfectly imperfect sentiment and a personal note hidden beneath a silver scratch-off. Just between you two.</span></p>
+<div class="actions"><a class="btn" href="#collections">Explore the collections</a><a class="btn outline" href="#card-concierge">Create a custom card</a><button class="btn outline" id="heroOpen" type="button">Open the featured card</button></div>
+<p class="tiny" style="margin-top:22px">Preview store · Secure checkout is currently in test mode.</p>
+</div>
+<div class="card-stage">
+<button aria-label="Open The Absolutely Not Era" class="paper" id="heroCard" type="button"><div class="hand" id="heroFront"></div><div class="micro">Beautifully Unfiltered</div></button>
+<div class="featured-label eyebrow">Featured card<strong id="heroTitle"></strong></div>
+</div>
 </section>
-<section class="how-section" id="how-it-works" aria-labelledby="how-title">
- <div class="how-heading"><div class="eyebrow">THE BEAUTIFULLY UNFILTERED EXPERIENCE</div><h2 id="how-title">A little thought.<br><em class="rose-type">A lot of personality.</em></h2><p>Three simple steps to make someone’s day.</p></div>
- <div class="how-grid">
-  <article class="how-step" data-motion><div class="how-art how-select"><div class="how-card how-card-back">You get me.</div><div class="how-card how-card-front">The best kind<br>of trouble.</div></div><div class="how-index">01 / SELECT</div><h3>Find your card.</h3><p>Explore the collections or create your own with our AI Card Concierge.</p></article>
-  <article class="how-step" data-motion><div class="how-art how-personalize"><div class="how-letter"><span>JUST BETWEEN US</span><div class="how-message">You know exactly<br>why this is funny.</div><small>Love, your favorite accomplice.</small></div></div><div class="how-index">02 / PERSONALIZE</div><h3>Make it yours.</h3><p>Add a thoughtful note, an inside joke, and your signature sign-off.</p></article>
-  <article class="how-step" data-motion><div class="how-art how-send"><div class="how-envelope"><div class="how-envelope-flap"></div><div class="how-envelope-seal">BU</div><div class="how-envelope-label">For you</div></div></div><div class="how-index">03 / SEND &amp; REVEAL</div><h3>Make their day.</h3><p>Send a little black envelope with a personal surprise waiting inside.</p></article>
- </div>
+<section aria-labelledby="how-title" class="how-section" id="how-it-works">
+<div class="how-heading"><div class="eyebrow">HOW IT WORKS</div><h2 id="how-title">Pick it. Personalize it.<em class="how-punchline">Thoughtful looks good on you.</em></h2></div>
+<div class="how-grid">
+<article class="how-step" data-motion=""><div class="how-art how-select"><div class="how-card how-card-back">You get me.</div><div class="how-card how-card-front">The best kind<br/>of trouble.</div></div><div class="how-index">01 / SELECT</div><h3>Find your favorite.</h3><p>Explore the collections or create your own with our AI Card Concierge.</p></article>
+<article class="how-step" data-motion=""><div class="how-art how-personalize"><div class="how-letter"><span>JUST BETWEEN US</span><div class="how-message">You know exactly<br/>why this is funny.</div><small>Love, your favorite accomplice.</small></div></div><div class="how-index">02 / PERSONALIZE</div><h3>Make it personal.</h3><p>Add a thoughtful note, an inside joke, and your signature sign-off.</p></article>
+<article class="how-step" data-motion=""><div class="how-art how-send"><div class="how-envelope"><div class="how-envelope-flap"></div><div class="how-envelope-seal">BU</div><div class="how-envelope-label">For you</div></div></div><div class="how-index">03 / SEND &amp; REVEAL</div><h3>Send it beautifully.</h3><p>Send a little black envelope with a personal surprise waiting inside.</p></article>
+</div>
 </section>
-<section class="section" id="collections">
-  <div class="section-head"><div><div class="eyebrow">The Collections</div><h2>Some things deserve to be said beautifully.<br><em class="rose-type">Others, unfiltered.</em></h2><a class="btn collection-cta" href="#tiles">Explore the collections <span aria-hidden="true">↗</span></a></div><p class="note"></p></div>
-  <div class="tiles" id="tiles" role="group" aria-label="Collections"></div>
-  <div class="shelf" id="shelf">
-    <div class="shelf-head"><div><h3 id="shelfTitle"></h3><p class="collection-intro" id="shelfIntro"></p></div><span class="eyebrow" id="shelfCount"></span></div>
-    <div class="grid" id="grid"></div>
-  </div>
-</section>
+<div class="concierge-editorial-frame" aria-label="Featured: AI Card Concierge">
+<section aria-labelledby="concierge-heading" class="concierge-feature" id="card-concierge">
+<div class="concierge-copy">
 
-<section id="card-concierge" class="concierge-feature" aria-labelledby="concierge-heading">
-  <div class="concierge-copy">
-    <div class="eyebrow">A little help saying it perfectly</div>
-    <div class="concierge-edition">INTRODUCING / THE AI CARD CONCIERGE</div>
-    <h2 id="concierge-heading">Your story.<br><em>Our sharpest wit.</em></h2>
-    <p>For the moments that deserve more than a generic greeting. Tell our AI Card Concierge who it's for, what happened, and the inside joke. Together, we'll turn your story into something beautifully unfiltered.</p>
-    <a class="concierge-button" href="https://beautifully-unfiltered-ai.shawnakgrant.workers.dev/" target="_blank" rel="noopener noreferrer">Create your card <span aria-hidden="true">↗</span></a>
-    <div class="concierge-footnote">AI-POWERED · PERSONALIZED BY YOU · UNIQUELY YOURS</div>
-  </div>
-  <div class="concierge-art" aria-hidden="true"><div class="concierge-sheet"><span class="sheet-top">BEAUTIFULLY UNFILTERED · BESPOKE</span><div class="sheet-message">Put a little thought<br>into it.<br>Make it beautifully<br>unfiltered.</div><span class="sheet-bottom">PERSONALIZED WITH A LITTLE ATTITUDE.</span></div><div class="concierge-accent">YOUR WORDS. OUR WIT.</div></div>
+<div class="concierge-edition">INTRODUCING THE AI CARD CONCIERGE</div>
+<h2 id="concierge-heading">No two stories alike.<br/><em>No two cards either.</em></h2>
+<p>Tell us who it's for, what happened, and the inside joke. Our AI Card Concierge turns your story into something uniquely yours.</p>
+<a class="concierge-button" href="https://beautifully-unfiltered-ai.shawnakgrant.workers.dev/" rel="noopener noreferrer" target="_blank">Create your card <span aria-hidden="true">↗</span></a>
+
+</div>
+<div aria-hidden="true" class="concierge-art"><div class="concierge-sheet"><span class="sheet-top">BEAUTIFULLY UNFILTERED · BESPOKE</span><div class="sheet-message">Put a little thought<br/>into it.<br/>Make it beautifully<br/>unfiltered.</div><span class="sheet-bottom">PERSONALIZED FOR YOUR PERSON.</span></div></div>
+</section>
+</div>
+<section class="section" id="collections">
+<div class="section-head"><div><div class="eyebrow">The Collections</div><h2>For every occasion.<br/><em class="rose-type">And everything in between.</em></h2><a class="btn collection-cta" href="#tiles">Explore the collections <span aria-hidden="true">↗</span></a></div><p class="note"></p></div>
+<div aria-label="Collections" class="tiles" id="tiles" role="group"></div>
+<div class="shelf" id="shelf">
+<div class="shelf-head"><div><h3 id="shelfTitle"></h3><p class="collection-intro" id="shelfIntro"></p></div><span class="eyebrow" id="shelfCount"></span></div>
+<div class="grid" id="grid"></div>
+</div>
 </section>
 <section class="reveal-section" id="private-reveal">
-  <div class="reveal-editorial"><div class="eyebrow">THE RECIPIENT EXPERIENCE</div><h2>The best part?<br><em class="rose-type">Watching it unfold.</em></h2><p>A beautiful little surprise, a message made personal, and a moment that’s entirely theirs. Go ahead. See what it’s like to receive one.</p></div>
-  <div id="sigWrap">
-    <div class="stage" id="sigStage">
-      <div class="stage-copy"><div class="eyebrow">The Recipient Experience</div><h2>The best part?<br><em class="rose-type">Watching it unfold.</em></h2><p class="note">A beautiful little surprise, a message made personal, and a moment that’s entirely theirs. Go ahead. See what it’s like to receive one.</p></div>
-      <div class="bcard" aria-hidden="true">
-        <div class="bpage"><p class="binside" id="sigInside"></p><p class="bsign" id="sigSign"></p></div>
-        <div class="bcover"><div class="cfront" id="sigFront"></div><div class="bmicro">Beautifully Unfiltered</div><div class="cover-reverse" aria-hidden="true"></div></div>
-      </div>
-      <button class="env" type="button" id="sigEnv" aria-describedby="sigTeaser">
-        <span class="env-back"></span><span class="env-front"></span><span class="env-flap"></span><span class="seal" aria-hidden="true">BU</span>
-        <span class="env-label"><span class="env-to" id="sigTo">For you</span><span class="env-teaser" id="sigTeaser">Consider this your beautifully unfiltered moment.</span><span class="env-tap">Tap to open</span></span>
-      </button>
-    </div>
-    <p class="sr" aria-live="polite" id="sigLive"></p>
-    <div class="controls"><button class="ctl" type="button" id="sigSkip" hidden>Skip animation</button><button class="ctl" type="button" id="sigReplay" hidden>Replay the reveal</button></div>
-    <div class="after" id="sigAfter" hidden>
-      <h3>Know someone who needs this kind of honesty?</h3>
-      <p>Choose a card from the collections, add your own touch, and preview how it arrives.</p>
-      <a class="ctl solid" href="#collections" data-sendback>Send one back</a>
-    </div>
-  </div>
-  <div class="controls"><button class="ctl" type="button" id="sigPersonalize">Personalize this card</button></div>
-  <p class="tiny" style="margin-top:14px">Interactive preview only · Nothing is purchased, sent or saved</p>
-</section>
-<section class="dark-panel inner-circle" id="inner-circle">
-  <div class="eyebrow">The Inner Circle</div>
-  <h2>Be first to know.</h2>
-  <p class="lead">First access to the cards, private reveals, and collections we haven't dared to publish yet.</p>
-  <form class="email" id="innerForm" novalidate>
-    <label class="sr" for="innerEmail">Email address</label>
-    <input id="innerEmail" type="email" placeholder="Your email address" autocomplete="email">
-    <button type="submit">Join the list</button>
-  </form>
-  <p class="form-status" id="innerStatus" role="status"></p>
-  <p class="tiny">Coming soon · Signups aren't open yet, and this preview does not collect or store email addresses.</p>
+<div class="reveal-editorial"><div class="eyebrow">THE RECIPIENT EXPERIENCE</div><h2>The best part?<br/><em class="rose-type">Watching it unfold.</em></h2><p>A little black envelope. A personalized message waiting beneath a scratch-off. And soon, a voice memo they can tap to hear. Because some things deserve more than an ordinary greeting.</p></div>
+<div id="sigWrap">
+<div class="stage" id="sigStage">
+<div class="stage-copy"><div class="eyebrow">The Recipient Experience</div><h2>The best part?<br/><em class="rose-type">Watching it unfold.</em></h2><p class="note">A little black envelope. A personalized message waiting beneath a scratch-off. And soon, a voice memo they can tap to hear. Because some things deserve more than an ordinary greeting.</p></div>
+<div aria-hidden="true" class="bcard">
+<div class="bpage"><p class="binside" id="sigInside"></p><p class="bsign" id="sigSign"></p></div>
+<div class="bcover"><div class="cfront" id="sigFront"></div><div class="bmicro">Beautifully Unfiltered</div><div aria-hidden="true" class="cover-reverse"></div></div>
+</div>
+<button aria-describedby="sigTeaser" class="env" id="sigEnv" type="button">
+<span class="env-back"></span><span class="env-front"></span><span class="env-flap"></span><span aria-hidden="true" class="seal">BU</span>
+<span class="env-label"><span class="env-to" id="sigTo">For you</span><span class="env-teaser" id="sigTeaser">Consider this your beautifully unfiltered moment.</span><span class="env-tap">Tap to open</span></span>
+</button>
+</div>
+<p aria-live="polite" class="sr" id="sigLive"></p>
+<div class="controls"><button class="ctl" hidden="" id="sigSkip" type="button">Skip animation</button><button class="ctl" hidden="" id="sigReplay" type="button">Replay the reveal</button></div>
+<div class="after" hidden="" id="sigAfter">
+<h3>Know someone who needs this kind of honesty?</h3>
+<p>Choose a card from the collections, add your own touch, and preview how it arrives.</p>
+<a class="ctl solid" data-sendback="" href="#collections">Send one back</a>
+</div>
+</div>
+<div class="controls"><button class="ctl" id="sigPersonalize" type="button">Personalize this card</button></div>
+<p class="tiny" style="margin-top:14px">Interactive preview only · Nothing is purchased, sent or saved</p>
 </section>
 <section class="brand-story" id="behind-the-brand"><div class="brand-story-inner"><div class="eyebrow">BEHIND THE BRAND</div><h2>A little wit. <em class="rose-type">A lot of heart.</em></h2><p>Behind every great friendship is a collection of inside jokes, questionable advice, and stories that never get old. Ours just happened to inspire a greeting card company.</p><a class="btn" href="our-story.html">Read our story <span aria-hidden="true">↗</span></a></div></section>
 </main>
-<div class="footer-tagline">Life is messy. Your correspondence shouldn’t be.</div>
-<footer><span>© 2026 Beautifully Unfiltered · Preview</span><span>Beautifully understated. Occasionally unhinged.</span><span>Made for the people who get it.</span></footer>
-
-<dialog id="reveal" aria-labelledby="revealTitle">
-  <div class="dlg">
-    <button class="x" type="button" id="closeReveal" aria-label="Close">×</button>
-    <div class="eyebrow" id="revealCollection"></div>
-    <h3 class="reveal-title" id="revealTitle"></h3>
-    <div class="step" id="stepPersonal">
-      <div class="personal">
-        <div class="mini" aria-label="Live preview">
-          <div class="eyebrow" style="color:#bdb5aa">Live preview</div>
-          <div class="mini-env"><span class="env-to" id="pvTo">For you</span><span class="env-teaser">Consider this your beautifully unfiltered moment.</span></div>
-          <div class="mini-card"><span class="k">Front</span><div class="v" id="pvFront"></div></div>
-          <div class="mini-card"><span class="k">Inside</span><div class="sealed">Sealed until the envelope is opened.</div></div>
-          <div class="mini-card"><span class="k">Sign-off</span><div class="sv" id="pvSign" aria-live="polite"></div></div>
-        </div>
-        <form class="form" id="pForm" autocomplete="off">
-          <label class="f" for="fTo">Recipient name <span style="text-transform:none;letter-spacing:0">(required for delivery)</span></label>
-          <input type="text" id="fTo" maxlength="40" placeholder="e.g. Taryn">
-          <p class="hint">Their name appears on the black envelope and in the email.</p>
-          <label class="f" for="fNote">Your personal note <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
-          <textarea id="fNote" maxlength="500" rows="4" placeholder="Add a heartfelt thought, an inside joke, or a little extra sass…"></textarea>
-          <p class="hint">Revealed after the card opens, before the final sign-off. Up to 500 characters.</p>
-          <fieldset>
-            <legend>Sign-off</legend>
-            <label class="opt"><input type="radio" name="mode" value="keep" checked><span>Keep the original<small id="optOriginal"></small></span></label>
-            <label class="opt"><input type="radio" name="mode" value="add"><span>Add my name below the original<small>Your name or nickname, signed underneath</small></span></label>
-            <div class="sub-field" id="addField" hidden><label class="sr" for="fFrom">Your name or nickname</label><input type="text" id="fFrom" maxlength="40" placeholder="Your name or nickname"></div>
-            <label class="opt"><input type="radio" name="mode" value="custom"><span>Write my own sign-off<small>Replaces the original sign-off</small></span></label>
-            <div class="sub-field" id="customField" hidden><label class="sr" for="fCustom">Custom sign-off</label><textarea id="fCustom" maxlength="90" placeholder="Your own sign-off"></textarea></div>
-          </fieldset>
-          <section class="delivery-box" aria-label="Delivery and checkout">
-            <h4>Make it personal.</h4>
-            <p class="delivery-intro">Choose how and when your card arrives. The punchline stays a surprise.</p>
-            <span class="f">Delivery method</span>
-            <div class="delivery-options">
-              <label><input type="radio" name="deliveryMethod" value="email" checked> Email</label>
-              <label><input type="radio" name="deliveryMethod" value="text"> Text message</label>
-            </div>
-            <div class="delivery-field" id="emailDeliveryField"><label for="deliveryEmail">Recipient's email</label><input id="deliveryEmail" type="email" maxlength="254" placeholder="friend@example.com" autocomplete="email"></div>
-            <div class="delivery-field" id="textDeliveryField" hidden><label for="deliveryPhone">Recipient's phone number</label><input id="deliveryPhone" type="tel" maxlength="30" placeholder="(555) 555-5555" autocomplete="tel"><p class="delivery-hint">After payment, we'll open your phone's messaging app with the private card link. You press Send.</p></div>
-            <span class="f">When should it arrive?</span>
-            <div class="delivery-options">
-              <label><input type="radio" name="deliveryTiming" value="now" checked> Send now</label>
-              <label><input type="radio" name="deliveryTiming" value="later"> Schedule for later</label>
-            </div>
-            <div id="scheduleDeliveryFields" hidden>
-              <div class="delivery-field"><label for="deliveryDate">Delivery date</label><input id="deliveryDate" type="date"></div>
-              <div class="delivery-field"><label for="deliveryTime">Delivery time</label><input id="deliveryTime" type="time" value="09:00"></div>
-              <div class="delivery-field"><label for="deliveryZone">Recipient's time zone</label><select id="deliveryZone"><option value="America/Los_Angeles">Pacific</option><option value="America/Denver">Mountain</option><option value="America/Chicago">Central</option><option value="America/New_York">Eastern</option></select></div>
-              <p class="delivery-warning" id="scheduleWarning">Scheduled email cards are delivered on the next 30-minute processing run after your chosen time. Please allow up to 30 minutes.</p>
-            </div>
-            <div class="checkout-price"><span>Digital greeting card</span><strong>$6.95</strong></div>
-            <button class="ctl checkout-button" type="button" id="previewMyCardBtn" style="margin-bottom:12px">Preview My Card — Free</button>
-            <button class="ctl solid checkout-button" type="button" id="previewRevealBtn">Continue to secure payment — $6.95</button>
-            <p class="delivery-hint">Secure Stripe test checkout. No real payment is charged while we're testing.</p>
-            <p class="delivery-warning" id="deliveryError" role="alert" hidden></p>
-          </section>
-        </form>
-      </div>
-    </div>
-    <div class="step" id="stepReveal" hidden>
-      <p class="recipient-whisper" hidden>A little something, just for you.<span class="recipient-whisper-sub">Beautifully unfiltered.</span></p>
-      <button class="recipient-sound" id="recipientSound" type="button" hidden aria-pressed="false">Sound off · Turn on</button>
-      <div class="stage" id="dlgStage">
-      <button class="wow-open-card" id="dlgOpenCard" type="button" aria-label="Open the folded greeting card">Tap to open your card</button>
-      <div class="stage-copy"><p class="quiet">Sealed, addressed, and ready.</p><p class="note" style="margin-top:10px">Tap the envelope to open it.</p></div>
-      <div class="bcard" aria-hidden="true">
-        <div class="bpage"><p class="binside" id="dlgInside"></p><p class="bsign" id="dlgSign"></p></div>
-        <div class="bcover"><div class="cfront" id="dlgFront"></div><div class="bmicro">Beautifully Unfiltered</div><div class="cover-reverse" aria-hidden="true"></div></div>
-      </div>
-      <button class="env" type="button" id="dlgEnv" aria-describedby="dlgTeaser">
-        <span class="env-back"></span><span class="env-front"></span><span class="env-flap"></span><span class="seal" aria-hidden="true">BU</span>
-        <span class="env-label"><span class="env-to" id="dlgTo">For you</span><span class="env-teaser" id="dlgTeaser">Consider this your beautifully unfiltered moment.</span><span class="env-tap">Tap to open</span></span>
-      </button>
-    </div>
-    <p class="recipient-instruction" hidden>Tap the seal to open.</p>
-    <p class="sr" aria-live="polite" id="dlgLive"></p>
-    <section class="gift-note" id="dlgGiftNote" hidden aria-label="A personal note"><span class="gift-note-rule" aria-hidden="true"></span><div class="gift-note-label">BEAUTIFULLY UNFILTERED</div><h3 class="gift-note-heading">One More Thing…</h3><div class="gift-note-subtitle">A personal note, just for you.</div><div class="scratch-wrap" id="dlgScratchWrap"><p id="dlgGiftNoteText"></p><canvas id="dlgScratchCanvas" class="scratch-canvas" aria-label="Scratch away the champagne coating to reveal your personal note"></canvas></div><div class="scratch-actions" id="dlgScratchActions"><button class="ctl" type="button" id="dlgQuickReveal">Quick Reveal</button><span class="scratch-hint">Or rub the silver with your finger or mouse</span></div></section>
-    <div class="controls"><button class="ctl" type="button" id="dlgSkip" hidden>Skip animation</button></div><div class="controls"><button class="ctl" type="button" id="dlgReplay" hidden>↻ Experience it again</button></div>
-    <div class="after" id="dlgAfter" hidden>
-      <h3>Know someone who needs this kind of honesty?</h3>
-      <p>Choose a card from the collections, add your own touch, and preview how it arrives.</p>
-      <a class="ctl solid" href="#collections" data-sendback>Send one back</a>
-    </div>
-      <div class="share-panel" id="sharePanel" hidden>
-        <h3>Ready to make someone's day?</h3>
-        <p>Copy a private card link to send by text or email. The recipient opens the envelope directly.</p>
-        <div class="controls"><button class="ctl solid" type="button" id="copyCardLink">Copy card link</button><button class="ctl" type="button" id="shareCardLink">Share card</button></div>
-        <p class="share-status" id="shareStatus" role="status"></p>
-        <p class="tiny">Preview only · No checkout or automatic delivery. Anyone with the link can open this card. Links work once the website is hosted online.</p>
-      </div>
-      <button class="backlink" type="button" id="editAgain">Edit personalization</button>
-    </div>
-  </div>
-</dialog>
-
-
-<dialog id="quickPreview" class="quick-preview" aria-labelledby="qpTitle">
-  <div class="qp-shell" id="qpShell">
-    <button class="qp-close" type="button" id="qpClose" aria-label="Close preview">×</button>
-    <div class="qp-sub">The inside story · Complimentary preview</div>
-    <h2 id="qpTitle"></h2>
-    <div class="qp-stage">
-      <div class="qp-book" id="qpBook">
-        <div class="qp-page">
-          <div class="qp-inside" id="qpInside"></div>
-          <div class="qp-sign" id="qpSign"></div>
-          <div class="qp-brand">Beautifully Unfiltered</div>
-        </div>
-        <div class="qp-cover">
-          <div class="qp-front" id="qpFront"></div>
-          <div class="qp-brand">Beautifully Unfiltered</div>
-        </div>
-      </div>
-    </div>
-    <div class="qp-actions">
-      <button type="button" id="qpToggle">Open card</button>
-      <button type="button" class="qp-primary" id="qpPersonalize">Personalize this card</button>
-    </div>
-    <p class="qp-help">See the full punchline before you personalize. The recipient's envelope reveal is separate.</p>
-  </div>
-</dialog>
-
-<div class="delivery-receipt" id="deliveryReceipt" hidden role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
-  <div class="delivery-receipt-inner">
-    <div class="eyebrow">BEAUTIFULLY UNFILTERED</div>
-    <h2 id="receiptTitle">Your card is ready.</h2>
-    <p id="receiptDescription">A little something worth sending.</p>
-    <p class="receipt-status" id="receiptStatus" role="status"></p>
-    <div class="receipt-actions">
-      <button id="receiptPrimary" type="button">Send your card</button>
-      <button id="receiptCopy" class="secondary" type="button">Copy private card link</button>
-      <button id="receiptClose" class="secondary" type="button">Close</button>
-    </div>
-  </div>
+<section class="dark-panel inner-circle" id="inner-circle">
+<div class="eyebrow">The Inner Circle</div>
+<h2>Be first to know.</h2>
+<p class="lead">First access to the cards, private reveals, and collections we haven't dared to publish yet.</p>
+<form class="email" id="innerForm" novalidate="">
+<label class="sr" for="innerEmail">Email address</label>
+<input autocomplete="email" id="innerEmail" placeholder="Your email address" type="email"/>
+<button type="submit">Join the list</button>
+</form>
+<p class="form-status" id="innerStatus" role="status"></p>
+<p class="tiny">Coming soon · Signups aren't open yet, and this preview does not collect or store email addresses.</p>
+</section><footer><span>© 2026 Beautifully Unfiltered · Preview</span><span>Beautifully understated. Occasionally unhinged.</span><span>Made for the people who get it.</span></footer>
+<dialog aria-labelledby="revealTitle" id="reveal">
+<div class="dlg">
+<button aria-label="Close" class="x" id="closeReveal" type="button">×</button>
+<div class="eyebrow" id="revealCollection"></div>
+<h3 class="reveal-title" id="revealTitle"></h3>
+<div class="step" id="stepPersonal">
+<div class="personal">
+<div aria-label="Live preview" class="mini">
+<div class="eyebrow" style="color:#bdb5aa">Live preview</div>
+<div class="mini-env"><span class="env-to" id="pvTo">For you</span><span class="env-teaser">Consider this your beautifully unfiltered moment.</span></div>
+<div class="mini-card"><span class="k">Front</span><div class="v" id="pvFront"></div></div>
+<div class="mini-card"><span class="k">Inside</span><div class="sealed">Sealed until the envelope is opened.</div></div>
+<div class="mini-card"><span class="k">Sign-off</span><div aria-live="polite" class="sv" id="pvSign"></div></div>
 </div>
-<script type="text/plain" id="card-data">
+<form autocomplete="off" class="form" id="pForm">
+<label class="f" for="fTo">Recipient name <span style="text-transform:none;letter-spacing:0">(required for delivery)</span></label>
+<input id="fTo" maxlength="40" placeholder="e.g. Taryn" type="text"/>
+<p class="hint">Their name appears on the black envelope and in the email.</p>
+<label class="f" for="fNote">Your personal note <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+<textarea id="fNote" maxlength="500" placeholder="Add a heartfelt thought, an inside joke, or a little extra sass…" rows="4"></textarea>
+<p class="hint">Revealed after the card opens, before the final sign-off. Up to 500 characters.</p>
+<fieldset>
+<legend>Sign-off</legend>
+<label class="opt"><input checked="" name="mode" type="radio" value="keep"/><span>Keep the original<small id="optOriginal"></small></span></label>
+<label class="opt"><input name="mode" type="radio" value="add"/><span>Add my name below the original<small>Your name or nickname, signed underneath</small></span></label>
+<div class="sub-field" hidden="" id="addField"><label class="sr" for="fFrom">Your name or nickname</label><input id="fFrom" maxlength="40" placeholder="Your name or nickname" type="text"/></div>
+<label class="opt"><input name="mode" type="radio" value="custom"/><span>Write my own sign-off<small>Replaces the original sign-off</small></span></label>
+<div class="sub-field" hidden="" id="customField"><label class="sr" for="fCustom">Custom sign-off</label><textarea id="fCustom" maxlength="90" placeholder="Your own sign-off"></textarea></div>
+</fieldset>
+<section aria-label="Delivery and checkout" class="delivery-box">
+<h4>Make it personal.</h4>
+<p class="delivery-intro">Choose how and when your card arrives. The punchline stays a surprise.</p>
+<span class="f">Delivery method</span>
+<div class="delivery-options">
+<label><input checked="" name="deliveryMethod" type="radio" value="email"/> Email</label>
+<label><input name="deliveryMethod" type="radio" value="text"/> Text message</label>
+</div>
+<div class="delivery-field" id="emailDeliveryField"><label for="deliveryEmail">Recipient's email</label><input autocomplete="email" id="deliveryEmail" maxlength="254" placeholder="friend@example.com" type="email"/></div>
+<div class="delivery-field" hidden="" id="textDeliveryField"><label for="deliveryPhone">Recipient's phone number</label><input autocomplete="tel" id="deliveryPhone" maxlength="30" placeholder="(555) 555-5555" type="tel"/><p class="delivery-hint">After payment, we'll open your phone's messaging app with the private card link. You press Send.</p></div>
+<span class="f">When should it arrive?</span>
+<div class="delivery-options">
+<label><input checked="" name="deliveryTiming" type="radio" value="now"/> Send now</label>
+<label><input name="deliveryTiming" type="radio" value="later"/> Schedule for later</label>
+</div>
+<div hidden="" id="scheduleDeliveryFields">
+<div class="delivery-field"><label for="deliveryDate">Delivery date</label><input id="deliveryDate" type="date"/></div>
+<div class="delivery-field"><label for="deliveryTime">Delivery time</label><input id="deliveryTime" type="time" value="09:00"/></div>
+<div class="delivery-field"><label for="deliveryZone">Recipient's time zone</label><select id="deliveryZone"><option value="America/Los_Angeles">Pacific</option><option value="America/Denver">Mountain</option><option value="America/Chicago">Central</option><option value="America/New_York">Eastern</option></select></div>
+<p class="delivery-warning" id="scheduleWarning">Scheduled email cards are delivered on the next 30-minute processing run after your chosen time. Please allow up to 30 minutes.</p>
+</div>
+<div class="checkout-price"><span>Digital greeting card</span><strong>$6.95</strong></div>
+<button class="ctl checkout-button" id="previewMyCardBtn" style="margin-bottom:12px" type="button">Preview My Card — Free</button>
+<button class="ctl solid checkout-button" id="previewRevealBtn" type="button">Continue to secure payment — $6.95</button>
+<p class="delivery-hint">Secure Stripe test checkout. No real payment is charged while we're testing.</p>
+<p class="delivery-warning" hidden="" id="deliveryError" role="alert"></p>
+</section>
+</form>
+</div>
+</div>
+<div class="step" hidden="" id="stepReveal">
+<p class="recipient-whisper" hidden="">A little something, just for you.<span class="recipient-whisper-sub">Beautifully unfiltered.</span></p>
+<button aria-pressed="false" class="recipient-sound" hidden="" id="recipientSound" type="button">Sound off · Turn on</button>
+<div class="stage" id="dlgStage">
+<button aria-label="Open the folded greeting card" class="wow-open-card" id="dlgOpenCard" type="button">Tap to open your card</button>
+<div class="stage-copy"><p class="quiet">Sealed, addressed, and ready.</p><p class="note" style="margin-top:10px">Tap the envelope to open it.</p></div>
+<div aria-hidden="true" class="bcard">
+<div class="bpage"><p class="binside" id="dlgInside"></p><p class="bsign" id="dlgSign"></p></div>
+<div class="bcover"><div class="cfront" id="dlgFront"></div><div class="bmicro">Beautifully Unfiltered</div><div aria-hidden="true" class="cover-reverse"></div></div>
+</div>
+<button aria-describedby="dlgTeaser" class="env" id="dlgEnv" type="button">
+<span class="env-back"></span><span class="env-front"></span><span class="env-flap"></span><span aria-hidden="true" class="seal">BU</span>
+<span class="env-label"><span class="env-to" id="dlgTo">For you</span><span class="env-teaser" id="dlgTeaser">Consider this your beautifully unfiltered moment.</span><span class="env-tap">Tap to open</span></span>
+</button>
+</div>
+<p class="recipient-instruction" hidden="">Tap the seal to open.</p>
+<p aria-live="polite" class="sr" id="dlgLive"></p>
+<section aria-label="A personal note" class="gift-note" hidden="" id="dlgGiftNote"><span aria-hidden="true" class="gift-note-rule"></span><div class="gift-note-label">BEAUTIFULLY UNFILTERED</div><h3 class="gift-note-heading">One More Thing…</h3><div class="gift-note-subtitle">A personal note, just for you.</div><div class="scratch-wrap" id="dlgScratchWrap"><p id="dlgGiftNoteText"></p><canvas aria-label="Scratch away the champagne coating to reveal your personal note" class="scratch-canvas" id="dlgScratchCanvas"></canvas></div><div class="scratch-actions" id="dlgScratchActions"><button class="ctl" id="dlgQuickReveal" type="button">Quick Reveal</button><span class="scratch-hint">Or rub the silver with your finger or mouse</span></div></section>
+<div class="controls"><button class="ctl" hidden="" id="dlgSkip" type="button">Skip animation</button></div><div class="controls"><button class="ctl" hidden="" id="dlgReplay" type="button">↻ Experience it again</button></div>
+<div class="after" hidden="" id="dlgAfter">
+<h3>Know someone who needs this kind of honesty?</h3>
+<p>Choose a card from the collections, add your own touch, and preview how it arrives.</p>
+<a class="ctl solid" data-sendback="" href="#collections">Send one back</a>
+</div>
+<div class="share-panel" hidden="" id="sharePanel">
+<h3>Ready to make someone's day?</h3>
+<p>Copy a private card link to send by text or email. The recipient opens the envelope directly.</p>
+<div class="controls"><button class="ctl solid" id="copyCardLink" type="button">Copy card link</button><button class="ctl" id="shareCardLink" type="button">Share card</button></div>
+<p class="share-status" id="shareStatus" role="status"></p>
+<p class="tiny">Preview only · No checkout or automatic delivery. Anyone with the link can open this card. Links work once the website is hosted online.</p>
+</div>
+<button class="backlink" id="editAgain" type="button">Edit personalization</button>
+</div>
+</div>
+</dialog>
+<dialog aria-labelledby="qpTitle" class="quick-preview" id="quickPreview">
+<div class="qp-shell" id="qpShell">
+<button aria-label="Close preview" class="qp-close" id="qpClose" type="button">×</button>
+<div class="qp-sub">The inside story · Complimentary preview</div>
+<h2 id="qpTitle"></h2>
+<div class="qp-stage">
+<div class="qp-book" id="qpBook">
+<div class="qp-page">
+<div class="qp-inside" id="qpInside"></div>
+<div class="qp-sign" id="qpSign"></div>
+<div class="qp-brand">Beautifully Unfiltered</div>
+</div>
+<div class="qp-cover">
+<div class="qp-front" id="qpFront"></div>
+<div class="qp-brand">Beautifully Unfiltered</div>
+</div>
+</div>
+</div>
+<div class="qp-actions">
+<button id="qpToggle" type="button">Open card</button>
+<button class="qp-primary" id="qpPersonalize" type="button">Personalize this card</button>
+</div>
+<p class="qp-help">See the full punchline before you personalize. The recipient's envelope reveal is separate.</p>
+</div>
+</dialog>
+<div aria-labelledby="receiptTitle" aria-modal="true" class="delivery-receipt" hidden="" id="deliveryReceipt" role="dialog">
+<div class="delivery-receipt-inner">
+<div class="eyebrow">BEAUTIFULLY UNFILTERED</div>
+<h2 id="receiptTitle">Your card is ready.</h2>
+<p id="receiptDescription">A little something worth sending.</p>
+<p class="receipt-status" id="receiptStatus" role="status"></p>
+<div class="receipt-actions">
+<button id="receiptPrimary" type="button">Send your card</button>
+<button class="secondary" id="receiptCopy" type="button">Copy private card link</button>
+<button class="secondary" id="receiptClose" type="button">Close</button>
+</div>
+</div>
+</div>
+<script id="card-data" type="text/plain">
 ## Womanhood, Unfiltered
 The Absolutely Not Era || I've entered my absolutely not era. || And as my closest friend, I'm going to need you to stop volunteering me for things. || Respectfully, no.
 Limited Edition || My tolerance is now a limited-edition item. || Fortunately, you've been grandfathered in. Everyone else can submit a request in writing. || Management.
@@ -1934,10 +2009,15 @@ openSharedCard();
 /* Taryn Edit is now browsed through the Collections gallery. */
 if(location.hash==='#taryn-edit'){show(collections.findIndex(c=>c.name==='The Taryn Edit'),true);}
 </script>
-
-
-
 <script>
 (function(){const steps=document.querySelectorAll('.how-step[data-motion]');if(!steps.length)return;if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){steps.forEach(el=>el.classList.add('is-visible'));return;}const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}})},{threshold:.15});steps.forEach(el=>observer.observe(el));})();
 </script>
-</body></html>
+<script id="concierge-intro-observer">(function(){
+  var panel=document.querySelector('.concierge-editorial-frame');
+  if(!panel)return;
+  if(!('IntersectionObserver' in window)){panel.classList.add('introduced');return;}
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){if(entry.isIntersecting){panel.classList.add('introduced');observer.disconnect();}});
+  },{threshold:0.2});
+  observer.observe(panel);
+})();</script></body></html>
