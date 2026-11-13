@@ -1116,7 +1116,7 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 @media(max-width:700px){#how-it-works .how-heading h2{font-size:clamp(34px,8vw,45px)!important}#collections .section-head h2{font-size:clamp(36px,9vw,53px)!important}.brand-story h2{font-size:clamp(36px,8vw,50px)!important}}
 </style></head>
 <body>
-<header><a class="logo" href="#top">BEAUTIFULLY UNFILTERED</a><nav><a href="#collections">Collections</a><a class="nav-concierge" href="#card-concierge">AI Card Concierge ✦</a><a href="our-story.html">Our Story</a><a href="#tiles">The Taryn Edit</a></nav></header>
+<header><a class="logo" href="#top">BEAUTIFULLY UNFILTERED</a><nav><a href="#collections">Collections</a><a class="nav-concierge" href="#card-concierge">AI Card Concierge ✦</a><a href="our-story.html">Our Story</a><a href="#taryn-edit">The Taryn Edit</a></nav></header>
 <main id="top">
 <section class="hero">
 <div>
@@ -1999,7 +1999,6 @@ function show(i,scroll){
   if(scroll)$('shelf').scrollIntoView({behavior:reduceMQ.matches?'auto':'smooth',block:'start'});
 }
 collections.forEach((c,i)=>{
-  if(c.name==='The Taryn Edit')return; // Available exclusively through the dedicated tribute section.
   const t=document.createElement('button');t.type='button';t.className='tile';t.dataset.collection=editionKeys[i];t.dataset.edition='0'+(i+1);
   const n=document.createElement('span');n.className='name';n.textContent=c.name;
   const k=document.createElement('span');k.className='count';k.textContent=plural(c.cards.length);
@@ -2010,7 +2009,7 @@ collections.forEach((c,i)=>{
   preview.append(hook);
   t.append(preview,n,k);t.addEventListener('click',()=>show(i,true));tiles.append(t);
 });
-// A quiet, non-clickable coming-soon tile centered beneath the six live collections.
+// A quiet, non-clickable coming-soon tile beneath the seven live collections.
 const seasonalTile=document.createElement('div');
 seasonalTile.className='tile seasonal-tile';
 seasonalTile.setAttribute('aria-label','The Seasonal Edit, coming soon');
