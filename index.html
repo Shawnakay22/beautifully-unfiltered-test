@@ -876,6 +876,49 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
  #reveal.recipient-mode .stage .env{width:min(85vw,460px)!important;left:50%!important;transform:translateX(-50%)!important}
  #reveal.recipient-mode .wow-open-card{top:calc(var(--w) * .2);padding:12px 14px;font-size:10px;white-space:nowrap}
 }
+
+/* WOW v4: a physical front cover with a separate blank reverse side. */
+#reveal.recipient-mode .stage .bcard{perspective:1800px!important;transform-style:preserve-3d!important}
+#reveal.recipient-mode .bcover{
+  transform-origin:0 50%!important;
+  transform:rotateY(0deg)!important;
+  transform-style:preserve-3d!important;
+  backface-visibility:visible!important;
+  transition:transform 1.65s cubic-bezier(.22,.68,.16,1)!important;
+  box-shadow:0 14px 34px #0003,inset 0 0 0 1px #c9c0b5!important;
+}
+#reveal.recipient-mode .bcover .cfront,#reveal.recipient-mode .bcover .bmicro{
+  backface-visibility:hidden!important;
+  -webkit-backface-visibility:hidden!important;
+  transform:translateZ(1px);
+}
+/* Reverse of the cover: unprinted ivory paper, never mirrored cover lettering. */
+#reveal.recipient-mode .bcover::after{
+  content:"";position:absolute;inset:0;display:block;
+  background:linear-gradient(115deg,#eee7db 0%,#f8f4ec 16%,#faf7f0 100%);
+  border:1px solid #d6ccbf;box-shadow:inset -8px 0 22px #8c77621a;
+  transform:rotateY(180deg) translateZ(2px);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  pointer-events:none;
+}
+#reveal.recipient-mode .stage.s-unfold .bcover{
+  transform:rotateY(-179deg)!important;opacity:1!important;
+}
+/* Shift the spread into the center, keeping the approved large page size. */
+#reveal.recipient-mode .stage.s-unfold .bcard{
+  transform:translate(calc(var(--w) * .48),calc(var(--w) * -.53))!important;
+}
+#reveal.recipient-mode .stage.s-unfold .bpage{box-shadow:0 18px 38px #0004,inset 9px 0 16px #8c776215!important}
+#reveal.recipient-mode .stage.s-unfold{height:calc(var(--w) * 1.38)!important}
+#reveal.recipient-mode .stage.s-unfold .wow-open-card{display:none!important}
+/* Preserve the scratch-off's dimensions; it only appears after the reveal completes. */
+#reveal.recipient-mode #dlgGiftNote[hidden]{display:none!important}
+@media(max-width:700px){
+ #reveal.recipient-mode .stage.s-unfold .bcard{transform:translate(calc(var(--w) * .46),calc(var(--w) * -.66))!important}
+ #reveal.recipient-mode .stage.s-unfold{height:calc(var(--w) * 2.15)!important}
+}
+@media(prefers-reduced-motion:reduce){#reveal.recipient-mode .bcover{transition:none!important}}
+
 </style>
 </head>
 <body>
