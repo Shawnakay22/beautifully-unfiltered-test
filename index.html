@@ -1867,6 +1867,17 @@ async function openPaidGift() {
   }
 }
 
+// Notify the purchaser only when the paid gift recipient actually opens the envelope.
+// No tracking on previews, loading the gift link, or automated email-link scans.
+$('dlgEnv').addEventListener('click', () => {
+  const match = location.hash.match(/^#gift=([a-f0-9-]{36})$/i);
+  if (!match || !dlg.classList.contains('recipient-mode') ||
+      dlg.classList.contains('sample-mode') || dlg.classList.contains('customer-preview-mode')) return;
+  fetch(CHECKOUT_API + '/opened/' + encodeURIComponent(match[1]), {
+    method: 'POST', keepalive: true
+  }).catch(() => {});
+});
+
 async function completeCheckout() {
   const params=new URLSearchParams(location.search);
   if(params.get('checkout')==='cancel'){
