@@ -849,6 +849,33 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
  #reveal.recipient-mode .stage{--w:min(91vw,50dvh)!important;height:calc(var(--w) * 1.32)!important;margin:0 auto!important;}
  #reveal.recipient-mode .stage.s-out .bcard{transform:translateY(calc(var(--w) * -.68)) scale(1.08)!important;}
 }
+
+/* WOW v3: recipient-only, true two-page card. Keep checkout and scratch-off unchanged. */
+#reveal.recipient-mode #stepReveal{max-width:1180px!important}
+#reveal.recipient-mode .dlg{padding:24px 12px 36px!important}
+#reveal.recipient-mode .stage{--w:clamp(300px,36vw,490px)!important;width:min(100%,1120px)!important;height:calc(var(--w) * 1.54)!important;overflow:visible!important;margin:4px auto 0!important;transition:height .7s ease!important}
+#reveal.recipient-mode .stage.s-out{height:calc(var(--w) * 1.30)!important}
+#reveal.recipient-mode .stage .bcard{width:var(--w)!important;height:calc(var(--w) * 1.17)!important;margin-left:calc(var(--w) * -.5)!important;top:calc(var(--w) * .62)!important;opacity:0;visibility:hidden;clip-path:none!important;transform:translateY(0)!important;transition:transform 1.3s cubic-bezier(.22,.7,.25,1),opacity .4s ease!important;filter:none!important;z-index:4}
+#reveal.recipient-mode .stage.s-rise .bcard{opacity:1;visibility:visible;transform:translateY(calc(var(--w) * -.25))!important}
+#reveal.recipient-mode .stage.s-out .bcard{opacity:1;visibility:visible;transform:translateY(calc(var(--w) * -.53))!important}
+#reveal.recipient-mode .bpage,#reveal.recipient-mode .bcover{padding:calc(var(--w) * .065)!important}
+#reveal.recipient-mode .bcover{transform-origin:left center!important;transform:translateX(0) rotate(0)!important;opacity:1!important;backface-visibility:visible!important;transition:transform 1.25s cubic-bezier(.2,.7,.25,1)!important;z-index:3!important}
+#reveal.recipient-mode .stage.s-unfold .bcover{transform:translateX(-100%) rotate(-1deg)!important;opacity:1!important}
+#reveal.recipient-mode .stage.s-unfold .bpage{box-shadow:0 20px 45px #0005,inset 0 0 0 1px #c9c0b5!important}
+#reveal.recipient-mode .stage.s-out .env{bottom:calc(var(--w) * -.48)!important;opacity:0!important;pointer-events:none!important}
+#reveal.recipient-mode .recipient-instruction{display:none!important}
+#reveal.recipient-mode .wow-open-card{display:none;position:absolute;top:calc(var(--w) * .09);left:50%;transform:translateX(-50%);z-index:15;border:1px solid #d9cbbb;background:#f8f4ec;color:#24201e;padding:14px 24px;letter-spacing:.13em;text-transform:uppercase;font:600 12px Arial,sans-serif;cursor:pointer;box-shadow:0 12px 35px #0006}
+#reveal.recipient-mode .stage.s-await-open:not(.s-unfold) .wow-open-card{display:block}
+#reveal.recipient-mode .stage.s-unfold .wow-open-card{display:none}
+#reveal.recipient-mode .gift-note{margin:12px auto 28px!important}
+@media(max-width:700px){
+ #reveal.recipient-mode .stage{--w:min(43vw,320px)!important;height:calc(var(--w) * 2.65)!important}
+ #reveal.recipient-mode .stage.s-out{height:calc(var(--w) * 1.85)!important}
+ #reveal.recipient-mode .stage .bcard{top:calc(var(--w) * 1.0)!important}
+ #reveal.recipient-mode .stage.s-out .bcard{transform:translateY(calc(var(--w) * -.66))!important}
+ #reveal.recipient-mode .stage .env{width:min(85vw,460px)!important;left:50%!important;transform:translateX(-50%)!important}
+ #reveal.recipient-mode .wow-open-card{top:calc(var(--w) * .2);padding:12px 14px;font-size:10px;white-space:nowrap}
+}
 </style>
 </head>
 <body>
@@ -1005,6 +1032,7 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
       <p class="recipient-whisper" hidden>A little something, just for you.<span class="recipient-whisper-sub">Beautifully unfiltered.</span></p>
       <button class="recipient-sound" id="recipientSound" type="button" hidden aria-pressed="false">Sound off · Turn on</button>
       <div class="stage" id="dlgStage">
+      <button class="wow-open-card" id="dlgOpenCard" type="button" aria-label="Open the folded greeting card">Tap to open your card</button>
       <div class="stage-copy"><p class="quiet">Sealed, addressed, and ready.</p><p class="note" style="margin-top:10px">Tap the envelope to open it.</p></div>
       <div class="bcard" aria-hidden="true">
         <div class="bpage"><p class="binside" id="dlgInside"></p><p class="bsign" id="dlgSign"></p></div>
@@ -1162,7 +1190,7 @@ const toLabel=n=>n&&n.trim()?'For '+n.trim():'For you';
 function makeReveal(pre){
   const st=$(pre+'Stage'),env=$(pre+'Env'),skip=$(pre+'Skip'),replay=$(pre+'Replay'),after=$(pre+'After'),live=$(pre+'Live');
   let card=null,pers={mode:'keep',from:'',custom:'',to:'',note:''},timers=[],state='closed';
-  const STEPS=['s-open','s-rise','s-out','s-unfold','s-inside','s-punch','s-sign'];
+  const STEPS=['s-open','s-rise','s-out','s-await-open','s-unfold','s-inside','s-punch','s-sign'];
   function clear(){timers.forEach(clearTimeout);timers=[];}
   function writeInside(){$(pre+'Inside').textContent=card.inside;}
   function writeSign(){fillSign($(pre+'Sign'),composeSign(card,pers));}
@@ -1192,19 +1220,30 @@ function makeReveal(pre){
     if(document.activeElement===env||document.activeElement===skip)replay.focus({preventScroll:true});
   }
   function finishInstant(){st.classList.add('instant');finish();void st.offsetWidth;st.classList.remove('instant');}
+  function unfoldCard(){
+    if(state!=='front')return;
+    state='playing';st.classList.remove('s-await-open');
+    st.classList.add('s-unfold');if(pre==='dlg')recipientCue('slide');
+    const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
+    at(1100,()=>{writeInside();st.classList.add('s-inside','s-punch');});
+    at(2000,()=>{writeSign();st.classList.add('s-sign');});
+    at(2900,finish);
+  }
   function open(){
     if(state!=='closed')return;
     if(reduceMQ.matches){finishInstant();return;}
-    state='playing';skip.hidden=false;skip.focus({preventScroll:true});
+    state='playing';skip.hidden=false;
     const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
-    st.classList.add('s-open');if(pre==='dlg')recipientCue('open'); // flap lifts
-    at(1850,()=>{st.classList.add('s-rise');if(pre==='dlg')recipientCue('rise');});             // 0.8s ivory card rises
-    at(3900,()=>{st.classList.add('s-out');env.disabled=true;}); // 1.75s card clears envelope, front reads
-    at(7350,()=>{st.classList.add('s-unfold');if(pre==='dlg')recipientCue('slide');});          // 2.5s short pause, card unfolds
-    at(8900,()=>{writeInside();st.classList.add('s-inside','s-punch');});  // 3.0s inside punchline
-    at(10450,()=>{writeSign();st.classList.add('s-sign');});      // 3.85s sign-off, final beat
-    at(11800,finish);
+    st.classList.add('s-open');if(pre==='dlg')recipientCue('open');
+    at(850,()=>{st.classList.add('s-rise');if(pre==='dlg')recipientCue('rise');});
+    at(2100,()=>{st.classList.add('s-out');env.disabled=true;});
+    if(pre==='dlg'){
+      at(3400,()=>{state='front';st.classList.add('s-await-open');skip.hidden=true;live.textContent='The front of your card is ready. Tap to open your card.';});
+    }else{
+      at(3400,()=>{state='front';unfoldCard();});
+    }
   }
+  if(pre==='dlg')$('dlgOpenCard').addEventListener('click',()=>{if(state==='front')unfoldCard();});
   env.addEventListener('click',open);
   skip.addEventListener('click',finishInstant);
   replay.addEventListener('click',()=>{reset();env.focus({preventScroll:true});});
