@@ -919,6 +919,58 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 }
 @media(prefers-reduced-motion:reduce){#reveal.recipient-mode .bcover{transition:none!important}}
 
+
+/* WOW v5 — centered book-style opening; recipient view only. */
+#reveal.recipient-mode #stepReveal{width:100%!important;max-width:1120px!important;margin-inline:auto!important}
+#reveal.recipient-mode .stage{
+  --w:min(390px,41vw,48dvh)!important;
+  width:min(100%,calc(var(--w) * 2 + 48px))!important;
+  max-width:100%!important;
+  margin:8px auto 0!important;
+  overflow:visible!important;
+}
+#reveal.recipient-mode .stage .bcard{
+  transform-style:preserve-3d!important;
+  perspective:2000px!important;
+}
+#reveal.recipient-mode .bcover{
+  transform-origin:left center!important;
+  transform:rotateY(0deg)!important;
+  transform-style:preserve-3d!important;
+  backface-visibility:visible!important;
+  -webkit-backface-visibility:visible!important;
+  transition:transform 1.6s cubic-bezier(.22,.68,.16,1)!important;
+}
+#reveal.recipient-mode .stage.s-unfold .bcover{
+  transform:rotateY(-180deg)!important;
+  opacity:1!important;
+}
+/* An actual separate blank inside-cover face, rather than mirrored front text. */
+#reveal.recipient-mode .cover-reverse{
+  position:absolute;inset:0;display:block;
+  background:linear-gradient(95deg,#eae3d8,#faf7f0 13%,#f8f4ec);
+  border:1px solid #d6ccbf;
+  box-shadow:inset -10px 0 20px #8c776216;
+  transform:rotateY(180deg) translateZ(3px);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  pointer-events:none;
+}
+#reveal.recipient-mode .bcover::after{display:none!important;content:none!important}
+#reveal.recipient-mode .bcover .cfront,#reveal.recipient-mode .bcover .bmicro{
+  backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important;
+}
+#reveal.recipient-mode .stage.s-unfold .bcard{
+  transform:translate(calc(var(--w) * .5),calc(var(--w) * -.53))!important;
+}
+#reveal.recipient-mode .stage.s-unfold{height:calc(var(--w) * 1.38)!important}
+@media(max-width:700px){
+  #reveal.recipient-mode .stage{--w:min(43vw,300px)!important;width:100%!important}
+  #reveal.recipient-mode .stage.s-unfold .bcard{
+    transform:translate(calc(var(--w) * .5),calc(var(--w) * -.66))!important;
+  }
+  #reveal.recipient-mode .stage.s-unfold{height:calc(var(--w) * 2.15)!important}
+}
+
 </style>
 </head>
 <body>
@@ -977,7 +1029,7 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
       <div class="stage-copy"><div class="eyebrow">The Private Reveal</div><h2>Some things are<br>better opened privately.</h2><p class="note">A little black envelope. A message meant just for you. Tap the envelope to see how a card arrives.</p></div>
       <div class="bcard" aria-hidden="true">
         <div class="bpage"><p class="binside" id="sigInside"></p><p class="bsign" id="sigSign"></p></div>
-        <div class="bcover"><div class="cfront" id="sigFront"></div><div class="bmicro">Beautifully Unfiltered</div></div>
+        <div class="bcover"><div class="cfront" id="sigFront"></div><div class="bmicro">Beautifully Unfiltered</div><div class="cover-reverse" aria-hidden="true"></div></div>
       </div>
       <button class="env" type="button" id="sigEnv" aria-describedby="sigTeaser">
         <span class="env-back"></span><span class="env-front"></span><span class="env-flap"></span><span class="seal" aria-hidden="true">BU</span>
@@ -1079,7 +1131,7 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
       <div class="stage-copy"><p class="quiet">Sealed, addressed, and ready.</p><p class="note" style="margin-top:10px">Tap the envelope to open it.</p></div>
       <div class="bcard" aria-hidden="true">
         <div class="bpage"><p class="binside" id="dlgInside"></p><p class="bsign" id="dlgSign"></p></div>
-        <div class="bcover"><div class="cfront" id="dlgFront"></div><div class="bmicro">Beautifully Unfiltered</div></div>
+        <div class="bcover"><div class="cfront" id="dlgFront"></div><div class="bmicro">Beautifully Unfiltered</div><div class="cover-reverse" aria-hidden="true"></div></div>
       </div>
       <button class="env" type="button" id="dlgEnv" aria-describedby="dlgTeaser">
         <span class="env-back"></span><span class="env-front"></span><span class="env-flap"></span><span class="seal" aria-hidden="true">BU</span>
