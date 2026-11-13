@@ -971,6 +971,23 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
   #reveal.recipient-mode .stage.s-unfold{height:calc(var(--w) * 2.15)!important}
 }
 
+
+/* V6: a separate, gently arriving stationery enclosure after the card opens. */
+#reveal.recipient-mode .gift-note{
+  position:relative;opacity:0!important;
+  transform:translateY(-55px) scale(.94) rotate(-2deg)!important;
+  transition:opacity 1s ease,transform 1.35s cubic-bezier(.16,1,.3,1),box-shadow 1.35s ease!important;
+  box-shadow:0 3px 7px #0002!important;
+  will-change:transform,opacity;
+}
+#reveal.recipient-mode .gift-note.show{
+  opacity:1!important;transform:translateY(0) scale(1) rotate(0)!important;
+  box-shadow:0 22px 42px #0005,0 2px 5px #0002!important;
+}
+@media(prefers-reduced-motion:reduce){
+  #reveal.recipient-mode .gift-note{transition:none!important;transform:none!important}
+}
+
 </style>
 </head>
 <body>
@@ -1309,7 +1326,7 @@ function makeReveal(pre){
     live.textContent=card.front+' '+card.inside+' '+composeSign(card,pers).main+' '+composeSign(card,pers).by;
     if(pre==='dlg'&&pers.note&&pers.note.trim()){
       $('dlgGiftNoteText').textContent=pers.note.trim();
-      $('dlgGiftNote').hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>{$('dlgGiftNote').classList.add('show');setupScratchNote();}));
+      $('dlgGiftNote').hidden=false;setupScratchNote();timers.push(setTimeout(()=>{$('dlgGiftNote').classList.add('show');},850));
     }
     after.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>after.classList.add('show')));
     if(document.activeElement===env||document.activeElement===skip)replay.focus({preventScroll:true});
