@@ -1020,6 +1020,41 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 .brand-story{background:#f2ece4;color:#211d1c;padding:95px 8%}.brand-story-inner{max-width:850px;margin:auto;text-align:center}.brand-story .eyebrow{color:#85766d}.brand-story h2{font:400 clamp(40px,5vw,72px)/1.12 Georgia,serif;letter-spacing:-.045em;margin:22px 0}.brand-story p{font-size:17px;line-height:1.8;color:#625a54;margin:0 auto 29px;max-width:750px}.brand-story .btn{display:inline-block;background:#211d1c;color:#f7f2eb;border-color:#211d1c}
 @media(max-width:800px){.how-grid{grid-template-columns:1fr;max-width:440px;gap:38px}.how-section{padding:70px 7%}.how-art{height:250px}.brand-story{padding:72px 7%}}
 @media(prefers-reduced-motion:reduce){.how-step[data-motion]{opacity:1!important;transform:none!important;transition:none!important}.how-card,.how-envelope{transition:none!important}}
+
+/* Private concept: AI Concierge product-launch hero; scoped to this section only */
+.bu-launch-frame{padding:12px!important;background:#f1ece4!important}
+.bu-launch-frame #card-concierge.bu-launch{display:block!important;position:relative;overflow:hidden;padding:clamp(35px,5vw,76px) clamp(22px,6vw,100px) 44px!important;background:#090909!important;color:#f8f5ee!important;min-height:850px!important;isolation:isolate}
+.bu-launch::before{content:"";position:absolute;inset:10% -25% -10%;background:radial-gradient(ellipse at 50% 47%,rgba(181,155,120,.15),transparent 45%);pointer-events:none;z-index:-1}
+.bu-launch-top{display:flex;align-items:center;gap:13px;font:10px Arial,sans-serif;letter-spacing:.2em;color:#b9aa97}
+.bu-launch-dot{width:7px;height:7px;border-radius:50%;background:#c7b79e;box-shadow:0 0 16px #c7b79e}
+.bu-launch-index{margin-left:auto;color:#77716a}
+.bu-launch-head{text-align:center;margin:58px auto 0;position:relative;z-index:3}
+.bu-launch-kicker{font:11px Arial,sans-serif;letter-spacing:.28em;color:#bdb0a0;margin-bottom:24px}
+.bu-launch-kicker strong{font-weight:600;color:#f4efe7}
+.bu-launch-frame #card-concierge.bu-launch h2{font:400 clamp(40px,7vw,104px)/1.02 Georgia,serif!important;letter-spacing:-.065em!important;margin:0 auto!important;color:#f8f5ee!important;max-width:100%;overflow-wrap:normal}
+.bu-launch-frame #card-concierge.bu-launch h2 em{font-style:italic;color:#c7b8a5!important}
+.bu-launch-head p{font:clamp(14px,1.35vw,18px)/1.65 Arial,sans-serif;color:#bfb9b1;letter-spacing:.01em;margin:28px auto 0;max-width:690px;padding:0 12px}.bu-invite{font-weight:600;color:#f8f5ee;font-size:1.18em;display:inline-block;margin-bottom:8px}
+.bu-orbit{height:clamp(380px,43vw,620px);position:relative;perspective:1200px;display:flex;align-items:center;justify-content:center;margin-top:-5px;touch-action:pan-y}
+.bu-orbit-glow{position:absolute;width:min(680px,80vw);height:360px;border-radius:50%;background:radial-gradient(ellipse,rgba(220,193,151,.23),rgba(137,111,79,.07) 42%,transparent 70%);filter:blur(20px);transform:translateY(35px);pointer-events:none}
+.bu-object{width:clamp(245px,28vw,365px);height:clamp(310px,35vw,460px);position:relative;display:block;transform-style:preserve-3d;transform:rotateX(-8deg) rotateY(-18deg) rotateZ(5deg);will-change:transform;filter:drop-shadow(35px 55px 24px rgba(0,0,0,.65));animation:buHover 5.5s ease-in-out infinite alternate;outline-offset:14px}
+.bu-object:focus-visible{outline:2px solid #e6d4b7}
+.bu-card-edge{position:absolute;inset:0;background:#d4c6b1;border:1px solid #9f907c;transform:translate3d(8px,8px,-15px)}
+.bu-edge-two{transform:translate3d(14px,14px,-27px);background:#a99b88}
+.bu-card-face{position:absolute;inset:0;background:linear-gradient(135deg,#fffdf8 0%,#f3ede3 67%,#e5dbcd 100%);border:1px solid #d9cfc0;color:#1c1a18;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:28px 19px 30px;box-shadow:inset 0 0 0 12px #f7f1e8,inset 0 0 0 13px #d7ccbe;backface-visibility:hidden}
+.bu-card-overline,.bu-card-under{font:9px/1.5 Arial,sans-serif;letter-spacing:.17em;color:#786f64}
+.bu-card-title{font:italic clamp(23px,2.5vw,35px)/1.22 Georgia,serif;letter-spacing:-.055em}
+.bu-card-title i{font-style:italic}
+.bu-orbit-hint{position:absolute;right:8%;bottom:16%;font:10px Arial,sans-serif;letter-spacing:.22em;color:#a99c8b}
+.bu-launch-bottom{display:flex;align-items:end;justify-content:space-between;gap:30px;border-top:1px solid #39332d;padding-top:30px}
+.bu-launch-mini{font:9px Arial,sans-serif;letter-spacing:.2em;color:#a89a87}
+.bu-launch-bottom p{font:clamp(19px,2vw,29px) Georgia,serif;letter-spacing:-.035em;margin:10px 0 0}
+.bu-launch-bottom p em{color:#c7b8a5}
+.bu-launch-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:35px;padding:23px 28px;min-width:310px;background:#f5f0e8;color:#171512!important;font:11px Arial,sans-serif;letter-spacing:.14em;transition:background .25s,transform .25s}
+.bu-launch-cta:hover{background:#d8c5a9;transform:translateY(-4px)}
+.bu-launch-cta span{font-size:20px}
+@keyframes buHover{from{translate:0 -10px}to{translate:0 13px}}
+@media(max-width:700px){.bu-launch-frame #card-concierge.bu-launch{min-height:0!important;padding:34px 22px 38px!important}.bu-launch-index{display:none}.bu-launch-head{margin-top:48px}.bu-launch-frame #card-concierge.bu-launch h2{font-size:clamp(56px,12vw,90px)!important}.bu-launch-kicker{font-size:9px;letter-spacing:.16em}.bu-orbit{height:430px;margin-top:5px}.bu-orbit-hint{right:0;bottom:8%}.bu-launch-bottom{display:block}.bu-launch-cta{margin-top:25px;width:100%;min-width:0}}
+@media(prefers-reduced-motion:reduce){.bu-object{animation:none!important}.bu-launch-cta{transition:none!important}}
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
@@ -1139,17 +1174,13 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 <article class="how-step" data-motion=""><div class="how-art how-send"><div class="how-envelope"><div class="how-envelope-flap"></div><div class="how-envelope-seal">BU</div><div class="how-envelope-label">For your eyes only.</div></div></div><div class="how-index">03 / SEND &amp; REVEAL</div><h3>Send it beautifully.</h3><p>Send a little black envelope with a personal surprise waiting inside.</p></article>
 </div>
 </section>
-<div aria-label="Featured: AI Card Concierge" class="concierge-editorial-frame">
-<section aria-labelledby="concierge-heading" class="concierge-feature" id="card-concierge">
-<div class="concierge-copy">
-<div class="concierge-edition">INTRODUCING THE AI CARD CONCIERGE</div>
-<h2 id="concierge-heading">No two stories alike.<br/><em>No two cards either.</em></h2>
-<p>Tell us who it's for, what happened, and the inside joke. Our AI Card Concierge turns your story into something uniquely yours.</p>
-<a class="concierge-button" href="https://beautifully-unfiltered-ai.shawnakgrant.workers.dev/" rel="noopener noreferrer" target="_blank">Create your card <span aria-hidden="true">↗</span></a>
-</div>
-<div aria-hidden="true" class="concierge-art"><div class="concierge-sheet"><span class="sheet-top">BEAUTIFULLY UNFILTERED · BESPOKE</span><div class="sheet-message">Put a little thought<br/>into it.<br/>Make it beautifully<br/>unfiltered.</div><span class="sheet-bottom">PERSONALIZED FOR YOUR PERSON.</span></div></div>
-</section>
-</div>
+<div aria-label="Featured: AI Card Concierge" class="concierge-editorial-frame bu-launch-frame">
+<section aria-labelledby="concierge-heading" class="concierge-feature bu-launch" id="card-concierge">
+  <div class="bu-launch-top"><span class="bu-launch-dot"></span> BEAUTIFULLY UNFILTERED PRESENTS <span class="bu-launch-index">01 / THE NEXT CHAPTER</span></div>
+  <div class="bu-launch-head"><div class="bu-launch-kicker">INTRODUCING THE <strong>AI CARD CONCIERGE</strong></div><h2 id="concierge-heading">A new era<br/><em>in expression.</em></h2><p><strong class="bu-invite">Get creative with your card.</strong><br/>Our AI Card Concierge helps you create the perfect Beautifully Unfiltered card. Share your story, add your inside jokes, and let our signature wit bring it all together.</p></div>
+  <div class="bu-orbit" id="buOrbit" aria-label="Interactive floating greeting card"><div class="bu-orbit-glow"></div><a class="bu-object" id="buObject" href="https://beautifully-unfiltered-ai.shawnakgrant.workers.dev/" target="_blank" rel="noopener noreferrer" aria-label="Explore the AI Card Concierge"><span class="bu-card-edge bu-edge-two"></span><span class="bu-card-edge bu-edge-one"></span><span class="bu-card-face"><span class="bu-card-overline">BEAUTIFULLY UNFILTERED / BESPOKE</span><span class="bu-card-title">Put a little thought<br/>into it.<br/><i>Make it beautifully<br/>unfiltered.</i></span><span class="bu-card-under">ONE STORY. ONE PERSON. ONE OF A KIND.</span></span></a><span class="bu-orbit-hint">MOVE TO EXPLORE <span aria-hidden="true">↗</span></span></div>
+  <div class="bu-launch-bottom"><div><span class="bu-launch-mini">A PERSONALIZED EXPERIENCE, POWERED BY AI</span><p>No two stories alike. <em>No two cards either.</em></p></div><a class="bu-launch-cta" href="https://beautifully-unfiltered-ai.shawnakgrant.workers.dev/" target="_blank" rel="noopener noreferrer">MEET YOUR CARD CONCIERGE <span aria-hidden="true">↗</span></a></div>
+</section></div>
 <section class="section" id="collections">
 <div class="section-head"><div><div class="eyebrow">The Collections</div><h2>For every occasion.<br/><em class="rose-type">And everything in between.</em></h2></div><p class="note"></p></div>
 <div aria-label="Collections" class="tiles" id="tiles" role="group"></div>
@@ -2042,4 +2073,8 @@ if(location.hash==='#taryn-edit'){show(collections.findIndex(c=>c.name==='The Ta
     entries.forEach(function(entry){if(entry.isIntersecting){panel.classList.add('introduced');observer.disconnect();}});
   },{threshold:0.2});
   observer.observe(panel);
-})();</script></body></html>
+})();</script><script>
+/* Floating-card interaction is isolated from the site's existing card animations. */
+(()=>{const stage=document.getElementById('buOrbit'),card=document.getElementById('buObject');if(!stage||!card)return;const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;const fine=window.matchMedia('(hover: hover) and (pointer: fine)').matches;if(!fine||reduced)return;let raf=0,x=0,y=0;function paint(){card.style.transform=`rotateX(${(-8-y*12).toFixed(2)}deg) rotateY(${(-18+x*22).toFixed(2)}deg) rotateZ(${(5+x*3).toFixed(2)}deg)`;raf=0}stage.addEventListener('pointermove',e=>{const r=stage.getBoundingClientRect();x=Math.max(-1,Math.min(1,(e.clientX-r.left)/r.width*2-1));y=Math.max(-1,Math.min(1,(e.clientY-r.top)/r.height*2-1));if(!raf)raf=requestAnimationFrame(paint)});stage.addEventListener('pointerleave',()=>{x=0;y=0;if(!raf)raf=requestAnimationFrame(paint)})})();
+</script>
+</body></html>
