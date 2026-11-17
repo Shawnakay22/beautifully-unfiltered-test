@@ -1488,6 +1488,19 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 }
 @media(prefers-reduced-motion:reduce){#reveal.recipient-mode .stage .env-flap,#reveal.recipient-mode .stage .bcard,#reveal.recipient-mode .stage .bcover{transition-duration:.01ms!important}}
 
+
+/* V39 targeted fixes: single instruction, clean front, scratch layer visible on entry. */
+#reveal.recipient-mode .stage .env::before{content:none!important;display:none!important}
+#reveal.recipient-mode .stage .env::after{content:'TAP THE BU. SEAL TO OPEN'!important;display:block!important;white-space:nowrap!important;letter-spacing:.16em!important;font-size:clamp(9px,2.5vw,11px)!important;line-height:1.5!important;text-shadow:0 2px 7px #000!important;opacity:1!important}
+#reveal.recipient-mode .stage.rec-opening .env::after,
+#reveal.recipient-mode .stage.rec-rising .env::after,
+#reveal.recipient-mode .stage.rec-front .env::after{opacity:0!important}
+#reveal.recipient-mode .stage .bcover::before,
+#reveal.recipient-mode .stage .bcover::after{content:none!important;display:none!important}
+#reveal.recipient-mode .stage .bcover .bmicro{display:none!important}
+#reveal.recipient-mode .stage .bcover{padding:clamp(22px,7vw,48px)!important}
+#reveal.recipient-mode .gift-note .scratch-canvas{display:block!important;opacity:1;z-index:2}
+#reveal.recipient-mode .gift-note .scratch-wrap.revealed .scratch-canvas{opacity:0!important;pointer-events:none!important}
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
@@ -2039,7 +2052,7 @@ function makeReveal(pre){
     live.textContent=card.front+' '+card.inside+' '+composeSign(card,pers).main+' '+composeSign(card,pers).by;
     if(pre==='dlg'&&pers.note&&pers.note.trim()){
       $('dlgGiftNoteText').textContent=pers.note.trim();
-      $('dlgGiftNote').hidden=false;$('dlgScratchJump').hidden=false;setupScratchNote();
+      $('dlgGiftNote').hidden=false;$('dlgScratchJump').hidden=false;/* Scratch surface is painted after its panel becomes visible. */
     }
     after.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>after.classList.add('show')));
     if(document.activeElement===env||document.activeElement===skip)replay.focus({preventScroll:true});
@@ -2075,7 +2088,7 @@ function makeReveal(pre){
       at(3400,()=>{state='front';unfoldCard();});
     }
   }
-  if(pre==='dlg')$('dlgScratchJump').addEventListener('click',()=>{$('dlgGiftNote').classList.add('show');$('dlgScratchJump').hidden=true;});
+  if(pre==='dlg')$('dlgScratchJump').addEventListener('click',()=>{$('dlgGiftNote').classList.add('show');$('dlgScratchJump').hidden=true;requestAnimationFrame(()=>requestAnimationFrame(()=>setupScratchNote()));});
   if(pre==='dlg'){$('dlgOpenCard').addEventListener('click',()=>{if(state==='front')unfoldCard();});st.querySelector('.bcard').addEventListener('click',()=>{if(state==='front')unfoldCard();});}
   env.addEventListener('click',open);
   skip.addEventListener('click',finishInstant);
@@ -2136,7 +2149,7 @@ function setupScratchNote(){
   const canvas=$('dlgScratchCanvas'),wrap=$('dlgScratchWrap');
   if(wrap.classList.contains('revealed'))return;
   const r=wrap.getBoundingClientRect();
-  if(!r.width||!r.height)return;
+  if(!r.width||!r.height){requestAnimationFrame(()=>setupScratchNote());return;}
   const dpr=Math.min(window.devicePixelRatio||1,2);
   canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);
   const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
