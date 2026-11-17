@@ -1367,6 +1367,39 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
  #reveal.recipient-mode .stage .binside{font-size:clamp(18px,4.8vw,26px)!important}
 }
 
+
+/* V35: tactile, smooth recipient presentation. Scoped to mobile recipient only. */
+@media(max-width:700px){
+ #reveal.recipient-mode .stage .env{will-change:opacity;transition:opacity 1.25s cubic-bezier(.22,.65,.2,1)!important;backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important}
+ #reveal.recipient-mode .stage .env-back,
+ #reveal.recipient-mode .stage .env-front,
+ #reveal.recipient-mode .stage .env-flap{background-blend-mode:normal!important;}
+ /* Micro-fiber visible even on high-density iPhone displays; gradients are cheap to composite. */
+ #reveal.recipient-mode .stage .env-back:after,
+ #reveal.recipient-mode .stage .env-front:after,
+ #reveal.recipient-mode .stage .env-flap:after{
+   opacity:.48!important;mix-blend-mode:normal!important;
+   background-image:repeating-linear-gradient(0deg,transparent 0px,#ffffff0d 1px,transparent 2px,transparent 4px),repeating-linear-gradient(91deg,#ffffff09 0px,transparent 1px,transparent 3px),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E")!important;
+   background-size:auto,auto,160px 160px!important;pointer-events:none!important;
+ }
+ #reveal.recipient-mode .stage .env-flap{filter:drop-shadow(0 8px 13px #000b)!important}
+ #reveal.recipient-mode .stage .env-front{filter:drop-shadow(0 -7px 12px #0008)!important}
+ #reveal.recipient-mode .stage .seal{box-shadow:0 2px 0 #b5a080,0 7px 14px #000b,inset 0 1px 5px #fff9!important}
+ #reveal.recipient-mode .stage .env:before{content:'TAP THE BU. SEAL TO OPEN';position:absolute;z-index:30;left:50%;top:calc(50% + 72px);transform:translateX(-50%);font:600 10px/1.4 Arial,sans-serif;letter-spacing:.19em;color:#f4ede0;text-shadow:0 2px 9px #000;white-space:nowrap;pointer-events:none;opacity:.9;transition:opacity .4s ease}
+ #reveal.recipient-mode .stage.s-open .env:before{opacity:0}
+ /* One continuous GPU-composited card trajectory, no clip-path or resize midflight. */
+ #reveal.recipient-mode .stage .bcard{top:50%!important;left:50%!important;width:min(91vw,450px)!important;height:min(79dvh,740px)!important;clip-path:none!important;opacity:0!important;visibility:hidden!important;transform:translate3d(-50%,12%,0) scale(.86)!important;transition:transform 2.25s cubic-bezier(.19,.82,.22,1),opacity .9s ease!important;will-change:transform,opacity;backface-visibility:hidden!important}
+ #reveal.recipient-mode .stage.s-rise .bcard{opacity:1!important;visibility:visible!important;transform:translate3d(-50%,-17%,0) scale(.9)!important;clip-path:none!important;z-index:12!important}
+ #reveal.recipient-mode .stage.s-out .bcard,
+ #reveal.recipient-mode .stage.s-await-open .bcard,
+ #reveal.recipient-mode .stage.s-unfold .bcard{opacity:1!important;visibility:visible!important;transform:translate3d(-50%,-50%,0) scale(1)!important;clip-path:none!important;z-index:12!important}
+ #reveal.recipient-mode .stage.s-out .env{opacity:0!important;transform:translate(-50%,-50%)!important;pointer-events:none!important}
+ #reveal.recipient-mode .stage .bcover{transition:transform 1.1s cubic-bezier(.22,.7,.22,1),opacity .7s ease!important}
+ #reveal.recipient-mode .gift-note{margin:20px auto 100px!important}
+ #reveal.recipient-mode .scratch-jump{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);left:50%;transform:translateX(-50%);z-index:2147483000;width:min(88vw,370px);padding:14px 18px;background:#f2e9dc;color:#211e1b;border:1px solid #c8b7a1;border-radius:2px;box-shadow:0 8px 35px #0009;font:600 11px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+ #reveal.recipient-mode .scratch-jump[hidden]{display:none!important}
+}
+
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
@@ -1751,7 +1784,7 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 </div>
 <p class="recipient-instruction" hidden="">Tap the envelope to break the seal.</p>
 <p aria-live="polite" class="sr" id="dlgLive"></p>
-<section aria-label="A personal note" class="gift-note" hidden="" id="dlgGiftNote"><span aria-hidden="true" class="gift-note-rule"></span><div class="gift-note-label">BEAUTIFULLY UNFILTERED</div><h3 class="gift-note-heading">One More Thing…</h3><div class="gift-note-subtitle">A personal note, just for you.</div><div class="scratch-wrap" id="dlgScratchWrap"><p id="dlgGiftNoteText"></p><canvas aria-label="Scratch away the champagne coating to reveal your personal note" class="scratch-canvas" id="dlgScratchCanvas"></canvas></div><div class="scratch-actions" id="dlgScratchActions"><button class="ctl" id="dlgQuickReveal" type="button">Quick Reveal</button><span class="scratch-hint">Or rub the silver with your finger or mouse</span></div></section>
+<button class="scratch-jump" id="dlgScratchJump" type="button" hidden>One more thing · Reveal your note ↓</button><section aria-label="A personal note" class="gift-note" hidden="" id="dlgGiftNote"><span aria-hidden="true" class="gift-note-rule"></span><div class="gift-note-label">BEAUTIFULLY UNFILTERED</div><h3 class="gift-note-heading">One More Thing…</h3><div class="gift-note-subtitle">A personal note, just for you.</div><div class="scratch-wrap" id="dlgScratchWrap"><p id="dlgGiftNoteText"></p><canvas aria-label="Scratch away the champagne coating to reveal your personal note" class="scratch-canvas" id="dlgScratchCanvas"></canvas></div><div class="scratch-actions" id="dlgScratchActions"><button class="ctl" id="dlgQuickReveal" type="button">Quick Reveal</button><span class="scratch-hint">Or rub the silver with your finger or mouse</span></div></section>
 <div class="controls"><button class="ctl" hidden="" id="dlgSkip" type="button">Skip animation</button></div><div class="controls"><button class="ctl" hidden="" id="dlgReplay" type="button">↻ Experience it again</button></div>
 <div class="after" hidden="" id="dlgAfter">
 <h3>Know someone who needs this kind of honesty?</h3>
@@ -1905,7 +1938,7 @@ function makeReveal(pre){
     $(pre+'Front').textContent=card.front;$(pre+'To').textContent=pre==='dlg' && pers.to.trim()?pers.to.trim():toLabel(pers.to);$(pre+'To').classList.toggle('long-name',pers.to.trim().length>18);
     env.disabled=false;env.removeAttribute('tabindex');env.setAttribute('aria-label',toLabel(pers.to)+'. Open the envelope');
     skip.hidden=true;replay.hidden=true;after.hidden=true;after.classList.remove('show');live.textContent='';
-    if(pre==='dlg'){$('dlgGiftNote').hidden=true;$('dlgGiftNote').classList.remove('show');$('dlgGiftNoteText').textContent='';resetScratchNote();}
+    if(pre==='dlg'){$('dlgScratchJump').hidden=true;$('dlgGiftNote').hidden=true;$('dlgGiftNote').classList.remove('show');$('dlgGiftNoteText').textContent='';resetScratchNote();}
     void st.offsetWidth;st.classList.remove('instant');
   }
   function finish(){
@@ -1917,7 +1950,7 @@ function makeReveal(pre){
     live.textContent=card.front+' '+card.inside+' '+composeSign(card,pers).main+' '+composeSign(card,pers).by;
     if(pre==='dlg'&&pers.note&&pers.note.trim()){
       $('dlgGiftNoteText').textContent=pers.note.trim();
-      $('dlgGiftNote').hidden=false;setupScratchNote();timers.push(setTimeout(()=>{$('dlgGiftNote').classList.add('show');},850));
+      $('dlgGiftNote').hidden=false;$('dlgScratchJump').hidden=false;setupScratchNote();timers.push(setTimeout(()=>{$('dlgGiftNote').classList.add('show');},850));
     }
     after.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>after.classList.add('show')));
     if(document.activeElement===env||document.activeElement===skip)replay.focus({preventScroll:true});
@@ -1946,6 +1979,7 @@ function makeReveal(pre){
       at(3400,()=>{state='front';unfoldCard();});
     }
   }
+  if(pre==='dlg')$('dlgScratchJump').addEventListener('click',()=>{$('dlgGiftNote').scrollIntoView({behavior:'smooth',block:'center'});$('dlgScratchJump').hidden=true;});
   if(pre==='dlg')$('dlgOpenCard').addEventListener('click',()=>{if(state==='front')unfoldCard();});
   env.addEventListener('click',open);
   skip.addEventListener('click',finishInstant);
