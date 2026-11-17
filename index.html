@@ -1437,6 +1437,57 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 }
 @keyframes bu-v36-emerge{0%{opacity:0;transform:translate3d(-50%,22%,0) scale(.79)}12%{opacity:1}100%{opacity:1;transform:translate3d(-50%,-50%,0) scale(1)}}
 
+
+/* V38 — single recipient-only animation system. Legacy s-* rules do not drive this experience. */
+#reveal.recipient-mode{width:100vw!important;max-width:100vw!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#11100f!important}
+#reveal.recipient-mode .dlg{position:relative!important;width:100%!important;height:100dvh!important;min-height:0!important;padding:0!important;overflow:hidden!important;background:#11100f!important}
+#reveal.recipient-mode #stepReveal{height:100%!important;position:relative!important;overflow:hidden!important}
+#reveal.recipient-mode .stage{--w:min(78vw,850px)!important;position:absolute!important;inset:0!important;width:100%!important;max-width:none!important;height:100%!important;min-height:0!important;margin:0!important;overflow:hidden!important;background:radial-gradient(ellipse at 50% 50%,#26221e,#100f0e 72%)!important;perspective:1400px!important;isolation:isolate!important}
+#reveal.recipient-mode .stage-copy,#reveal.recipient-mode .recipient-whisper,#reveal.recipient-mode .recipient-instruction{display:none!important}
+#reveal.recipient-mode .stage .env{--w:min(78vw,850px)!important;position:absolute!important;left:50%!important;top:50%!important;bottom:auto!important;width:var(--w)!important;min-width:0!important;max-width:none!important;height:calc(var(--w)*.62)!important;margin:0!important;padding:0!important;transform:translate3d(-50%,-50%,0)!important;transition:opacity 1s ease!important;opacity:1!important;overflow:visible!important;filter:none!important;z-index:8!important;pointer-events:auto!important;box-shadow:0 28px 60px #000a!important;will-change:auto!important}
+#reveal.recipient-mode .stage .env-back,#reveal.recipient-mode .stage .env-front,#reveal.recipient-mode .stage .env-flap{background-image:linear-gradient(135deg,#34302b,#1c1b19 50%,#11100f),var(--bu-v31-grain)!important;background-blend-mode:normal,soft-light!important;background-size:cover,260px 260px!important}
+#reveal.recipient-mode .stage .env-back{box-shadow:inset 0 0 75px #0008!important}
+#reveal.recipient-mode .stage .env-front{background-image:linear-gradient(145deg,#34312d,#1d1b19 57%,#100f0e),var(--bu-v31-grain)!important;filter:drop-shadow(0 -5px 6px #000a)!important;z-index:3!important}
+#reveal.recipient-mode .stage .env-flap{height:51%!important;top:0!important;transform-origin:50% 0!important;transform:rotateX(0deg)!important;transition:transform 2.25s cubic-bezier(.2,.6,.2,1)!important;filter:drop-shadow(0 10px 12px #000c)!important;z-index:5!important;backface-visibility:visible!important}
+#reveal.recipient-mode .stage .env-label{display:none!important}
+#reveal.recipient-mode .stage .seal{top:50%!important;left:50%!important;width:clamp(55px,8vw,85px)!important;height:clamp(55px,8vw,85px)!important;font-size:clamp(19px,2.2vw,25px)!important;z-index:7!important;background:radial-gradient(circle at 36% 27%,#fffaf0,#e9d9b8 80%)!important;border:4px double #c9b895!important;box-shadow:0 7px 18px #000b,inset 0 1px 2px #fff!important;transition:opacity .6s ease,transform .6s ease!important}
+#reveal.recipient-mode .stage .env::after{content:'TAP THE BU. SEAL TO OPEN';position:absolute;top:calc(50% + 65px);left:0;right:0;z-index:9;text-align:center;color:#f5eee3;letter-spacing:.25em;font:600 10px Arial,sans-serif;text-shadow:0 2px 5px #000;pointer-events:none;transition:opacity .4s}
+#reveal.recipient-mode .stage.rec-opening .env::after{opacity:0}
+#reveal.recipient-mode .stage.rec-opening .env-flap{transform:rotateX(172deg)!important}
+#reveal.recipient-mode .stage.rec-opening .seal{opacity:0!important;transform:translate(-50%,-50%) scale(.75)!important}
+#reveal.recipient-mode .stage.rec-rising .env,#reveal.recipient-mode .stage.rec-front .env,#reveal.recipient-mode .stage.rec-inside .env{pointer-events:none!important}
+#reveal.recipient-mode .stage.rec-front .env,#reveal.recipient-mode .stage.rec-inside .env{opacity:0!important}
+#reveal.recipient-mode .stage .bcard{position:absolute!important;left:50%!important;top:50%!important;bottom:auto!important;margin:0!important;width:min(80vw,460px)!important;height:min(78dvh,660px)!important;max-height:none!important;z-index:2!important;opacity:0!important;visibility:hidden!important;pointer-events:none!important;transform:translate3d(-50%,18%,0) scale(.82)!important;transition:transform 2.5s cubic-bezier(.18,.72,.2,1),opacity .8s ease,visibility 0s linear .8s!important;animation:none!important;filter:none!important;clip-path:none!important;will-change:transform!important}
+#reveal.recipient-mode .stage.rec-rising .bcard,#reveal.recipient-mode .stage.rec-front .bcard,#reveal.recipient-mode .stage.rec-inside .bcard{visibility:visible!important;opacity:1!important;z-index:14!important;transform:translate3d(-50%,-50%,0) scale(1)!important;animation:none!important;clip-path:none!important;transition:transform 2.5s cubic-bezier(.18,.72,.2,1),opacity .8s ease!important}
+#reveal.recipient-mode .stage .bpage,#reveal.recipient-mode .stage .bcover{inset:0!important;box-sizing:border-box!important;padding:clamp(20px,5vw,45px)!important;overflow:hidden!important}
+#reveal.recipient-mode .stage .bpage{background:#f8f4ed!important;box-shadow:0 20px 50px #0009!important}
+#reveal.recipient-mode .stage .bcover{opacity:1!important;visibility:visible!important;transform:none!important;transform-origin:center!important;transition:opacity .9s ease,visibility 0s linear .9s!important;animation:none!important}
+#reveal.recipient-mode .stage.rec-inside .bcover{opacity:0!important;visibility:hidden!important;transform:none!important}
+#reveal.recipient-mode .stage .cover-reverse{display:none!important}
+#reveal.recipient-mode .stage .binside{font-size:clamp(17px,3.8vw,26px)!important;line-height:1.4!important;overflow-wrap:break-word!important}
+#reveal.recipient-mode .stage .bsign{font-size:clamp(10px,2.3vw,14px)!important}
+#reveal.recipient-mode .stage .cfront{font-size:clamp(21px,4.6vw,32px)!important}
+#reveal.recipient-mode .stage.rec-front .bcard{pointer-events:auto!important;cursor:pointer!important}
+#reveal.recipient-mode .wow-open-card{display:none!important}
+#reveal.recipient-mode .stage.rec-front .wow-open-card{display:block!important;position:absolute!important;z-index:30!important;left:50%!important;top:auto!important;bottom:3dvh!important;transform:translateX(-50%)!important;padding:12px 18px!important;width:max-content!important;max-width:90vw!important;background:#f5eee3!important;color:#191817!important;border:0!important;font:600 11px Arial,sans-serif!important;letter-spacing:.14em!important;pointer-events:auto!important}
+#reveal.recipient-mode .stage.rec-inside .wow-open-card{display:none!important}
+#reveal.recipient-mode .x{position:fixed!important;z-index:100!important;right:14px!important;top:calc(env(safe-area-inset-top,0px) + 12px)!important;color:#f5f1e9!important}
+#reveal.recipient-mode .scratch-jump{position:fixed!important;z-index:45!important;bottom:calc(env(safe-area-inset-bottom,0px) + 14px)!important;left:50%!important;transform:translateX(-50%)!important;width:max-content!important;max-width:94vw!important}
+#reveal.recipient-mode .gift-note{position:fixed!important;inset:0!important;z-index:48!important;width:100%!important;height:100dvh!important;max-width:none!important;overflow-y:auto!important;margin:0!important;padding:90px 22px 90px!important;background:#f5f0e8!important;color:#211d1a!important;display:none!important}
+#reveal.recipient-mode .gift-note.show:not([hidden]){display:block!important}
+#reveal.recipient-mode .gift-note[hidden]{display:none!important}
+#reveal.recipient-mode .controls,#reveal.recipient-mode .after{display:none!important}
+@media(max-width:700px){
+ #reveal.recipient-mode .stage{--w:165dvh!important;background:#1b1917!important}
+ #reveal.recipient-mode .stage .env{--w:165dvh!important;width:var(--w)!important;height:100dvh!important;box-shadow:none!important}
+ #reveal.recipient-mode .stage .env-flap{height:50%!important}
+ #reveal.recipient-mode .stage .seal{width:78px!important;height:78px!important;font-size:24px!important}
+ #reveal.recipient-mode .stage .env::after{top:calc(50% + 68px)!important}
+ #reveal.recipient-mode .stage .bcard{width:min(89vw,460px)!important;height:min(76dvh,670px)!important}
+ #reveal.recipient-mode .stage .binside{font-size:clamp(17px,5vw,24px)!important}
+}
+@media(prefers-reduced-motion:reduce){#reveal.recipient-mode .stage .env-flap,#reveal.recipient-mode .stage .bcard,#reveal.recipient-mode .stage .bcover{transition-duration:.01ms!important}}
+
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
@@ -1969,7 +2020,7 @@ function makeReveal(pre){
   function writeSign(){fillSign($(pre+'Sign'),composeSign(card,pers));}
   function reset(){
     clear();state='closed';
-    st.classList.add('instant');st.classList.remove(...STEPS);
+    st.classList.add('instant');st.classList.remove(...STEPS,'rec-opening','rec-rising','rec-front','rec-inside');
     // inside + sign-off are not in the DOM until their beat
     $(pre+'Inside').textContent='';$(pre+'Sign').textContent='';
     $(pre+'Front').textContent=card.front;$(pre+'To').textContent=pre==='dlg' && pers.to.trim()?pers.to.trim():toLabel(pers.to);$(pre+'To').classList.toggle('long-name',pers.to.trim().length>18);
@@ -1981,13 +2032,14 @@ function makeReveal(pre){
   function finish(){
     clear();state='done';
     writeInside();writeSign();
-    st.classList.add(...STEPS);
+    if(pre==='dlg'&&st.closest('.recipient-mode')){st.classList.add('rec-opening','rec-rising','rec-front','rec-inside');}
+    else st.classList.add(...STEPS);
     env.disabled=true;env.setAttribute('tabindex','-1');
     skip.hidden=true;replay.hidden=false;
     live.textContent=card.front+' '+card.inside+' '+composeSign(card,pers).main+' '+composeSign(card,pers).by;
     if(pre==='dlg'&&pers.note&&pers.note.trim()){
       $('dlgGiftNoteText').textContent=pers.note.trim();
-      $('dlgGiftNote').hidden=false;$('dlgScratchJump').hidden=false;setupScratchNote();timers.push(setTimeout(()=>{$('dlgGiftNote').classList.add('show');},850));
+      $('dlgGiftNote').hidden=false;$('dlgScratchJump').hidden=false;setupScratchNote();
     }
     after.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>after.classList.add('show')));
     if(document.activeElement===env||document.activeElement===skip)replay.focus({preventScroll:true});
@@ -1996,7 +2048,8 @@ function makeReveal(pre){
   function unfoldCard(){
     if(state!=='front')return;
     state='playing';st.classList.remove('s-await-open');
-    st.classList.add('s-unfold');if(pre==='dlg')recipientCue('slide');
+    if(pre==='dlg'&&st.closest('.recipient-mode')){st.classList.add('rec-inside');}
+    else st.classList.add('s-unfold');if(pre==='dlg')recipientCue('slide');
     const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
     at(1100,()=>{writeInside();st.classList.add('s-inside','s-punch');});
     at(2000,()=>{writeSign();st.classList.add('s-sign');});
@@ -2007,6 +2060,12 @@ function makeReveal(pre){
     if(reduceMQ.matches){finishInstant();return;}
     state='playing';skip.hidden=false;
     const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
+    if(pre==='dlg'&&st.closest('.recipient-mode')){
+      st.classList.add('rec-opening');if(pre==='dlg')recipientCue('open');
+      at(1900,()=>{st.classList.add('rec-rising');recipientCue('rise');});
+      at(4550,()=>{st.classList.add('rec-front');env.disabled=true;state='front';skip.hidden=true;live.textContent='Tap the card to read your message.';});
+      return;
+    }
     st.classList.add('s-open');if(pre==='dlg')recipientCue('open');
     at(pre==='dlg'&&st.closest('.recipient-mode')?2250:850,()=>{st.classList.add('s-rise');if(pre==='dlg')recipientCue('rise');});
     at(pre==='dlg'&&st.closest('.recipient-mode')?4750:2100,()=>{st.classList.add('s-out');env.disabled=true;});
