@@ -1501,6 +1501,17 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 #reveal.recipient-mode .stage .bcover{padding:clamp(22px,7vw,48px)!important}
 #reveal.recipient-mode .gift-note .scratch-canvas{display:block!important;opacity:1;z-index:2}
 #reveal.recipient-mode .gift-note .scratch-wrap.revealed .scratch-canvas{opacity:0!important;pointer-events:none!important}
+
+/* V40: reversible personal-note overlay; recipient card remains open beneath. */
+#reveal.recipient-mode .gift-note .gift-note-back{
+ position:sticky!important;top:0!important;z-index:60!important;display:block!important;
+ margin:-38px auto 35px 0!important;padding:12px 15px!important;
+ background:#f5f0e8!important;color:#211d1a!important;
+ border:1px solid #bfb3a6!important;font:600 11px Arial,sans-serif!important;
+ letter-spacing:.12em!important;text-transform:uppercase!important;
+ cursor:pointer!important;box-shadow:0 3px 14px #00000012!important;
+}
+#reveal.recipient-mode .gift-note .gift-note-back:focus-visible{outline:2px solid #211d1a!important;outline-offset:3px!important}
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
@@ -1885,7 +1896,7 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 </div>
 <p class="recipient-instruction" hidden="">Tap the envelope to break the seal.</p>
 <p aria-live="polite" class="sr" id="dlgLive"></p>
-<button class="scratch-jump" id="dlgScratchJump" type="button" hidden>One more thing · Reveal your note ↓</button><section aria-label="A personal note" class="gift-note" hidden="" id="dlgGiftNote"><span aria-hidden="true" class="gift-note-rule"></span><div class="gift-note-label">BEAUTIFULLY UNFILTERED</div><h3 class="gift-note-heading">One More Thing…</h3><div class="gift-note-subtitle">A personal note, just for you.</div><div class="scratch-wrap" id="dlgScratchWrap"><p id="dlgGiftNoteText"></p><canvas aria-label="Scratch away the champagne coating to reveal your personal note" class="scratch-canvas" id="dlgScratchCanvas"></canvas></div><div class="scratch-actions" id="dlgScratchActions"><button class="ctl" id="dlgQuickReveal" type="button">Quick Reveal</button><span class="scratch-hint">Or rub the silver with your finger or mouse</span></div></section>
+<button class="scratch-jump" id="dlgScratchJump" type="button" hidden>One more thing · Reveal your note ↓</button><section aria-label="A personal note" class="gift-note" hidden="" id="dlgGiftNote"><button class="gift-note-back" id="dlgGiftNoteBack" type="button" aria-label="Back to your card">← Back to your card</button><span aria-hidden="true" class="gift-note-rule"></span><div class="gift-note-label">BEAUTIFULLY UNFILTERED</div><h3 class="gift-note-heading">One More Thing…</h3><div class="gift-note-subtitle">A personal note, just for you.</div><div class="scratch-wrap" id="dlgScratchWrap"><p id="dlgGiftNoteText"></p><canvas aria-label="Scratch away the champagne coating to reveal your personal note" class="scratch-canvas" id="dlgScratchCanvas"></canvas></div><div class="scratch-actions" id="dlgScratchActions"><button class="ctl" id="dlgQuickReveal" type="button">Quick Reveal</button><span class="scratch-hint">Or rub the silver with your finger or mouse</span></div></section>
 <div class="controls"><button class="ctl" hidden="" id="dlgSkip" type="button">Skip animation</button></div><div class="controls"><button class="ctl" hidden="" id="dlgReplay" type="button">↻ Experience it again</button></div>
 <div class="after" hidden="" id="dlgAfter">
 <h3>Know someone who needs this kind of honesty?</h3>
@@ -2089,6 +2100,7 @@ function makeReveal(pre){
     }
   }
   if(pre==='dlg')$('dlgScratchJump').addEventListener('click',()=>{$('dlgGiftNote').classList.add('show');$('dlgScratchJump').hidden=true;requestAnimationFrame(()=>requestAnimationFrame(()=>setupScratchNote()));});
+  if(pre==='dlg')$('dlgGiftNoteBack').addEventListener('click',()=>{$('dlgGiftNote').classList.remove('show');$('dlgScratchJump').hidden=false;});
   if(pre==='dlg'){$('dlgOpenCard').addEventListener('click',()=>{if(state==='front')unfoldCard();});st.querySelector('.bcard').addEventListener('click',()=>{if(state==='front')unfoldCard();});}
   env.addEventListener('click',open);
   skip.addEventListener('click',finishInstant);
