@@ -1153,6 +1153,122 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 @media(prefers-reduced-motion:reduce){#heroCard{transition:none!important;}}
 @media(max-width:650px){#heroCard{transform:perspective(900px) rotateY(-6deg) rotateZ(-2deg)!important;}}
 
+
+/* V32 — recipient-only immersive portrait stationery on phones.
+   The collection gallery, sender checkout, and AI Concierge remain unchanged. */
+@media (max-width:700px) {
+  #reveal.recipient-mode {
+    width:100vw!important;max-width:100vw!important;
+    height:100dvh!important;max-height:100dvh!important;
+    margin:0!important;padding:0!important;
+    background:#0b0a09!important;color:#f5f0e9!important;
+    overflow-x:hidden!important;overflow-y:auto!important;
+    overscroll-behavior:contain;
+  }
+  #reveal.recipient-mode::backdrop{background:#090807}
+  #reveal.recipient-mode .dlg {
+    min-height:100dvh!important;
+    padding:max(58px,env(safe-area-inset-top)) 12px max(22px,env(safe-area-inset-bottom))!important;
+    background:radial-gradient(ellipse at 50% 45%,#292521 0%,#141210 54%,#090807 100%)!important;
+    color:#f5f0e9!important;
+  }
+  #reveal.recipient-mode .x{position:fixed!important;right:12px!important;top:max(8px,env(safe-area-inset-top))!important;z-index:40!important;color:#eee4d6!important}
+  #reveal.recipient-mode .recipient-whisper{margin:2px auto 4px!important;color:#f4ede3!important;font-size:clamp(22px,5.7vw,28px)!important}
+  #reveal.recipient-mode .recipient-whisper-sub{color:#b9aa9a!important}
+  #reveal.recipient-mode #stepReveal{max-width:100%!important}
+  #reveal.recipient-mode .stage{
+    --w:min(94vw,48dvh)!important;
+    width:100%!important;max-width:100%!important;
+    height:calc(var(--w) * 1.83)!important;
+    margin:0 auto!important;
+    overflow:visible!important;
+    perspective:1800px!important;
+    transition:height .8s ease!important;
+  }
+  #reveal.recipient-mode .stage .env{
+    width:var(--w)!important;left:50%!important;
+    transform:translateX(-50%) rotate(-1deg)!important;
+    bottom:calc(var(--w) * .13)!important;
+    height:calc(var(--w) * .64)!important;
+    filter:drop-shadow(0 24px 24px #000b)!important;
+  }
+  #reveal.recipient-mode .stage.s-open .env{transform:translateX(-50%) rotate(0deg)!important}
+  #reveal.recipient-mode .stage.s-out .env{bottom:calc(var(--w) * -.42)!important;opacity:0!important}
+  #reveal.recipient-mode .stage .bcard{
+    width:calc(var(--w) * .88)!important;
+    height:calc(var(--w) * 1.22)!important;
+    left:50%!important;top:calc(var(--w) * .69)!important;
+    margin-left:calc(var(--w) * -.44)!important;
+    transform:translateY(0)!important;
+    transform-style:preserve-3d!important;
+    perspective:1800px!important;
+    opacity:0;visibility:hidden;
+    filter:drop-shadow(0 16px 16px #0009)!important;
+    transition:transform 1.45s cubic-bezier(.2,.75,.2,1),opacity .5s ease!important;
+  }
+  #reveal.recipient-mode .stage.s-rise .bcard{
+    opacity:1;visibility:visible;
+    transform:translateY(calc(var(--w) * -.32))!important;
+  }
+  #reveal.recipient-mode .stage.s-out .bcard,
+  #reveal.recipient-mode .stage.s-await-open .bcard{
+    opacity:1;visibility:visible;
+    transform:translateY(calc(var(--w) * -.62)) scale(1.035)!important;
+  }
+  #reveal.recipient-mode .stage.s-unfold .bcard{
+    opacity:1;visibility:visible;
+    transform:translateY(calc(var(--w) * -.62)) scale(1.035)!important;
+  }
+  #reveal.recipient-mode .bpage,#reveal.recipient-mode .bcover{
+    padding:calc(var(--w) * .075)!important;
+    background-color:#f7f2e9;
+  }
+  #reveal.recipient-mode .bpage{
+    background:linear-gradient(130deg,#fffdf8,#f5efe6 90%)!important;
+    box-shadow:inset 0 2px 10px #b6a48b26,0 18px 32px #0007!important;
+  }
+  #reveal.recipient-mode .bcover{
+    transform-origin:center top!important;
+    transform:rotateX(0deg)!important;
+    backface-visibility:visible!important;
+    transition:transform 1.55s cubic-bezier(.2,.7,.2,1)!important;
+    box-shadow:inset 0 1px 0 #fff9,0 13px 24px #0006!important;
+  }
+  #reveal.recipient-mode .stage.s-unfold .bcover{
+    transform:rotateX(178deg)!important;
+    opacity:1!important;
+  }
+  #reveal.recipient-mode .cover-reverse{
+    transform:rotateX(180deg) translateZ(2px)!important;
+    background:linear-gradient(175deg,#eee6da,#faf7f0 30%,#f4eee5)!important;
+    box-shadow:inset 0 10px 20px #66544318!important;
+  }
+  #reveal.recipient-mode .bcover .cfront,
+  #reveal.recipient-mode .bcover .bmicro{backface-visibility:hidden!important}
+  #reveal.recipient-mode .stage.s-unfold{height:calc(var(--w) * 1.83)!important}
+  #reveal.recipient-mode .wow-open-card{
+    top:calc(var(--w) * 1.52)!important;
+    left:50%!important;transform:translateX(-50%)!important;
+    background:#f6f0e7!important;color:#1b1917!important;
+    border:1px solid #d7cbbd!important;
+    font-size:11px!important;
+    z-index:20!important;
+  }
+  #reveal.recipient-mode .recipient-sound{color:#e8ded1!important;border-color:#746b61!important}
+  #reveal.recipient-mode .recipient-instruction{color:#b7aa9b!important}
+  #reveal.recipient-mode .controls .ctl{color:#f4ede4;border-color:#8b7e70}
+  #reveal.recipient-mode .after{border-color:#776c6044}
+  #reveal.recipient-mode .after h3{color:#f4ede4}
+  #reveal.recipient-mode .after p{color:#bcb0a2}
+  #reveal.recipient-mode .gift-note{color:#201b18}
+}
+@media(max-width:700px) and (max-height:690px){
+  #reveal.recipient-mode .stage{--w:min(92vw,43dvh)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #reveal.recipient-mode .bcover,#reveal.recipient-mode .bcard{transition:none!important}
+}
+
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
