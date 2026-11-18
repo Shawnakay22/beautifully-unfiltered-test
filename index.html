@@ -1774,6 +1774,30 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 @media(max-width:650px){#tiles .tile .collection-preview{transform:perspective(800px) rotateY(-3deg)!important}#grid .product .paper{transform:perspective(800px) rotateY(-3deg)!important}}
 @media(prefers-reduced-motion:reduce){#tiles .tile .collection-preview,#grid .product .paper{transition:none!important}}
 </style>
+
+<style id="bu-sequenced-preview-refinement">
+/* The preview decision is offered only once the inside card is fully revealed. */
+#reveal.customer-preview-mode:not(.preview-complete) #previewPurchaseActions{display:none!important}
+#reveal.customer-preview-mode.preview-complete #previewPurchaseActions:not([hidden]){display:flex!important}
+/* The opening instruction belongs to the card reveal, before purchase decisions. */
+#reveal.recipient-mode.customer-preview-mode .stage.rec-front:not(.rec-inside) .wow-open-card{
+ display:block!important;position:fixed!important;z-index:115!important;
+ left:50%!important;top:auto!important;bottom:calc(env(safe-area-inset-bottom,0px) + 28px)!important;
+ transform:translateX(-50%)!important;min-width:220px!important;
+ padding:15px 20px!important;white-space:nowrap!important;
+ background:#f5eee3!important;color:#191817!important;
+ border:1px solid #d4c7b7!important;box-shadow:0 10px 30px #0008!important;
+ pointer-events:auto!important;
+}
+#reveal.recipient-mode.customer-preview-mode .stage.rec-inside .wow-open-card{display:none!important}
+/* The folding cover turns gradually instead of vanishing mid-motion. */
+#reveal.recipient-mode.customer-preview-mode .stage .bcover{
+ transition:transform 2.4s cubic-bezier(.22,.68,.18,1),visibility 0s linear 2.4s!important;
+}
+#reveal.recipient-mode.customer-preview-mode .stage.rec-inside .bcover{
+ transition:transform 2.4s cubic-bezier(.22,.68,.18,1),visibility 0s linear 2.4s!important;
+}
+</style>
 </head>
 <body>
 <header><a class="logo" href="#top">BEAUTIFULLY UNFILTERED</a><nav><a href="#collections">Collections</a><a class="nav-concierge" href="#card-concierge">AI Card Concierge ✦</a><a href="our-story.html">Our Story</a><a href="#taryn-edit">The Taryn Edit</a></nav></header>
@@ -2096,6 +2120,7 @@ function makeReveal(pre){
   function writeSign(){fillSign($(pre+'Sign'),composeSign(card,pers));}
   function reset(){
     clear();state='closed';
+    if(pre==='dlg'){const preview=st.closest('#reveal');if(preview){preview.classList.remove('preview-complete');$('previewPurchaseActions').hidden=true;}}
     st.classList.add('instant');st.classList.remove(...STEPS,'rec-opening','rec-rising','rec-front','rec-inside');
     // inside + sign-off are not in the DOM until their beat
     $(pre+'Inside').textContent='';$(pre+'Sign').textContent='';
@@ -2107,6 +2132,7 @@ function makeReveal(pre){
   }
   function finish(){
     clear();state='done';
+    if(pre==='dlg'){const preview=st.closest('#reveal');if(preview&&preview.classList.contains('customer-preview-mode')){preview.classList.add('preview-complete');$('previewPurchaseActions').hidden=false;}}
     writeInside();writeSign();
     if(pre==='dlg'&&st.closest('.recipient-mode')){st.classList.add('rec-opening','rec-rising','rec-front','rec-inside');}
     else st.classList.add(...STEPS);
@@ -2127,9 +2153,9 @@ function makeReveal(pre){
     if(pre==='dlg'&&st.closest('.recipient-mode')){st.classList.add('rec-inside');}
     else st.classList.add('s-unfold');if(pre==='dlg')recipientCue('slide');
     const at=(ms,fn)=>timers.push(setTimeout(fn,ms));
-    at(1100,()=>{writeInside();st.classList.add('s-inside','s-punch');});
-    at(2000,()=>{writeSign();st.classList.add('s-sign');});
-    at(2900,finish);
+    at(2350,()=>{writeInside();st.classList.add('s-inside','s-punch');});
+    at(2950,()=>{writeSign();st.classList.add('s-sign');});
+    at(3650,finish);
   }
   function open(){
     if(state!=='closed')return;
@@ -2262,7 +2288,8 @@ function showStep(which){$('stepPersonal').hidden=which!=='p';$('stepReveal').hi
 function launchPersonalizedReveal(){
   if(!active)return;
   dlg.classList.add('recipient-mode','sample-mode','customer-preview-mode');
-  $('previewPurchaseActions').hidden=false;
+  $('previewPurchaseActions').hidden=true;
+  dlg.classList.remove('preview-complete');
   dr.set(active,pers());showStep('r');
   $('sharePanel').hidden=true;
   $('shareStatus').textContent='';
