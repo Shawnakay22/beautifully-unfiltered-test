@@ -1521,6 +1521,11 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 #reveal.customer-preview-mode #editAgain{display:none!important}
 #previewPurchaseActions{margin:20px auto 8px;gap:12px}
 #previewPurchaseActions .ctl{min-width:185px}
+/* Customer preview only: restore edit and checkout controls above full-screen stage. */
+#reveal.recipient-mode.customer-preview-mode #previewPurchaseActions:not([hidden]){display:flex!important;position:fixed!important;z-index:110!important;left:50%!important;bottom:calc(env(safe-area-inset-bottom,0px) + 16px)!important;transform:translateX(-50%)!important;width:min(94vw,520px)!important;justify-content:center!important;flex-wrap:wrap!important;margin:0!important;padding:10px!important;background:#171615e8!important;border:1px solid #ffffff33!important;border-radius:3px!important}
+#reveal.recipient-mode.customer-preview-mode #previewPurchaseActions .ctl{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:0!important;flex:1 1 190px!important;color:#f5f1e9!important;border:1px solid #bcb6ad!important}
+#reveal.recipient-mode.customer-preview-mode #previewPurchaseActions .ctl.solid{background:#f5f1e9!important;color:#181818!important}
+
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
