@@ -1526,6 +1526,40 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 #reveal.recipient-mode.customer-preview-mode #previewPurchaseActions .ctl{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-width:0!important;flex:1 1 190px!important;color:#f5f1e9!important;border:1px solid #bcb6ad!important}
 #reveal.recipient-mode.customer-preview-mode #previewPurchaseActions .ctl.solid{background:#f5f1e9!important;color:#181818!important}
 
+/* V43 targeted preview polish: keep the working envelope and checkout intact. */
+#reveal.recipient-mode.customer-preview-mode .stage .bcard{
+  perspective:1800px!important;
+  transform-style:preserve-3d!important;
+}
+#reveal.recipient-mode.customer-preview-mode .stage .bcover{
+  transform-origin:0% 50%!important;
+  transform:rotateY(0deg)!important;
+  opacity:1!important;
+  visibility:visible!important;
+  backface-visibility:hidden!important;
+  transition:transform 1.2s cubic-bezier(.2,.72,.18,1),visibility 0s linear 1.2s!important;
+  will-change:transform!important;
+}
+#reveal.recipient-mode.customer-preview-mode .stage.rec-inside .bcover{
+  transform:rotateY(-165deg)!important;
+  opacity:1!important;
+  visibility:hidden!important;
+  transition:transform 1.2s cubic-bezier(.2,.72,.18,1),visibility 0s linear 1.2s!important;
+}
+/* The card itself is the tap target; remove the redundant obstructed prompt. */
+#reveal.recipient-mode.customer-preview-mode .wow-open-card{display:none!important}
+/* Purchase controls stay below the card, not on top of the open prompt. */
+#reveal.recipient-mode.customer-preview-mode #previewPurchaseActions:not([hidden]){
+  bottom:calc(env(safe-area-inset-bottom,0px) + 12px)!important;
+}
+#reveal.recipient-mode.customer-preview-mode .scratch-jump:not([hidden]){
+  bottom:calc(env(safe-area-inset-bottom,0px) + 108px)!important;
+}
+@media(max-width:560px){
+  #reveal.recipient-mode.customer-preview-mode #previewPurchaseActions:not([hidden]){gap:7px!important;padding:8px!important}
+  #reveal.recipient-mode.customer-preview-mode #previewPurchaseActions .ctl{font-size:10px!important;letter-spacing:.08em!important;padding:10px 8px!important;flex:1 1 130px!important}
+  #reveal.recipient-mode.customer-preview-mode .scratch-jump:not([hidden]){bottom:calc(env(safe-area-inset-bottom,0px) + 122px)!important}
+}
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
