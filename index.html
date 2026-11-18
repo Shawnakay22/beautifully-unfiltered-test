@@ -1819,7 +1819,37 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 .bu-m-title{font:italic 33px Georgia,serif;margin:35px 0 12px}.bu-m-inside{font:19px/1.6 Georgia,serif}.bu-m-sign{font:italic 16px Georgia,serif}
 .bu-m-wrap p{font-size:12px;color:#bcb6ad}
 @media(max-width:650px){.hero .card-stage .paper .hand{font-size:34px!important}}
-</style></head>
+</style><style id="bu-real-cotton-stationery-v1">
+/* Approved paper direction: real cotton grain, fine edges and soft studio light. */
+.hero .card-stage .paper,
+#grid .product .paper,
+#tiles .tile .collection-preview,
+.bu-m-paper{
+ background-image:linear-gradient(128deg,rgba(255,255,255,.18),transparent 42%,rgba(99,75,48,.09)),url("cotton-paper-texture.jpg")!important;
+ background-size:cover,420px 420px!important;
+ background-blend-mode:normal,multiply!important;
+}
+.hero .card-stage .paper{position:relative!important;isolation:isolate!important;border:1px solid #e2d7c7!important;box-shadow:inset 2px 2px 3px #fff9,inset -2px -3px 5px #8a705a20,5px 6px 0 #d6cabb,9px 11px 0 #b6a99a,20px 30px 55px #0009!important;}
+.hero .card-stage .paper::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px #fff7,inset 0 0 18px #886f5011;z-index:0}
+.hero .card-stage .paper .hand,.hero .card-stage .paper .micro{position:relative;z-index:1}
+#grid .product .paper{box-shadow:inset 1px 1px 2px #fff8,inset -2px -2px 4px #8a705a20,4px 5px 0 #d4c7b8,8px 12px 20px #0004!important;border:1px solid #e4d9cb!important}
+#tiles .tile .collection-preview{box-shadow:inset 1px 1px 3px #fff8,4px 5px 0 #cdbfae,7px 12px 18px #0003!important}
+.bu-m-paper{border:1px solid #e2d7c7!important;box-shadow:inset 2px 2px 4px #fff8,inset -2px -3px 5px #8a705a22,5px 6px 0 #d8cbbc,10px 13px 0 #b7aa9c,20px 28px 38px #0009!important}
+/* Preserve intentional colored paper treatments on other collections. */
+#grid .product[data-collection]:not([data-collection="meaningful"]) .paper,
+#tiles .tile[data-collection]:not([data-collection="meaningful"]) .collection-preview{background-image:none!important}
+<style id="bu-recipient-paper-approved">/* Approved cotton stationery also follows the card into recipient delivery. */
+.bcover,.bpage,.mini-card{
+ background-image:linear-gradient(128deg,rgba(255,255,255,.15),transparent 45%,rgba(99,75,48,.08)),url("cotton-paper-texture.jpg")!important;
+ background-size:cover,420px 420px!important;
+ background-blend-mode:normal,multiply!important;
+ box-shadow:inset 1px 1px 3px #fff9,inset -2px -2px 4px #8a705a25,3px 4px 0 #d7cabb,9px 15px 26px #0005!important;
+}
+/* Preserve distinctive colored card faces across collections. */
+.dlg[data-collection=work] .bcover,.dlg[data-collection=taryn] .bcover,
+.dlg[data-collection=birthdays] .bcover,.dlg[data-collection=marriage] .bcover,
+.dlg[data-collection=womanhood] .bcover{background-image:none!important}
+</style></style></head>
 <body>
 <header><a class="logo" href="#top">BEAUTIFULLY UNFILTERED</a><nav><a href="#collections">Collections</a><a class="nav-concierge" href="#card-concierge">AI Card Concierge ✦</a><a href="our-story.html">Our Story</a><a href="#collections" id="nav-taryn">The Taryn Edit</a></nav></header>
 <dialog id="buMeaningfulDialog" class="bu-meaningful-dialog" aria-label="Beautifully Meaningful card preview"><div class="bu-m-wrap"><button type="button" class="bu-m-close" onclick="document.getElementById('buMeaningfulDialog').close()" aria-label="Close preview">×</button><div class="eyebrow">BEAUTIFULLY MEANINGFUL · DESIGN PREVIEW</div><div class="bu-m-paper"><div class="bu-m-title"></div><div class="bu-m-inside"></div><div class="bu-m-sign"></div><div class="micro">BEAUTIFULLY UNFILTERED</div></div><p>New collection preview. Checkout for these five new cards is not enabled yet.</p></div></dialog><main id="top">
@@ -1899,7 +1929,7 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 <div class="controls"><button class="ctl" id="sigPersonalize" type="button">Personalize this card</button></div>
 <p class="tiny" style="margin-top:14px">Interactive preview only · Nothing is purchased, sent or saved</p>
 </section>
-<section class="brand-story" id="behind-the-brand"><div class="brand-story-inner"><div class="eyebrow">BEHIND THE BRAND</div><h2>A little wit. <em class="rose-type">A lot of heart.</em></h2><p>Behind every great friendship is a collection of inside jokes, questionable advice, and stories that never get old. Ours just happened to inspire a greeting card company.</p><a class="btn" href="our-story.html">Read our story <span aria-hidden="true">↗</span></a></div></section>
+<section class="brand-story" id="behind-the-brand"><div class="brand-story-inner"><div class="eyebrow">BEHIND THE BRAND</div><h2>A little wit. <em class="rose-type">A lot of heart.</em></h2><p>For the moments that make us laugh until we cry—and the ones when finding the right words means everything. A little personality, a lot of heart, and a story worth sharing.</p><a class="btn" href="our-story.html">Read our story <span aria-hidden="true">↗</span></a></div></section>
 </main>
 <section class="dark-panel inner-circle" id="inner-circle">
 <div class="eyebrow">The Inner Circle</div>
@@ -2686,7 +2716,13 @@ $('innerForm').addEventListener('submit',e=>{
 const featured=collections.flatMap(c=>c.cards).find(c=>c.title==='The Absolutely Not Era');
 $('heroFront').textContent='Consider this your sign.';$('heroTitle').textContent='Consider This Your Sign';
 function openFeaturedSample(){
-  openMeaningfulPreview(meaningfulCards[0]);
+  openMeaningfulPreview({
+    title:'Consider This Your Sign',
+    front:'Consider this your sign.',
+    inside:'Tell them. Celebrate them. Send the note. Some things are simply too important to leave unsaid.',
+    sign:'The words matter.',
+    collection:'Beautifully Meaningful'
+  });
   return;
   active=featured;
   $('revealCollection').textContent='A sample from Womanhood, Unfiltered';
