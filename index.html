@@ -1517,6 +1517,10 @@ header nav .nav-concierge{color:#f0d9bc;font-weight:700}
 #reveal.recipient-mode.sample-mode .dlg,
 #reveal.recipient-mode .dlg{max-width:none!important;max-inline-size:none!important;}
 #reveal.recipient-mode .stage{left:0!important;right:0!important;}
+#reveal:not(.customer-preview-mode) #previewPurchaseActions{display:none!important}
+#reveal.customer-preview-mode #editAgain{display:none!important}
+#previewPurchaseActions{margin:20px auto 8px;gap:12px}
+#previewPurchaseActions .ctl{min-width:185px}
 </style>
 <style>
 /* Editorial refinements: collection card identities remain untouched. */
@@ -1915,6 +1919,10 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 <p class="share-status" id="shareStatus" role="status"></p>
 <p class="tiny">Preview only · No checkout or automatic delivery. Anyone with the link can open this card. Links work once the website is hosted online.</p>
 </div>
+<div class="controls" id="previewPurchaseActions" hidden>
+<button class="ctl" id="previewEditCard" type="button">← Edit My Card</button>
+<button class="ctl solid" id="previewPurchaseCard" type="button">Continue to Secure Payment — $6.95</button>
+</div>
 <button class="backlink" id="editAgain" type="button">Edit personalization</button>
 </div>
 </div>
@@ -2215,6 +2223,7 @@ function showStep(which){$('stepPersonal').hidden=which!=='p';$('stepReveal').hi
 function launchPersonalizedReveal(){
   if(!active)return;
   dlg.classList.add('recipient-mode','sample-mode','customer-preview-mode');
+  $('previewPurchaseActions').hidden=false;
   dr.set(active,pers());showStep('r');
   $('sharePanel').hidden=true;
   $('shareStatus').textContent='';
@@ -2386,7 +2395,20 @@ updateDelivery();
   $('previewMyCardBtn').addEventListener('click',launchPersonalizedReveal);
   $('previewRevealBtn').addEventListener('click',startCheckout);
 form.addEventListener('submit',e=>{e.preventDefault();launchPersonalizedReveal();});
-$('editAgain').addEventListener('click',()=>{dr.stop();dlg.classList.remove('customer-preview-mode','recipient-mode','sample-mode');showStep('p');$('fTo').focus();});
+function returnToPersonalization(){
+  dr.stop();
+  dlg.classList.remove('customer-preview-mode','recipient-mode','sample-mode');
+  $('previewPurchaseActions').hidden=true;
+  showStep('p');
+  dlg.scrollTop=0;
+  $('fTo').focus();
+}
+$('editAgain').addEventListener('click',returnToPersonalization);
+$('previewEditCard').addEventListener('click',returnToPersonalization);
+$('previewPurchaseCard').addEventListener('click',()=>{
+  returnToPersonalization();
+  startCheckout();
+});
 function openCard(c){
   active=c;form.reset();updateDelivery();
   $('revealCollection').textContent=c.collection;$('revealTitle').textContent=c.title;
@@ -2396,7 +2418,15 @@ function openCard(c){
   $('sharePanel').hidden=true;
   dlg.classList.remove('sample-mode','recipient-mode','customer-preview-mode');dlg.querySelector('.recipient-whisper').hidden=true;dlg.querySelector('.recipient-instruction').hidden=true;dlg.showModal();dlg.scrollTop=0;$('fTo').focus();
 }
-function closeDlg(){dr.stop();recipientSoundButton.hidden=true;recipientSoundOn=false;dlg.close();dlg.classList.remove('sample-mode','recipient-mode','customer-preview-mode');}
+function closeDlg(){
+  if(dlg.classList.contains('customer-preview-mode')){
+    returnToPersonalization();
+    return;
+  }
+  dr.stop();recipientSoundButton.hidden=true;recipientSoundOn=false;
+  dlg.close();dlg.classList.remove('sample-mode','recipient-mode','customer-preview-mode');
+  $('previewPurchaseActions').hidden=true;
+}
 $('closeReveal').addEventListener('click',closeDlg);
 dlg.addEventListener('click',e=>{if(e.target===dlg)closeDlg();});
 dlg.addEventListener('close',()=>dr.stop());
