@@ -1838,7 +1838,7 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 /* Preserve intentional colored paper treatments on other collections. */
 #grid .product[data-collection]:not([data-collection="meaningful"]) .paper,
 #tiles .tile[data-collection]:not([data-collection="meaningful"]) .collection-preview{background-image:none!important}
-/* Approved cotton stationery also follows the card into recipient delivery. */
+<style id="bu-recipient-paper-approved">/* Approved cotton stationery also follows the card into recipient delivery. */
 .bcover,.bpage,.mini-card{
  background-image:linear-gradient(128deg,rgba(255,255,255,.15),transparent 45%,rgba(99,75,48,.08)),url("cotton-paper-texture.jpg")!important;
  background-size:cover,420px 420px!important;
@@ -1849,28 +1849,10 @@ header nav a{white-space:nowrap!important;letter-spacing:.11em!important}
 .dlg[data-collection=work] .bcover,.dlg[data-collection=taryn] .bcover,
 .dlg[data-collection=birthdays] .bcover,.dlg[data-collection=marriage] .bcover,
 .dlg[data-collection=womanhood] .bcover{background-image:none!important}
-</style></style>
-<style id="bu-v14-opening-timing-only">
-/* V14 master: add exactly 0.5 seconds to card unfolding; no visual redesign. */
-#quickPreview .qp-book{transition-duration:2.15s!important}
-#quickPreview .qp-cover{transition-duration:2.15s!important}
-#quickPreview .qp-book.open .qp-inside,
-#quickPreview .qp-book.open .qp-sign{transition-delay:1.55s!important}
-#buMeaningfulDialog .bu-m-cover{
- transition:transform 1.65s cubic-bezier(.2,.68,.15,1),box-shadow 1.65s ease!important
-}
-#reveal .bcover,#private-reveal .bcover{transition-duration:1.5s,.5s!important}
-@media(prefers-reduced-motion:reduce){
- #quickPreview .qp-book,#quickPreview .qp-cover,
- #buMeaningfulDialog .bu-m-cover,#reveal .bcover,#private-reveal .bcover{
- transition:none!important
- }
-}
-</style>
-</head>
+</style></style></head>
 <body>
 <header><a class="logo" href="#top">BEAUTIFULLY UNFILTERED</a><nav><a href="#collections">Collections</a><a class="nav-concierge" href="#card-concierge">AI Card Concierge ✦</a><a href="our-story.html">Our Story</a><a href="#collections" id="nav-taryn">The Taryn Edit</a></nav></header>
-<dialog id="buMeaningfulDialog" class="bu-meaningful-dialog" aria-label="Beautifully Meaningful card preview"><div class="bu-m-wrap"><button type="button" class="bu-m-close" onclick="document.getElementById('buMeaningfulDialog').close()" aria-label="Close preview">×</button><div class="eyebrow">BEAUTIFULLY MEANINGFUL · DESIGN PREVIEW</div><button type="button" class="bu-m-book" aria-label="Open card to read inside" aria-expanded="false"><span class="bu-m-inner"><span class="bu-m-inside"></span><span class="bu-m-sign"></span><span class="micro">BEAUTIFULLY UNFILTERED</span></span><span class="bu-m-cover"><span class="bu-m-title"></span><span class="micro">BU.</span></span></button><div class="bu-m-hint" aria-live="polite">Tap the card to open</div><p>New collection preview. Checkout for these five new cards is not enabled yet.</p></div></dialog><main id="top">
+<dialog id="buMeaningfulDialog" class="bu-meaningful-dialog" aria-label="Beautifully Meaningful card preview"><div class="bu-m-wrap"><button type="button" class="bu-m-close" onclick="document.getElementById('buMeaningfulDialog').close()" aria-label="Close preview">×</button><div class="eyebrow">BEAUTIFULLY MEANINGFUL · DESIGN PREVIEW</div><div class="bu-m-paper"><div class="bu-m-title"></div><div class="bu-m-inside"></div><div class="bu-m-sign"></div><div class="micro">BEAUTIFULLY UNFILTERED</div></div><p>New collection preview. Checkout for these five new cards is not enabled yet.</p></div></dialog><main id="top">
 <section class="hero">
 <div>
 <div class="eyebrow">LUXURY DIGITAL GREETING CARDS</div>
@@ -2146,7 +2128,7 @@ The Volume Control || Your laugh is my favorite sound. || Apparently it's also t
 The Referral || I found you the perfect man. || He's single, employed, and has all his original teeth. At our age, that's practically a fucking unicorn. || Love you. I've already shared your Instagram profile.
 The Life Motto || Some women live by inspirational quotes. || We prefer 'Rock out with your cock out.' Same message. Significantly less appropriate. || Love you. Stay classy, bitch.
 The Love Language || Some people say 'I love you.' || I say 'Where the fuck have you been?' Same sentiment. More personality. || Love you, fucker.
-## The Plot Twist
+## The Plot Twist Edit
 The Divorce Party || Congratulations on your recent weight loss. || Funny how losing one man can make your whole life feel lighter. || Cheers to losing the dead weight.
 The Settlement || You kept the house. He kept his audacity. || I'd say you got the better deal. || Yours in favorable outcomes.
 The Fresh Start || This wasn't how you pictured your happily ever after. || Turns out, the best part of your story might be the chapter you write without him. || Yours in beautiful new beginnings.
@@ -2809,12 +2791,11 @@ const meaningfulCards=[
   {title:'Thank You for Being You',front:'I hope you know what you mean to me.',inside:'You make life softer, funnier, and so much better simply by being in it.',sign:'More grateful than I can say.',collection:'Beautifully Meaningful'}
 ];
 const collectionGroups=[
- {name:'Womanhood',keys:[0,4],intro:'The Hormone Edit and all the beautifully complicated chapters of being a woman.',preview:'Every version of you.',kind:'womanhood'},
  {name:'Work Bestie',keys:[1],intro:'For the coworker who understands the assignment—and every reason you want to quit.',preview:'Yours in corporate captivity.',kind:'work'},
+ {name:'The Taryn Edit',keys:[5,6],intro:'Bold, fearless, and lovingly inappropriate. A tribute to a friendship that never played by the rules.',preview:'Forever unfiltered.',kind:'taryn'},
+ {name:'Womanhood',keys:[0,4],intro:'The Hormone Edit and all the beautifully complicated chapters of being a woman.',preview:'Every version of you.',kind:'womanhood'},
  {name:'Birthdays & Relationships',keys:[2,3],intro:'Celebrations, love, marriage, milestones, and the people worth lovingly roasting.',preview:'Love, with a little attitude.',kind:'birthdays'},
- {name:'Beautifully Meaningful',keys:[],intro:'For love, gratitude, comfort, and the moments when words matter most.',preview:'Some people feel like home.',kind:'meaningful',cards:meaningfulCards},
- {name:'The Taryn Edit',keys:[5],intro:'Bold, fearless, and lovingly inappropriate. A tribute to a friendship that never played by the rules.',preview:'Forever unfiltered.',kind:'taryn'},
- {name:'The Plot Twist',keys:[6],intro:'For the endings, beginnings, and everything you didn’t see coming.',preview:'The next chapter looks good on you.',kind:'plot'}
+ {name:'Beautifully Meaningful',keys:[],intro:'For love, gratitude, comfort, and the moments when words matter most.',preview:'Some people feel like home.',kind:'meaningful',cards:meaningfulCards}
 ];
 const tiles=$('tiles');
 function groupCards(g){return g.cards||g.keys.flatMap(i=>collections[i].cards);}
@@ -2858,13 +2839,12 @@ function openMeaningfulPreview(card){
   modal.querySelector('.bu-m-title').textContent=card.front;
   modal.querySelector('.bu-m-inside').textContent=card.inside;
   modal.querySelector('.bu-m-sign').textContent=card.sign;
-  const book=modal.querySelector('.bu-m-book');book.classList.remove('is-open');book.setAttribute('aria-expanded','false');modal.querySelector('.bu-m-hint').textContent='Tap the card to open';
   modal.showModal();
 }
 show(0,false);
 openSharedCard();
 /* Taryn Edit is now browsed through the Collections gallery. */
-if(location.hash==='#taryn-edit'){show(collectionGroups.findIndex(g=>g.kind==='taryn'),true);}
+if(location.hash==='#taryn-edit'){show(1,true);}
 </script>
 <script>
 (function(){const steps=document.querySelectorAll('.how-step[data-motion]');if(!steps.length)return;if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){steps.forEach(el=>el.classList.add('is-visible'));return;}const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}})},{threshold:.15});steps.forEach(el=>observer.observe(el));})();
@@ -2913,294 +2893,4 @@ if(location.hash==='#taryn-edit'){show(collectionGroups.findIndex(g=>g.kind==='t
   setInterval(cycle,12000);
 })();
 </script>
-<style id="bu-stationery-corrected-v2">
-/* Photographic assets, scoped to the exact existing elements; preserves copy and scripts */
-:root{--bu-photo:url('assets/bu-stationery-blank.jpg');--bu-paper:url('assets/bu-ivory-paper.jpg')}
-#collections #tiles{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:40px 26px!important}
-#collections #tiles .tile{display:flex!important;flex-direction:column!important;align-items:center!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;min-width:0!important;color:#f4eee5!important;transform:none!important;overflow:visible!important}
-#collections #tiles .tile .collection-preview{width:100%!important;aspect-ratio:1/1.14!important;height:auto!important;position:relative!important;display:block!important;overflow:hidden!important;padding:0!important;margin:0 0 14px!important;opacity:1!important;background-image:var(--bu-photo)!important;background-color:#d1bd9f!important;background-position:center!important;background-size:cover!important;outline:0!important;filter:none!important;transform:none!important;box-shadow:none!important}
-#collections #tiles .tile .collection-preview:before,#collections #tiles .tile .collection-preview:after{content:none!important;display:none!important}
-#collections #tiles .tile .preview-hook{position:absolute!important;left:21%!important;top:41%!important;width:60%!important;height:29%!important;display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;padding:4%!important;color:#211d19!important;background:none!important;opacity:1!important;visibility:visible!important;filter:none!important;transform:rotate(-3deg)!important;text-shadow:none!important;font:italic clamp(14px,1.8vw,27px)/1.2 Georgia,serif!important;letter-spacing:-.04em!important}
-#collections #tiles .tile[data-collection=taryn] .preview-hook{color:#6b2938!important}
-#collections #tiles .tile[data-collection=birthdays] .preview-hook,#collections #tiles .tile[data-collection=marriage] .preview-hook{color:#164633!important}
-#collections #tiles .tile .name{display:block!important;position:static!important;text-align:center!important;color:#f4eee5!important;font:400 clamp(19px,2vw,29px)/1.3 Georgia,serif!important;opacity:1!important;margin:0!important}
-#collections #tiles .tile .count{display:block!important;position:static!important;text-align:center!important;color:#b8a99a!important;font:11px/1.5 Arial,sans-serif!important;letter-spacing:.22em!important;opacity:1!important;margin:8px 0 0!important}
-#collections #tiles .tile:hover .collection-preview{filter:brightness(1.06)!important}
-#collections #tiles .tile.bu-seasonal{cursor:default!important}
-#collections #tiles .tile.bu-seasonal .preview-hook{color:#71323a!important}
-/* Cards within each collection: identical premium ivory paper and matching ink. */
-#collections #grid .product{border:0!important;padding:0 0 16px!important;background:transparent!important;overflow:visible!important}
-#collections #grid .product .paper{background:var(--bu-paper) center/cover no-repeat #f3e9d9!important;box-shadow:4px 6px 0 #c6b8a5,12px 18px 22px #0008!important;color:#29211c!important;position:relative!important;border:1px solid #e8dcc9!important;aspect-ratio:4/5!important;height:auto!important;min-height:0!important;padding:12%!important;transform:none!important}
-#collections #grid .product .paper:before,#collections #grid .product .paper:after{content:none!important;display:none!important}
-#collections #grid .product .hand{color:#29211c!important;font:italic clamp(19px,2.1vw,31px)/1.22 Georgia,serif!important;text-shadow:none!important;opacity:1!important}
-#collections #grid .product[data-collection=taryn] .hand{color:#6b2938!important}
-#collections #grid .product[data-collection=birthdays] .hand,#collections #grid .product[data-collection=marriage] .hand{color:#164633!important}
-#collections #grid .product .micro{color:#77695d!important;opacity:1!important}
-#collections #grid .product h4{color:#f4eee5!important}
-/* Hero: existing headline and featured message unchanged, card photographed with envelope. */
-.hero .card-stage{position:relative!important;isolation:isolate!important}
-.hero .card-stage:before{content:''!important;position:absolute!important;inset:0 0 52px!important;background:var(--bu-photo) center/contain no-repeat!important;z-index:0!important;pointer-events:none!important}
-.hero #heroCard{position:relative!important;z-index:1!important;aspect-ratio:1/1.1!important;width:min(76%,420px)!important;min-height:0!important;margin:15% auto 7%!important;transform:rotate(-3deg)!important;background:transparent!important;box-shadow:none!important;color:#29211c!important;border:0!important;padding:10%!important}
-.hero #heroCard .hand{font:italic clamp(25px,3vw,44px)/1.15 Georgia,serif!important;color:#29211c!important}
-.hero #heroCard .micro{color:#62584f!important}
-/* How It Works: photography replaces flat vector props without altering captions. */
-#how-it-works .how-art{background:var(--bu-photo) center/cover no-repeat #c6b49c!important;overflow:hidden!important;isolation:isolate!important}
-#how-it-works .how-select .how-card-back{display:none!important}
-#how-it-works .how-select .how-card-front{position:absolute!important;left:20%!important;top:27%!important;width:62%!important;height:57%!important;transform:rotate(-3deg)!important;background:transparent!important;box-shadow:none!important;color:#211d19!important;font:italic clamp(18px,2vw,29px)/1.18 Georgia,serif!important}
-#how-it-works .how-personalize .how-letter{position:absolute!important;left:19%!important;top:27%!important;width:64%!important;height:56%!important;background:transparent!important;box-shadow:none!important;border:0!important;transform:rotate(-3deg)!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:5%!important}
-#how-it-works .how-personalize .how-message{color:#211d19!important;font:italic clamp(16px,1.6vw,24px)/1.22 Georgia,serif!important;text-align:center!important}
-#how-it-works .how-send{background:linear-gradient(130deg,#baa58d,#e6d5bd)!important}
-#how-it-works .how-send .how-envelope{filter:drop-shadow(10px 14px 15px #0005)!important}
-/* Recipient opening: same photographic ivory paper on both faces, including longer personalized messages. */
-.bcard .bpage,.bcard .bcover,.gift-note,.mini-card,.bu-m-card{background:var(--bu-paper) center/cover no-repeat #f3e9d9!important;color:#29211c!important}
-.bcard .cfront,.bcard .binside{color:#29211c!important}
-.bcard .bmicro,.bcard .bsign{color:#66584d!important}
-/* Make old color blocks and browser dots impossible to leak into new gallery. */
-#collections #tiles [data-collection=work] .collection-preview{padding:0!important}
-@media(max-width:780px){#collections #tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:25px 14px!important}}
-@media(max-width:490px){#collections #tiles{grid-template-columns:1fr!important;max-width:380px!important;margin-inline:auto!important}#collections #tiles .tile .preview-hook{font-size:25px!important}}
-</style>
-<script id="bu-seasonal-collection-v2">(function(){
-const gallery=document.getElementById('tiles');if(!gallery)return;
-const add=()=>{if(gallery.querySelector('.bu-seasonal'))return;
- const tile=document.createElement('div');tile.className='tile bu-seasonal';tile.setAttribute('aria-label','The Seasonal Edit, Christmas coming soon');
- const p=document.createElement('span');p.className='collection-preview';const h=document.createElement('span');h.className='preview-hook';h.textContent='The Seasonal Edit';p.appendChild(h);
- const n=document.createElement('span');n.className='name';n.textContent='The Seasonal Edit';const c=document.createElement('span');c.className='count';c.textContent='CHRISTMAS · COMING SOON';tile.append(p,n,c);gallery.append(tile);
-};
-if(gallery.children.length)add();else document.addEventListener('DOMContentLoaded',add,{once:true});
-})();</script>
-
-<style id="bu-luxury-consistency-v3">
-/* v3: remove inherited hero mockup spine and duplicate printed copy */
-.hero #heroCard::before,.hero #heroCard::after,.hero .card-stage .paper::before,.hero .card-stage .paper::after{content:none!important;display:none!important;box-shadow:none!important}
-.hero #heroCard{overflow:visible!important;isolation:auto!important;outline:none!important;box-shadow:none!important}
-.hero #heroCard .micro{display:none!important}
-.hero #heroCard .hand{font-size:clamp(23px,2.65vw,39px)!important;line-height:1.13!important;letter-spacing:-.045em!important;max-width:100%!important;text-shadow:none!important}
-/* A consistent physical ivory folded card for every quick-preview cover and inside. */
-#quickPreview .qp-page,#quickPreview .qp-cover,
-#quickPreview .qp-shell[data-collection] .qp-page,#quickPreview .qp-shell[data-collection] .qp-cover{
- background: #f2e7d6 var(--bu-paper) center/cover no-repeat!important;
- color:#29211c!important;border:1px solid #e2d5c1!important;
- box-shadow:inset 6px 0 11px #79644d14,5px 7px 0 #c9bca9,12px 18px 27px #0006!important;
-}
-#quickPreview .qp-front,#quickPreview .qp-inside,#quickPreview .qp-sign{color:#29211c!important;text-shadow:none!important}
-#quickPreview .qp-shell[data-collection=taryn] .qp-front,#quickPreview .qp-shell[data-collection=taryn] .qp-inside,#quickPreview .qp-shell[data-collection=taryn] .qp-sign{color:#722d42!important}
-#quickPreview .qp-shell[data-collection=birthdays] .qp-front,#quickPreview .qp-shell[data-collection=birthdays] .qp-inside,#quickPreview .qp-shell[data-collection=birthdays] .qp-sign,
-#quickPreview .qp-shell[data-collection=marriage] .qp-front,#quickPreview .qp-shell[data-collection=marriage] .qp-inside,#quickPreview .qp-shell[data-collection=marriage] .qp-sign{color:#194a37!important}
-#quickPreview .qp-brand{color:#665b50!important}
-/* Same cotton paper and ink for interactive envelope reveal. */
-#reveal .bpage,#reveal .bcover,#reveal.recipient-mode .stage .bpage,#reveal.recipient-mode .stage .bcover{background:#f2e7d6 var(--bu-paper) center/cover no-repeat!important;color:#29211c!important}
-#reveal .cfront,#reveal .binside,#reveal .bsign{color:#29211c!important}
-#reveal[data-collection=taryn] .cfront,#reveal[data-collection=taryn] .binside,#reveal[data-collection=taryn] .bsign{color:#722d42!important}
-#reveal[data-collection=birthdays] .cfront,#reveal[data-collection=birthdays] .binside,#reveal[data-collection=birthdays] .bsign,#reveal[data-collection=marriage] .cfront,#reveal[data-collection=marriage] .binside,#reveal[data-collection=marriage] .bsign{color:#194a37!important}
-/* Keep other existing messaging, animations and checkout untouched. */
-</style>
-
-<style id="bu-meaningful-animated-book-v4">
-/* Meaningful preview: no inherited dark overlay; physically hinged cotton paper. */
-#buMeaningfulDialog .bu-m-book{position:relative;display:block;margin:28px auto 12px;width:min(100%,360px);aspect-ratio:4/5;padding:0;border:0;background:transparent;color:#29221c;cursor:pointer;perspective:1250px;text-align:center;overflow:visible;isolation:isolate;appearance:none}
-#buMeaningfulDialog .bu-m-inner,#buMeaningfulDialog .bu-m-cover{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:34px 27px;background:#f1e6d5 url('assets/bu-ivory-paper.jpg') center/cover no-repeat!important;color:#29221c!important;border:1px solid #e5d7c4!important;opacity:1!important;filter:none!important;text-shadow:none!important;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-#buMeaningfulDialog .bu-m-inner{box-shadow:inset 12px 0 18px #806a5020,8px 15px 32px #0007;gap:20px;transform:rotateY(0deg)}
-#buMeaningfulDialog .bu-m-cover{transform-origin:left center;transform:rotateY(0deg);transform-style:preserve-3d;box-shadow:inset 5px 0 12px #7d684519,5px 7px 0 #c6b7a4,12px 19px 30px #0007;z-index:2;transition:transform 1.15s cubic-bezier(.2,.68,.15,1),box-shadow 1.15s ease}
-#buMeaningfulDialog .bu-m-book.is-open .bu-m-cover{transform:rotateY(-165deg);box-shadow:-12px 15px 25px #0005}
-#buMeaningfulDialog .bu-m-title{font:italic clamp(26px,4vw,36px)/1.18 Georgia,serif!important;color:#29221c!important;margin:0!important;max-width:100%}
-#buMeaningfulDialog .bu-m-inside{font:clamp(16px,2.1vw,21px)/1.48 Georgia,serif!important;color:#29221c!important;max-height:65%;overflow:auto;white-space:pre-line}
-#buMeaningfulDialog .bu-m-sign{font:italic 17px Georgia,serif!important;color:#544338!important}
-#buMeaningfulDialog .micro{font:10px Arial,sans-serif!important;letter-spacing:.2em;color:#726354!important}
-#buMeaningfulDialog .bu-m-cover .micro{position:absolute;bottom:27px}
-#buMeaningfulDialog .bu-m-hint{font:11px Arial,sans-serif;letter-spacing:.15em;text-transform:uppercase;color:#bcb0a4;min-height:20px;margin:12px auto}
-#buMeaningfulDialog .bu-m-book:focus-visible{outline:2px solid #e6d0ac;outline-offset:6px}
-@media(max-width:650px){#buMeaningfulDialog .bu-m-book{width:min(70vw,310px)}#buMeaningfulDialog .bu-m-wrap{padding:28px 14px}#buMeaningfulDialog .bu-m-book.is-open{transform:translateX(14%)}#buMeaningfulDialog .bu-m-book .bu-m-inner{padding:23px 17px}}
-@media(prefers-reduced-motion:reduce){#buMeaningfulDialog .bu-m-cover{transition:none!important}}
-</style>
-<script id="bu-meaningful-open-v4">(function(){const d=document.getElementById('buMeaningfulDialog');if(!d)return;const book=d.querySelector('.bu-m-book'),hint=d.querySelector('.bu-m-hint');book.addEventListener('click',()=>{const opened=book.classList.toggle('is-open');book.setAttribute('aria-expanded',String(opened));hint.textContent=opened?'Tap the card to close':'Tap the card to open'});d.addEventListener('close',()=>{book.classList.remove('is-open');book.setAttribute('aria-expanded','false')});})();</script>
-<style id="bu-v5-verified-visual-overrides">
-/* Real ivory paper in all meaningful previews; do not inherit dark overlay. */
-#buMeaningfulDialog .bu-m-book,#buMeaningfulDialog .bu-m-book *{filter:none!important;mix-blend-mode:normal!important;text-shadow:none!important}
-#buMeaningfulDialog .bu-m-inner,#buMeaningfulDialog .bu-m-cover{background-color:#f1e6d5!important;background-image:url('assets/bu-ivory-paper.jpg')!important;background-size:cover!important;opacity:1!important;color:#29221c!important}
-#buMeaningfulDialog .bu-m-inside,#buMeaningfulDialog .bu-m-title{color:#29221c!important;opacity:1!important}
-#buMeaningfulDialog .bu-m-sign{color:#544338!important;opacity:1!important}
-#buMeaningfulDialog .bu-m-book{transform:translateX(0);transition:transform .8s ease}
-#buMeaningfulDialog .bu-m-book.is-open{transform:translateX(18%)}
-/* Keep homepage reveal animation below its editorial text. */
-#private-reveal .reveal-editorial{position:relative;z-index:2;max-width:850px;margin:0 auto 28px}
-#private-reveal #sigWrap{position:relative;z-index:1;clear:both}
-#private-reveal #sigStage{margin:28px auto 0;max-width:100%}
-#private-reveal #sigReplay{cursor:pointer}
-#private-reveal .bcard{cursor:pointer}
-@media(max-width:650px){#buMeaningfulDialog .bu-m-book.is-open{transform:translateX(10%)}#private-reveal .reveal-editorial{margin-bottom:36px}}
-</style>
-<script id="bu-v5-repeat-and-close">(function(){
- const stage=document.getElementById('sigStage'), replay=document.getElementById('sigReplay');
- if(stage&&replay){const card=stage.querySelector('.bcard');if(card){card.addEventListener('click',function(){if(!replay.hidden)replay.click();});}}
- const d=document.getElementById('buMeaningfulDialog');if(d){d.addEventListener('click',e=>{if(e.target===d)d.close();});}
-})();</script>
-<style id="bu-v6-layout-motion-repair">
-/* Remove leftover email/browser badges and dots, including hover states. */
-#collections .product[data-collection="work"]::before,
-#collections .product[data-collection="work"]::after,
-#collections .tile[data-collection="work"]::before,
-#collections .tile[data-collection="work"]::after,
-#collections .tile[data-collection="work"] .collection-preview::before,
-#collections .tile[data-collection="work"] .collection-preview::after,
-#collections .product[data-collection="work"] .paper::before,
-#collections .product[data-collection="work"] .paper::after{content:none!important;display:none!important;visibility:hidden!important}
-/* Reintroduce subtle dimensional movement to all collection thumbnails and cards. */
-#collections #tiles .tile .collection-preview{transition:transform .55s cubic-bezier(.2,.75,.2,1),filter .55s ease,box-shadow .55s ease!important;transform-origin:center!important;will-change:transform}
-#collections #tiles .tile:hover .collection-preview,#collections #tiles .tile:focus-visible .collection-preview{transform:translateY(-9px) rotate(-1deg) scale(1.025)!important;filter:brightness(1.04)!important;box-shadow:0 24px 38px #0007!important}
-#collections #grid .product .paper{transition:transform .55s cubic-bezier(.2,.75,.2,1),box-shadow .55s ease!important;transform-origin:50% 80%!important;will-change:transform}
-#collections #grid .product:hover .paper,#collections #grid .product:focus-visible .paper{transform:perspective(1100px) rotateY(-9deg) rotateX(3deg) translateY(-7px)!important;box-shadow:5px 7px 0 #c6b8a5,17px 26px 35px #0009!important}
-/* Hero card retains its existing click-to-open feature and gains paper-like motion. */
-.hero #heroCard{transition:transform .75s cubic-bezier(.2,.75,.2,1),filter .65s ease!important;transform-origin:18% 50%!important;cursor:pointer!important}
-.hero #heroCard:hover,.hero #heroCard:focus-visible{transform:perspective(1100px) rotateY(-16deg) rotateZ(-3deg) translateY(-8px)!important;filter:brightness(1.05)!important}
-/* Undo the old cinematic negative margins that place the paper over the paragraph. */
-#private-reveal{overflow:hidden!important}
-#private-reveal .reveal-editorial{position:relative!important;z-index:3!important;margin:0 auto 36px!important;max-width:850px!important}
-#private-reveal .reveal-editorial p{position:relative!important;z-index:3!important;margin-bottom:0!important}
-#private-reveal #sigWrap{position:relative!important;z-index:1!important;display:flow-root!important;clear:both!important;margin:0 auto!important;padding-top:35px!important;overflow:visible!important}
-#private-reveal #sigStage{margin:0 auto!important;position:relative!important;max-width:100%!important;transform:none!important}
-#private-reveal #sigWrap .controls{position:relative!important;z-index:4!important}
-@media(max-width:650px){#private-reveal .reveal-editorial{margin-bottom:24px!important}#private-reveal #sigWrap{padding-top:24px!important}}
-@media(prefers-reduced-motion:reduce){#collections #tiles .tile .collection-preview,#collections #grid .product .paper,.hero #heroCard{transition:none!important;will-change:auto!important}}
-</style>
-
-<style id="bu-v9-ivory-and-envelope-refinement">
-/* Based on restored V6: no changes to text, collection order, checkout, or animation timing. */
-:root{--bu-envelope-photo:url('assets/bu-black-envelope-texture.jpg')}
-#collections #grid .product .paper,
-#quickPreview .qp-page,#quickPreview .qp-cover,
-#reveal .bpage,#reveal .bcover,
-#buMeaningfulDialog .bu-m-inner,#buMeaningfulDialog .bu-m-cover,
-.bcard .bpage,.bcard .bcover,.gift-note,.mini-card,.bu-m-card{background-color:#faf8f3!important;border-color:#e9e5dc!important}
-#private-reveal .env-back,#private-reveal .env-front,#private-reveal .env-flap,
-#reveal .env-back,#reveal .env-front,#reveal .env-flap,
-#how-it-works .how-envelope,#how-it-works .how-envelope-flap,
-#card-concierge .bu-chat-envelope,#card-concierge .bu-chat-flap{
-background-image:linear-gradient(135deg,rgba(255,255,255,.045),rgba(0,0,0,.34)),var(--bu-envelope-photo)!important;
-background-size:cover,cover!important;background-position:center!important;
-background-blend-mode:normal,multiply!important}
-#private-reveal .seal,#reveal .seal,#how-it-works .how-envelope-seal{
-background:radial-gradient(circle at 32% 24%,#fffdf7 0%,#f3e8d3 48%,#d7c6a8 100%)!important;
-border:3px double #c6a46a!important;box-shadow:inset 0 1px 3px #fff,0 5px 12px #0008!important;color:#26201b!important}
-</style>
-
-
-
-
-
-
-<style id="bu-v13-premium-preview-envelope">
-/* Preview and recipient envelope only; leave hero and collections untouched. */
-#reveal .stage .env, #private-reveal .stage .env {
-  background:#151414 url('assets/bu-black-envelope-texture.jpg') center/cover no-repeat!important;
-  box-shadow:0 24px 60px #000b, inset 0 1px 2px #ffffff12!important;
-  filter:none!important;
-}
-#reveal .stage .env-back,#reveal .stage .env-front,#reveal .stage .env-flap,
-#private-reveal .stage .env-back,#private-reveal .stage .env-front,#private-reveal .stage .env-flap{
-  background-image:linear-gradient(155deg,#ffffff0c,#0000003b),url('assets/bu-black-envelope-texture.jpg')!important;
-  background-position:center!important;background-size:cover!important;
-  opacity:1!important;
-}
-#reveal .stage .seal,#private-reveal .stage .seal{
- opacity:1!important;background:radial-gradient(circle at 28% 24%,#fffef9,#f4e8d0 65%,#d6c19a)!important;
- border:3px double #b69a64!important;box-shadow:0 6px 13px #0009,inset 0 2px 2px #fff9!important;
- color:#221d18!important;text-shadow:none!important;
-}
-/* The instruction belongs below the envelope, not over its monogram. */
-#reveal .stage .env-label .env-tap,#private-reveal .stage .env-label .env-tap{display:none!important}
-#reveal .stage:has(.env)::after,#private-reveal .stage:has(.env)::after{
- content:'TAP THE BU. SEAL TO OPEN';position:absolute;bottom:1%;left:0;right:0;
- text-align:center;color:#eee6db;font:600 10px/1.4 Arial,sans-serif;
- letter-spacing:.18em;pointer-events:none;
-}
-#reveal .stage .env-label,#private-reveal .stage .env-label{pointer-events:none!important}
-#reveal .stage .env-label .env-to,#reveal .stage .env-label .env-teaser{display:none!important}
-</style>
-
-<style id="bu-v14-actual-envelope-targets">
-/* These are the actual clickable envelope IDs for the showcase and card preview. */
-#sigEnv,#dlgEnv {background:transparent!important;filter:drop-shadow(0 18px 24px #0009)!important;}
-#sigEnv .env-back,#dlgEnv .env-back{
- background:#111 url('assets/bu-black-envelope-texture.jpg') center/cover no-repeat!important;
- box-shadow:inset 0 1px 2px #ffffff13,0 25px 50px #000a!important;
-}
-#sigEnv .env-front,#dlgEnv .env-front{
- background:linear-gradient(155deg,#ffffff09,#0000002c),url('assets/bu-black-envelope-texture.jpg') center/cover no-repeat!important;
- filter:brightness(.95)!important;
-}
-#sigEnv .env-flap,#dlgEnv .env-flap{
- background:linear-gradient(150deg,#ffffff10,#00000020),url('assets/bu-black-envelope-texture.jpg') center/cover no-repeat!important;
- box-shadow:0 4px 12px #0008!important;
-}
-#sigEnv .seal,#dlgEnv .seal{
- background:radial-gradient(circle at 30% 25%,#fffdf6,#eee0c2 72%,#d5bc8c)!important;
- border:3px double #b79b65!important;
- color:#211c17!important;
- box-shadow:0 4px 12px #000a,inset 0 2px 2px #fff9!important;
- text-shadow:none!important;
-}
-#sigEnv .env-label .env-tap,#dlgEnv .env-label .env-tap{
- display:block!important;position:absolute!important;top:calc(100% + 18px)!important;
- left:0!important;right:0!important;text-align:center!important;
- color:#f2ece2!important;font-size:clamp(10px,1vw,13px)!important;
- letter-spacing:.16em!important;white-space:nowrap!important;
-}
-#sigEnv .env-label .env-to,#sigEnv .env-label .env-teaser,
-#dlgEnv .env-label .env-to,#dlgEnv .env-label .env-teaser{opacity:0!important;}
-#sigEnv .env-label,#dlgEnv .env-label{pointer-events:none!important;overflow:visible!important;}
-/* Remove the previous incorrect pseudo-instruction. */
-#private-reveal .stage:has(.env)::after,#reveal .stage:has(.env)::after{content:none!important;}
-</style>
-
-<style id="bu-real-envelope-photograph-review">
-/* Real photographed paper in the customer's card preview, not a CSS imitation.
-   The original interactive envelope remains underneath for the opening sequence. */
-#reveal.customer-preview-mode #dlgEnv::after {
-  content:"";position:absolute;inset:0;z-index:12;pointer-events:none;
-  background:url('assets/bu-real-envelope-closed.png') center/100% 100% no-repeat;
-  opacity:1;transition:opacity .42s ease;
-  filter:drop-shadow(0 22px 18px rgba(0,0,0,.6)) drop-shadow(0 0 12px rgba(223,205,174,.18));
-}
-#reveal.customer-preview-mode .stage.s-open #dlgEnv::after {opacity:0}
-#reveal.customer-preview-mode #dlgEnv {outline:none!important;border:0!important;}
-#reveal.customer-preview-mode #dlgEnv:focus-visible {outline:2px solid #d4c6ad!important;outline-offset:6px!important}
-@media(prefers-reduced-motion:reduce){#reveal.customer-preview-mode #dlgEnv::after{transition:none}}
-</style>
-
-<style id="bu-photo-preserved-caption-fix">
-/* Preserve the photographic image on #dlgEnv::after.
-   Suppress only the legacy generated text above the photograph. */
-#reveal.customer-preview-mode #dlgEnv::before {content:none!important;display:none!important;}
-#reveal.customer-preview-mode #dlgEnv .env-label,
-#reveal.customer-preview-mode #dlgEnv .env-label .env-tap {display:none!important;}
-#reveal.customer-preview-mode .stage:has(#dlgEnv)::after {content:none!important;display:none!important;}
-/* Explicitly restore the approved photo, unaffected by legacy ::after captions. */
-#reveal.customer-preview-mode #dlgEnv::after {
- content:""!important;display:block!important;visibility:visible!important;
- background:url('assets/bu-real-envelope-closed.png') center/100% 100% no-repeat!important;
- opacity:1;
-}
-#reveal.customer-preview-mode .stage.s-open #dlgEnv::after {opacity:0!important;}
-</style>
-<style id="bu-recipient-interior-texture-only">
-/* Scoped to the recipient's interactive envelope. The approved closed photograph,
-   all card faces, animation states, and the rest of the site remain unchanged. */
-#reveal.recipient-mode #dlgEnv .env-back {
-  background-color:#11100f!important;
-  background-image:linear-gradient(155deg,rgba(255,255,255,.035),rgba(0,0,0,.20)),url('assets/bu-black-envelope-texture.jpg')!important;
-  background-position:center!important;background-size:cover!important;
-}
-#reveal.recipient-mode #dlgEnv .env-flap {
-  background-color:#151312!important;
-  background-image:linear-gradient(165deg,rgba(255,255,255,.065),rgba(0,0,0,.24)),url('assets/bu-black-envelope-texture.jpg')!important;
-  background-position:center!important;background-size:cover!important;
-  backface-visibility:visible;
-}
-#reveal.recipient-mode #dlgEnv .env-front {
-  background-color:#11100f!important;
-  background-image:linear-gradient(155deg,rgba(255,255,255,.025),rgba(0,0,0,.28)),url('assets/bu-black-envelope-texture.jpg')!important;
-  background-position:center!important;background-size:cover!important;
-}
-</style>
 </body></html>
